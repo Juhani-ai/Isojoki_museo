@@ -1,27 +1,51 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class MusicPlayer : MonoBehaviour
 {
+    // Musiikki
     public AudioClip[] playlist;
     public float fadeDuration = 1.0f;
     public bool shuffle = false;
 
+    // UI-klikkausääni
+    public AudioClip buttonClickSound;
+
+    // Napit, jotka käyttävät klikkausääntä
+    public Button[] buttonsWithClickSound;
+
     private AudioSource audioSource;
+    private AudioSource uiAudioSource;
     private List<int> shuffleIndices = new List<int>();
     private int currentTrackIndex = 0;
     private bool isFading = false;
     private Coroutine fadeCoroutine;
 
-    void Start()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
 
+        // Lisää erillinen AudioSource UI-äänille
+        uiAudioSource = gameObject.AddComponent<AudioSource>();
+
         InitializeShuffle();
-        PlayTrack(currentTrackIndex);
+        PlayTrack(shuffle ? shuffleIndices[0] : currentTrackIndex);
+    }
+
+    void Start()
+    {
+        // Lisää kuuntelijat kaikille napeille
+        foreach (Button button in buttonsWithClickSound)
+        {
+            if (button != null)
+            {
+                button.onClick.AddListener(PlayButtonClickSound);
+            }
+        }
     }
 
     void InitializeShuffle()
@@ -99,5 +123,11 @@ public class MusicPlayer : MonoBehaviour
     {
         shuffle = !shuffle;
         InitializeShuffle();
+    }
+
+    // UI-klikkausääni
+    public void PlayButtonClickSound()
+    {
+        uiAudioSource.PlayOneShot(buttonClickSound);
     }
 }
