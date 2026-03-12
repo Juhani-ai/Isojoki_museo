@@ -178,8 +178,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ' Isojoki Seura'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -467,8 +467,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ESINEET
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -947,8 +947,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: PELAA
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1320,8 +1320,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: POISTU
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
