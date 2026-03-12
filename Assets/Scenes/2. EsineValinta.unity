@@ -178,8 +178,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pytty
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -387,8 +387,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Voiaski
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -728,8 +728,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sahtikulho
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1314,8 +1314,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pahkakuppi
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2526,8 +2526,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Koristelupuu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2735,8 +2735,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Taskoin
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3499,8 +3499,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Survin
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3708,8 +3708,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Leikkihevonen
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3845,8 +3845,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Kauha
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3982,8 +3982,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Kappa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4119,8 +4119,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Luotipuntari
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5256,8 +5256,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Leili
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5375,8 +5375,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Kahvihuhmar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
-  m_sharedMaterial: {fileID: -8722252518866887378, guid: 218ab4775c1aa3f0b8ba38e7e47169ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
