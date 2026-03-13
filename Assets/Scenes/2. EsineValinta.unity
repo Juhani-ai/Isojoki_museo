@@ -2274,7 +2274,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7574476311072566550, guid: 72da7719eeea7e4dd9c5fc1b39222e62, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -950
+      value: -910
       objectReference: {fileID: 0}
     - target: {fileID: 7574476311072566550, guid: 72da7719eeea7e4dd9c5fc1b39222e62, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4710,7 +4710,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 30ffea16a857e4b299dd1f3df87fb82f, type: 3}
+  m_Texture: {fileID: 2800000, guid: 195323d14cb230c448d94164d636f7db, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -5827,7 +5827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7965894401982599656, guid: f6a7a7ae4d05bc434ae13767ed66447b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 928
+      value: 901
       objectReference: {fileID: 0}
     - target: {fileID: 7965894401982599656, guid: f6a7a7ae4d05bc434ae13767ed66447b, type: 3}
       propertyPath: m_AnchoredPosition.y
