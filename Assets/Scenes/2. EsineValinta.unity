@@ -179,7 +179,7 @@ MonoBehaviour:
   m_text: Pytty
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_text: Voiaski
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -628,7 +628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.013305664, y: 0.0008239746}
+  m_AnchoredPosition: {x: 0.013305664, y: 0.0008544922}
   m_SizeDelta: {x: -136.90576, y: 67.39838}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &324414874
@@ -729,7 +729,7 @@ MonoBehaviour:
   m_text: Sahtikulho
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_text: Pahkakuppi
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2527,7 +2527,7 @@ MonoBehaviour:
   m_text: Koristelupuu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2736,7 +2736,7 @@ MonoBehaviour:
   m_text: Taskoin
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3500,7 +3500,7 @@ MonoBehaviour:
   m_text: Survin
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3709,7 +3709,7 @@ MonoBehaviour:
   m_text: Leikkihevonen
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3846,7 +3846,7 @@ MonoBehaviour:
   m_text: Kauha
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3983,7 +3983,7 @@ MonoBehaviour:
   m_text: Kappa
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4120,7 +4120,7 @@ MonoBehaviour:
   m_text: Luotipuntari
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5257,7 +5257,7 @@ MonoBehaviour:
   m_text: Leili
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5376,7 +5376,7 @@ MonoBehaviour:
   m_text: Kahvihuhmar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
