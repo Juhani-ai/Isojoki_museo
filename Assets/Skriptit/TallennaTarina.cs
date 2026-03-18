@@ -1,83 +1,110 @@
 using System.IO;
 using UnityEngine;
-using UnityEngine.Networking;
-using System.Collections;
 using TMPro;
+using System.Collections.Generic;
 
 public class TarinaManager : MonoBehaviour
 {
+    [Header("UI Paneelit")]
+    public GameObject syoteKentta;      // Hierarchy: ViestiKenttä
+    public GameObject kiitosViesti;     // Hierarchy: Kiitosviesti
+    public GameObject scrollPaneeli;    // Hierarchy: Scroll View
+    
+    [Header("Napit")]
+    public GameObject tallennaNappi;    // Se alkuperäinen Tallenna-nappi
+    public GameObject kirjoitaNappi;     // Uusi "Kirjoita uusi" -nappi
+
+    [Header("Tekstikomponentit")]
+    public TMP_InputField syoteInputField;
+    public TMP_Text scrollTeksti;
+
     private string jsonPolku;
-    private System.Collections.Generic.List<string> tarinat =
-        new System.Collections.Generic.List<string>();
+    private List<string> tarinat = new List<string>();
 
     void Start()
     {
         jsonPolku = Path.Combine(Application.streamingAssetsPath, "tarinat.json");
-        // Alusta: Syote aktiivinen, muut ei
-        SetPanelActive("Syote", true);
-        SetPanelActive("Skrolli", false);
-        SetPanelActive("Kiitos", false);
+        LataaTarinatMuistiin();
+
+        // Alkutila: Syötekenttä ja Tallenna-nappi näkyvissä
+        AktivoiKirjoitustila();
     }
 
-    // Tallenna tarina ja näytä Kiitos
+    // Metodi "Kirjoita"-napille
+    public void AktivoiKirjoitustila()
+    {
+        NaytaPaneeli(syoteKentta);
+        
+        // Vaihdetaan napit
+        tallennaNappi.SetActive(true);
+        kirjoitaNappi.SetActive(false);
+        
+        // Tyhjennetään kenttä valmiiksi uutta tarinaa varten
+        syoteInputField.text = "";
+    }
+
     public void TallennaTarina()
     {
-        TMP_InputField inputField = GameObject.FindGameObjectWithTag("Syote").GetComponent<TMP_InputField>();
-        if (string.IsNullOrEmpty(inputField.text)) return;
+        if (string.IsNullOrWhiteSpace(syoteInputField.text)) return;
 
-        tarinat.Add(inputField.text);
-        StartCoroutine(TallennaTarinatJSON());
+        tarinat.Add(syoteInputField.text);
+        TallennaTarinatJSON();
 
-        // Vaihda paneelit
-        SetPanelActive("Syote", false);
-        SetPanelActive("Kiitos", true);
+        // Näytetään kiitosviesti
+        NaytaPaneeli(kiitosViesti);
+
+        // Vaihdetaan Tallenna -> Kirjoita
+        tallennaNappi.SetActive(false);
+        kirjoitaNappi.SetActive(true);
     }
 
-    // Avaa Skrolli
     public void AvaaSelaa()
     {
-        SetPanelActive("Kiitos", false);
-        SetPanelActive("Skrolli", true);
-        StartCoroutine(LataaJaNaytaTarinat());
+        NaytaPaneeli(scrollPaneeli);
+        PaivitaScrollTeksti();
+
+        // Varmistetaan, että selaustilassa näkyy "Kirjoita"-nappi, jotta pääsee takaisin
+        tallennaNappi.SetActive(false);
+        kirjoitaNappi.SetActive(true);
     }
 
-    // Apu-metodi paneelien aktivoimiseen
-    private void SetPanelActive(string tag, bool active)
+    // --- APUMETODIT ---
+
+    private void NaytaPaneeli(GameObject aktiivinenPaneeli)
     {
-        GameObject panel = GameObject.FindGameObjectWithTag(tag);
-        if (panel != null) panel.SetActive(active);
+        syoteKentta.SetActive(syoteKentta == aktiivinenPaneeli);
+        kiitosViesti.SetActive(kiitosViesti == aktiivinenPaneeli);
+        scrollPaneeli.SetActive(scrollPaneeli == aktiivinenPaneeli);
     }
 
-    // Tallenna JSON
-    private IEnumerator TallennaTarinatJSON()
+    private void LataaTarinatMuistiin()
     {
-        string json = JsonUtility.ToJson(new ListWrapper { tarinat = tarinat });
-        if (Application.platform != RuntimePlatform.WebGLPlayer)
-            File.WriteAllText(jsonPolku, json);
-        yield return null;
-    }
-
-    // Lataa ja näytä tarinat
-    private IEnumerator LataaJaNaytaTarinat()
-    {
-        UnityWebRequest request = UnityWebRequest.Get(jsonPolku);
-        yield return request.SendWebRequest();
-
-        TMP_Text tarinaNaytto = GameObject.FindGameObjectWithTag("Skrolli").GetComponentInChildren<TMP_Text>();
-        if (request.result == UnityWebRequest.Result.Success)
+        if (File.Exists(jsonPolku))
         {
-            tarinat = JsonUtility.FromJson<ListWrapper>(request.downloadHandler.text).tarinat;
-            string tarinaTeksti = "";
-            foreach (string tarina in tarinat)
-                tarinaTeksti += "- " + tarina + "\n\n";
-            tarinaNaytto.text = tarinaTeksti;
+            string json = File.ReadAllText(jsonPolku);
+            ListWrapper wrapper = JsonUtility.FromJson<ListWrapper>(json);
+            if (wrapper != null && wrapper.tarinat != null) tarinat = wrapper.tarinat;
         }
-        else
+    }
+
+    private void TallennaTarinatJSON()
+    {
+        string json = JsonUtility.ToJson(new ListWrapper { tarinat = tarinat }, true);
+        File.WriteAllText(jsonPolku, json);
+    }
+
+    private void PaivitaScrollTeksti()
+    {
+        if (scrollTeksti == null) return;
+        string teksti = "";
+        for (int i = 0; i < tarinat.Count; i++)
         {
-            tarinaNaytto.text = "Tarinoita ei voitu ladata.";
+            teksti += "--- Tarina " + (i + 1) + " ---\n" + tarinat[i] + "\n\n";
         }
+        scrollTeksti.text = teksti;
     }
 
     [System.Serializable]
-    public class ListWrapper { public System.Collections.Generic.List<string> tarinat; }
+    public class ListWrapper { public List<string> tarinat; }
 }
+
