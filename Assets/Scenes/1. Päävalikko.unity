@@ -290,7 +290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.986664, y: 166.93987}
+  m_AnchoredPosition: {x: -34, y: 166.93987}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &35391017
@@ -313,7 +313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ' Isojoki Seura'
+  m_text: ' Isojoki-seura'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 68.9
+  m_fontSize: 70.5
   m_fontSizeBase: 65
   m_fontWeight: 400
   m_enableAutoSizing: 1
