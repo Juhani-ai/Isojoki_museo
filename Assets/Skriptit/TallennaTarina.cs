@@ -2,44 +2,40 @@ using System.IO;
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using System; // Tarvitaan DateTimea varten
 
 public class TarinaManager : MonoBehaviour
 {
     [Header("UI Paneelit")]
-    public GameObject syoteKentta;      // Hierarchy: ViestiKenttä
-    public GameObject kiitosViesti;     // Hierarchy: Kiitosviesti
-    public GameObject scrollPaneeli;    // Hierarchy: Scroll View
+    public GameObject syoteKentta;
+    public GameObject kiitosViesti;
+    public GameObject scrollPaneeli;
     
     [Header("Napit")]
-    public GameObject tallennaNappi;    // Se alkuperäinen Tallenna-nappi
-    public GameObject kirjoitaNappi;     // Uusi "Kirjoita uusi" -nappi
+    public GameObject tallennaNappi;
+    public GameObject kirjoitaNappi;
 
     [Header("Tekstikomponentit")]
     public TMP_InputField syoteInputField;
     public TMP_Text scrollTeksti;
 
     private string jsonPolku;
-    private List<string> tarinat = new List<string>();
+    
+    // Muutetaan lista käyttämään TarinaData-luokkaa pelkän stringin sijaan
+    private List<TarinaData> tarinat = new List<TarinaData>();
 
     void Start()
     {
         jsonPolku = Path.Combine(Application.streamingAssetsPath, "tarinat.json");
         LataaTarinatMuistiin();
-
-        // Alkutila: Syötekenttä ja Tallenna-nappi näkyvissä
         AktivoiKirjoitustila();
     }
 
-    // Metodi "Kirjoita"-napille
     public void AktivoiKirjoitustila()
     {
         NaytaPaneeli(syoteKentta);
-        
-        // Vaihdetaan napit
         tallennaNappi.SetActive(true);
         kirjoitaNappi.SetActive(false);
-        
-        // Tyhjennetään kenttä valmiiksi uutta tarinaa varten
         syoteInputField.text = "";
     }
 
@@ -47,13 +43,16 @@ public class TarinaManager : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(syoteInputField.text)) return;
 
-        tarinat.Add(syoteInputField.text);
+        // Luodaan uusi tarina-olio päivämäärällä
+        TarinaData uusiTarina = new TarinaData();
+        uusiTarina.teksti = syoteInputField.text;
+        // Tallennetaan päivämäärä muodossa: 18.3.2026 klo 10:30
+        uusiTarina.pvm = DateTime.Now.ToString("d.M.yyyy 'klo' HH:mm");
+
+        tarinat.Add(uusiTarina);
         TallennaTarinatJSON();
 
-        // Näytetään kiitosviesti
         NaytaPaneeli(kiitosViesti);
-
-        // Vaihdetaan Tallenna -> Kirjoita
         tallennaNappi.SetActive(false);
         kirjoitaNappi.SetActive(true);
     }
@@ -62,8 +61,6 @@ public class TarinaManager : MonoBehaviour
     {
         NaytaPaneeli(scrollPaneeli);
         PaivitaScrollTeksti();
-
-        // Varmistetaan, että selaustilassa näkyy "Kirjoita"-nappi, jotta pääsee takaisin
         tallennaNappi.SetActive(false);
         kirjoitaNappi.SetActive(true);
     }
@@ -96,15 +93,27 @@ public class TarinaManager : MonoBehaviour
     private void PaivitaScrollTeksti()
     {
         if (scrollTeksti == null) return;
-        string teksti = "";
-        for (int i = 0; i < tarinat.Count; i++)
+        string kooste = "";
+        
+        // Käydään lista läpi lopusta alkuun, jotta uusin tarina on ylimpänä!
+        for (int i = tarinat.Count - 1; i >= 0; i--)
         {
-            teksti += "--- Tarina " + (i + 1) + " ---\n" + tarinat[i] + "\n\n";
+            kooste += "<color=#888888><size=80%>" + tarinat[i].pvm + "</size></color>\n";
+            kooste += tarinat[i].teksti + "\n\n";
+            kooste += "________________________\n\n";
         }
-        scrollTeksti.text = teksti;
+        scrollTeksti.text = kooste;
+    }
+
+    // Luokka yksittäiselle tarinalle
+    [System.Serializable]
+    public class TarinaData
+    {
+        public string teksti;
+        public string pvm;
     }
 
     [System.Serializable]
-    public class ListWrapper { public List<string> tarinat; }
+    public class ListWrapper { public List<TarinaData> tarinat; }
 }
 
