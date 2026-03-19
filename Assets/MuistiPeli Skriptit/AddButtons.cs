@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class AddButtons : MonoBehaviour
 {
+    private transform puzzle
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
