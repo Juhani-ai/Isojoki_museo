@@ -10,7 +10,7 @@ public class AudioSlider : MonoBehaviour
     void Start()
     {
         // Lataa tallennettu äänenvoimakkuus tai käytä oletusarvoa (1.0).
-        float savedVolume = PlayerPrefs.GetFloat(volumeKey, 1.0f);
+        float savedVolume = PlayerPrefs.GetFloat(volumeKey, 0.5f);
         audioSource.volume = savedVolume;
         volumeSlider.value = savedVolume;
 

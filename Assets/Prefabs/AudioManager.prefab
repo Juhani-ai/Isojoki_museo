@@ -144,18 +144,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
   playlist:
-  - {fileID: 8300000, guid: b23d68d5ff1f546d281eed426d25de4a, type: 3}
-  - {fileID: 8300000, guid: be2d99fcee80aa638892fa5e94caa1b2, type: 3}
-  - {fileID: 8300000, guid: b4d251a2f9dbe9c4dac33e0dc1ab56e2, type: 3}
-  - {fileID: 8300000, guid: ee5b99da787925414b7cd9dd1033b2ed, type: 3}
-  - {fileID: 8300000, guid: febdd7eb80d831e399f428d03d6c6ba8, type: 3}
-  - {fileID: 8300000, guid: 9c6d44ad44b7d98798b0a776be9d6cb5, type: 3}
-  - {fileID: 8300000, guid: 4ceb8c7a226bc143ba5dd83807d49eee, type: 3}
-  - {fileID: 8300000, guid: 7f0f53c05faf94ddaba4280371304a49, type: 3}
-  - {fileID: 8300000, guid: c3be5b73d6129b5aab87c478fbf64433, type: 3}
-  - {fileID: 8300000, guid: 0ee803ba2a06ee7cd8b51832551f8a33, type: 3}
-  - {fileID: 8300000, guid: e4e30cc1406af98a9a9dfe18812b9b5f, type: 3}
-  - {fileID: 8300000, guid: fa0d698ef34ec6dbaa445b2461714aa7, type: 3}
+  - {fileID: 8300000, guid: 71f142442c8915ee69a06ad7e7447d6a, type: 3}
+  - {fileID: 8300000, guid: 4ad834a4b4ac8cb3c8b6aade4cef5956, type: 3}
+  - {fileID: 8300000, guid: 4e6c3d262c99a3f7d9dd0cbac710c08f, type: 3}
+  - {fileID: 8300000, guid: 26f820e35cf10bac5b2544bb9fe7e7da, type: 3}
+  - {fileID: 8300000, guid: d337911e6a7679360aafe19191c39048, type: 3}
+  - {fileID: 8300000, guid: bef3b72e8bd0aaa1880f5651429c417f, type: 3}
+  - {fileID: 8300000, guid: 495bd687446d1cfccb6d95896d9f3ebf, type: 3}
+  - {fileID: 8300000, guid: 2e5c30acfa956d8c98fa2ca6ef27de76, type: 3}
+  - {fileID: 8300000, guid: 9bf16f5a4ba40b9c7b7a040ee92f8027, type: 3}
+  - {fileID: 8300000, guid: 2456e4a2d4b8307c98459cc1bc34eeeb, type: 3}
+  - {fileID: 8300000, guid: 0a6611eb1085f1055b34d7977f355317, type: 3}
+  - {fileID: 8300000, guid: 41b2f62c31c2a90aca2772de20f2fc1f, type: 3}
+  - {fileID: 8300000, guid: f717de33bdf7a0e4d9d8440ff4e2dea3, type: 3}
+  - {fileID: 8300000, guid: f7c141406b16b4fa7b96ec203bf815a9, type: 3}
+  - {fileID: 8300000, guid: bad8d278cb4e92dc692d5645517e2ba0, type: 3}
+  - {fileID: 8300000, guid: e3733aeab1fd1d67b96e2f898a8e6d55, type: 3}
+  - {fileID: 8300000, guid: a443baccaa7262686966dfcb405c1fde, type: 3}
+  - {fileID: 8300000, guid: b22373eef5aa58f25a17b397d1a12fd9, type: 3}
+  - {fileID: 8300000, guid: 4378513b8dba479c89de3b6b2f305cab, type: 3}
+  - {fileID: 8300000, guid: 1b026176d0328bc22b64229cac1cb8cf, type: 3}
   fadeDuration: 1
   shuffle: 1
   buttonClickSound: {fileID: 8300000, guid: 96d7b93c790137c66ad43f3e149187b7, type: 3}
