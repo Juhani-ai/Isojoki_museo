@@ -4,12 +4,13 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Kortti
-  - Mute
   - Volume
-  - Skrolli
+  - "P\xE4\xE4valikko"
+  - Esinevalinta
+  - UI
+  - Minipelit
   - Syote
-  - Kiitos
+  - Tarina
   layers:
   - Default
   - TransparentFX
