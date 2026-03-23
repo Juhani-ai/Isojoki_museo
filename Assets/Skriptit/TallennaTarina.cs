@@ -1,20 +1,17 @@
 using UnityEngine;
-using UnityEngine.Networking;
 using TMPro;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System;
 
 public class TarinaManager : MonoBehaviour
 {
-    [Header("Palvelimen osoitteet")]
-    public string palvelimenUrl = "https://isojokiseura.fi/peli/tallenna.php";
-    public string jsonUrl = "https://isojokiseura.fi/peli/tarinat.json";
-
-    [Header("UI Paneelit & Napit")]
+    [Header("UI Paneelit")]
     public GameObject syoteKentta;
     public GameObject kiitosViesti;
     public GameObject scrollPaneeli;
+    
+    [Header("Napit")]
     public GameObject tallennaNappi;
     public GameObject kirjoitaNappi;
 
@@ -22,12 +19,21 @@ public class TarinaManager : MonoBehaviour
     public TMP_InputField syoteInputField;
     public TMP_Text scrollTeksti;
 
+    private string tiedostoPolku;
     private List<TarinaData> tarinat = new List<TarinaData>();
 
     void Start()
     {
-        // Ladataan tarinat heti alussa palvelimelta
-        StartCoroutine(LataaTarinatPalvelimelta());
+        // Tallennetaan suoraan koneen levylle (StreamingAssets tai PersistentDataPath)
+        tiedostoPolku = Path.Combine(Application.streamingAssetsPath, "tarinat.json");
+
+        // Varmistetaan että kansio on olemassa
+        if (!Directory.Exists(Application.streamingAssetsPath))
+        {
+            Directory.CreateDirectory(Application.streamingAssetsPath);
+        }
+
+        LataaTarinatPaikallisesti();
         AktivoiKirjoitustila();
     }
 
@@ -36,8 +42,10 @@ public class TarinaManager : MonoBehaviour
         syoteKentta.SetActive(true);
         kiitosViesti.SetActive(false);
         scrollPaneeli.SetActive(false);
+        
         tallennaNappi.SetActive(true);
         kirjoitaNappi.SetActive(false);
+        
         syoteInputField.text = "";
     }
 
@@ -51,10 +59,11 @@ public class TarinaManager : MonoBehaviour
         };
 
         tarinat.Add(uusi);
-        StartCoroutine(LahetaTarinatPalvelimelle());
+        TallennaTarinatPaikallisesti();
 
         syoteKentta.SetActive(false);
         kiitosViesti.SetActive(true);
+        
         tallennaNappi.SetActive(false);
         kirjoitaNappi.SetActive(true);
     }
@@ -64,53 +73,51 @@ public class TarinaManager : MonoBehaviour
         syoteKentta.SetActive(false);
         kiitosViesti.SetActive(false);
         scrollPaneeli.SetActive(true);
+        
         tallennaNappi.SetActive(false);
         kirjoitaNappi.SetActive(true);
         
-        // Päivitetään näkymä (uusin ensin)
         PaivitaScrollTeksti();
     }
 
-    private IEnumerator LahetaTarinatPalvelimelle()
+    private void TallennaTarinatPaikallisesti()
     {
-        string json = JsonUtility.ToJson(new ListWrapper { tarinat = tarinat });
-        
-        using (UnityWebRequest www = UnityWebRequest.PostWwwForm(palvelimenUrl, "POST"))
+        try 
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-            www.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            www.downloadHandler = new DownloadHandlerBuffer();
-            www.SetRequestHeader("Content-Type", "application/json");
-
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-                Debug.LogError("Tallennusvirhe: " + www.error);
-            else
-                Debug.Log("Palvelin vastasi: " + www.downloadHandler.text);
+            string json = JsonUtility.ToJson(new ListWrapper { tarinat = tarinat }, true);
+            File.WriteAllText(tiedostoPolku, json);
+            Debug.Log("Tallennettu polkuun: " + tiedostoPolku);
+        }
+        catch (Exception e) 
+        {
+            Debug.LogError("Tallennus kusi: " + e.Message);
         }
     }
 
-    private IEnumerator LataaTarinatPalvelimelta()
+    private void LataaTarinatPaikallisesti()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(jsonUrl))
+        if (File.Exists(tiedostoPolku))
         {
-            // Lisätään satunnainen numero URL-osoitteeseen, jotta selain ei lataa vanhaa versiota välimuistista
-            www.url += "?t=" + UnityEngine.Random.Range(0, 1000000);
-
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.Success)
+            try 
             {
-                ListWrapper wrapper = JsonUtility.FromJson<ListWrapper>(www.downloadHandler.text);
-                if (wrapper != null && wrapper.tarinat != null) tarinat = wrapper.tarinat;
-                Debug.Log("Ladattu " + tarinat.Count + " tarinaa.");
+                string json = File.ReadAllText(tiedostoPolku);
+                ListWrapper wrapper = JsonUtility.FromJson<ListWrapper>(json);
+                if (wrapper != null && wrapper.tarinat != null) 
+                {
+                    tarinat = wrapper.tarinat;
+                }
+            }
+            catch (Exception e) 
+            {
+                Debug.LogError("Lataus kusi: " + e.Message);
             }
         }
     }
 
     private void PaivitaScrollTeksti()
     {
+        if (scrollTeksti == null) return;
+        
         string kooste = "";
         for (int i = tarinat.Count - 1; i >= 0; i--)
         {
