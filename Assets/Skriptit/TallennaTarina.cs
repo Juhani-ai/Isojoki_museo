@@ -31,9 +31,6 @@ public class TarinaManager : MonoBehaviour
 
     void Start()
     {
-        // POLKU-ASIOIDEN HOITO:
-        // Editorissa: Assets/tarinat.json (Näkyy heti projektissa)
-        // Buildissa: Pelin asennuskansio (Museon väen helppo löytää)
         #if UNITY_EDITOR
             tiedostoPolku = Path.Combine(Application.dataPath, "tarinat.json");
         #else
@@ -43,7 +40,6 @@ public class TarinaManager : MonoBehaviour
 
         filtteriPolku = Path.Combine(Application.streamingAssetsPath, "sensuuri.json");
 
-        // Pakotetaan tiedoston luonti heti käynnistyksessä
         LataaTarinatPaikallisesti();
         TallennaTarinatPaikallisesti();
 
@@ -52,7 +48,6 @@ public class TarinaManager : MonoBehaviour
         
         if(asiatonViestiPaneeli != null) asiatonViestiPaneeli.SetActive(false);
 
-        // Tulostetaan sijainti, jotta voit kopioida sen jos se on vieläkin hukassa
         Debug.Log("<color=green>TARINAT TALLENTUVAT TÄNNE: </color>" + tiedostoPolku);
     }
 
@@ -65,7 +60,7 @@ public class TarinaManager : MonoBehaviour
 
         if (SisaltaakoTorkya(teksti))
         {
-            syoteInputField.text = ""; // Tyhjennetään törkykenttä
+            syoteInputField.text = ""; 
             NaytaVirhe();
             return; 
         }
@@ -102,6 +97,8 @@ public class TarinaManager : MonoBehaviour
         if (asiatonViestiPaneeli != null)
         {
             asiatonViestiPaneeli.SetActive(true);
+            if (syoteKentta != null) syoteKentta.SetActive(false); // Piilotetaan syötekenttä
+
             CancelInvoke("PiilotaVirhe");
             Invoke("PiilotaVirhe", virheNayttoaika);
         }
@@ -110,6 +107,7 @@ public class TarinaManager : MonoBehaviour
     private void PiilotaVirhe()
     {
         if (asiatonViestiPaneeli != null) asiatonViestiPaneeli.SetActive(false);
+        if (syoteKentta != null) syoteKentta.SetActive(true); // Tuodaan syötekenttä takaisin
     }
 
     public void AktivoiKirjoitustila()
@@ -152,7 +150,6 @@ public class TarinaManager : MonoBehaviour
             string json = JsonUtility.ToJson(new ListWrapper { tarinat = tarinat }, true);
             File.WriteAllText(tiedostoPolku, json);
             #if UNITY_EDITOR
-                // Tämä pakottaa Unityn päivittämään Project-ikkunan
                 UnityEditor.AssetDatabase.Refresh();
             #endif
         } catch (Exception e) { Debug.LogError("Tallennus kusi: " + e.Message); }

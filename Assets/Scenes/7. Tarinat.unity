@@ -1764,37 +1764,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 548427554028637260, guid: f78701cadfc135812abf691532775d7f, type: 3}
   m_PrefabInstance: {fileID: 1517591374}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1563982524
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1563982525}
-  m_Layer: 0
-  m_Name: FilterManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1563982525
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563982524}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3225, y: 1.40268, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1608439148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2257,8 +2226,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4278190278
+  m_fontColor: {r: 0.7777108, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3505,4 +3474,3 @@ SceneRoots:
   - {fileID: 4343801014472142251}
   - {fileID: 1377251961749998437}
   - {fileID: 1812576664}
-  - {fileID: 1563982525}
