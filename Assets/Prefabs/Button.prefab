@@ -13,10 +13,12 @@ GameObject:
   - component: {fileID: 7878915262700381842}
   - component: {fileID: 3860466875459941909}
   - component: {fileID: 4307743739578401670}
-  - component: {fileID: 4095224828856988505}
+  - component: {fileID: 5576937859556081705}
+  - component: {fileID: 612065735982303684}
+  - component: {fileID: 1156829380358917025}
   m_Layer: 5
   m_Name: Button
-  m_TagString: Untagged
+  m_TagString: Minipelit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +32,7 @@ RectTransform:
   m_GameObject: {fileID: 1673446380733074820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.9525042, y: 3.9525042, z: 3.9525042}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 437678747670685237}
@@ -122,7 +124,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7878915262700381842}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: KaikkiYhdessaMaster, Assembly-CSharp
+        m_MethodName: SoitaKlikkaus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4307743739578401670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +152,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
---- !u!114 &4095224828856988505
+--- !u!114 &5576937859556081705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,10 +161,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 1673446380733074820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 322ffe9f9340e9a06b45084c6bd2857e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2aa6cc6647093ca3ba3af84f098123c9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ButtonScaleEffect
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPulseEffect
   scaleFactor: 1.1
+  pulseSpeed: 1.5
+--- !u!114 &612065735982303684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673446380733074820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa6cc6647093ca3ba3af84f098123c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPulseEffect
+  scaleFactor: 1.1
+  pulseSpeed: 1.5
+--- !u!114 &1156829380358917025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673446380733074820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa6cc6647093ca3ba3af84f098123c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPulseEffect
+  scaleFactor: 1.1
+  pulseSpeed: 1.5
 --- !u!1 &7926563328187400827
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,10 +259,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Tietokilpailu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
-  m_sharedMaterial: {fileID: -1762391828195960938, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -243,13 +286,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
