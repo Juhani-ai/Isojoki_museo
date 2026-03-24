@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class AddButtons : MonoBehaviour
 {
-    private transform puzzle
+    private transform puzzleField
+
+    Private GameObject
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
