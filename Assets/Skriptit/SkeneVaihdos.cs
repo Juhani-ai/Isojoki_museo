@@ -3,28 +3,44 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    // Metodi scenejen vaihtamiseen (esim. päävalikosta tarinoihin)
+    // Staattinen muuttuja säilyy, vaikka skripti tuhoutuisi skenevaihdossa
+    private static string edellinenSkene = "1. PaaValikko";
+
+    // Käytä tätä siirtymiseen (esim. Valikko -> Esineet)
     public void ChangeScene(string sceneName)
     {
+        edellinenSkene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(sceneName);
-        Debug.Log("Siirrytään kohtaukseen: " + sceneName);
+        Debug.Log("Siirrytään kohtaukseen: " + sceneName + ". Muistetaan edellinen: " + edellinenSkene);
     }
 
-    // Metodi paluuseen päävalikkoon
+    // "Älykäs" pakki-nappi
+    public void GoBack()
+    {
+        Debug.Log("Palataan edelliseen kohtaukseen: " + edellinenSkene);
+        SceneManager.LoadScene(edellinenSkene);
+        
+        // Nollataan muisti päävalikkoon paluun jälkeen, jottei jää "luuppia"
+        if (edellinenSkene.Contains("PaaValikko")) 
+        {
+            edellinenSkene = "1. PaaValikko";
+        }
+    }
+
     public void ReturnToMainMenu()
     {
-        SceneManager.LoadScene("Scenes/1. PaaValikko");
-        Debug.Log("Palataan päävalikkoon.");
+        SceneManager.LoadScene("1. PaaValikko");
+        Debug.Log("Palataan suoraan päävalikkoon.");
     }
 
-    // Metodi sovelluksen sulkemiseen
     public void QuitApplication()
     {
         Debug.Log("Sovellus suljetaan...");
         #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false; // Pysäytä Play-mode editorissa
+            UnityEditor.EditorApplication.isPlaying = false;
         #else
-            Application.Quit(); // Sulje sovellus buildissä
+            Application.Quit();
         #endif
     }
 }
+

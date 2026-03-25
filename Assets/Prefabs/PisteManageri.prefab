@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000041723, y: 0.00000047684}
+  m_AnchoredPosition: {x: -0.87, y: 0.03}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8076908043062305729
@@ -184,3 +184,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pistemanageri
   pisteNaytto: {fileID: 6952579086970763639}
   etuliite: 'Pisteet: '
+  audioSource: {fileID: 0}
+  kolikkoAani: {fileID: 8300000, guid: 4263cffa5fffda48082c8ae6b6fc983f, type: 3}
