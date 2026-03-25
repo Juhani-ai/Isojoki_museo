@@ -3,24 +3,34 @@ using TMPro;
 
 public class Pistemanageri : MonoBehaviour
 {
-    // Static tarkoittaa, että tämä luku on sama kaikissa skeneissä
     public static int kokonaisPisteet = 0;
     
     [Header("UI-Elementit")]
     public TMP_Text pisteNaytto;
     public string etuliite = "Pisteet: ";
 
+    [Header("Ääniasetukset")]
+    public AudioSource audioSource;
+    public AudioClip kolikkoAani;
+
     void Start()
     {
+        // Jos unohdit vetää AudioSourcen, yritetään etsiä se samasta objektista
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
         PaivitaUI();
     }
 
-    // Tätä metodia kutsutaan minipeleistä: Pistemanageri.LisaaPisteita(10);
     public static void LisaaPisteita(int maara)
     {
         kokonaisPisteet += maara;
-        // Etsitään skenessä oleva manageri ja päivitetään sen teksti
-        GameObject.FindAnyObjectByType<Pistemanageri>()?.PaivitaUI();
+        
+        // Etsitään skenessä oleva manageri
+        Pistemanageri manageri = Object.FindFirstObjectByType<Pistemanageri>();
+        if (manageri != null)
+        {
+            manageri.PaivitaUI();
+            manageri.SoitaPisteAani();
+        }
     }
 
     public void PaivitaUI()
@@ -31,7 +41,15 @@ public class Pistemanageri : MonoBehaviour
         }
     }
 
-    // Jos haluat tallentaa pisteet selaimen muistiin (WebGL)
+    public void SoitaPisteAani()
+    {
+        if (audioSource != null && kolikkoAani != null)
+        {
+            // PlayOneShot on paras pisteäänille, ne voivat soida päällekkäin
+            audioSource.PlayOneShot(kolikkoAani);
+        }
+    }
+
     public static void TallennaPisteet()
     {
         PlayerPrefs.SetInt("MuseoPisteet", kokonaisPisteet);
