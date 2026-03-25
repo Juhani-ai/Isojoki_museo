@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class AddButtons : MonoBehaviour
 {
-    [Serializefield]
-    private transform puzzleField
+    [SerializeField]
+    private Transform puzzleField;
     
-    [Serializefield]
+    [SerializeField]
     private GameObject button;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+  private void awake()
     {
         for(int i = 0; i <8; i++)
          {
@@ -17,6 +17,11 @@ public class AddButtons : MonoBehaviour
            _button.transform.SetParent(puzzleField, false);
          }
     }
+       
+       void Start()
+       {
+
+       }
 
 
     // Update is called once per frame
