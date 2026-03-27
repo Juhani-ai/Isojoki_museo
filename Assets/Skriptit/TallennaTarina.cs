@@ -24,6 +24,11 @@ public class TarinaManager : MonoBehaviour
     [Header("Asetukset")]
     public float virheNayttoaika = 3f;
 
+    [Header("Äänet")]
+    public AudioSource audioSource;
+    public AudioClip onnistumisAani; // Soi kiitosviestin yhteydessä
+    public AudioClip virheAani;      // Soi kun teksti on asiatonta
+
     private string tiedostoPolku;
     private string filtteriPolku;
     private List<TarinaData> tarinat = new List<TarinaData>();
@@ -31,9 +36,6 @@ public class TarinaManager : MonoBehaviour
 
     void Start()
     {
-        // POLKU-ASIOIDEN HOITO:
-        // Editorissa: Assets/tarinat.json (Näkyy heti projektissa)
-        // Buildissa: Pelin asennuskansio (Museon väen helppo löytää)
         #if UNITY_EDITOR
             tiedostoPolku = Path.Combine(Application.dataPath, "tarinat.json");
         #else
@@ -43,7 +45,6 @@ public class TarinaManager : MonoBehaviour
 
         filtteriPolku = Path.Combine(Application.streamingAssetsPath, "sensuuri.json");
 
-        // Pakotetaan tiedoston luonti heti käynnistyksessä
         LataaTarinatPaikallisesti();
         TallennaTarinatPaikallisesti();
 
@@ -51,8 +52,8 @@ public class TarinaManager : MonoBehaviour
         AktivoiKirjoitustila();
         
         if(asiatonViestiPaneeli != null) asiatonViestiPaneeli.SetActive(false);
+        if(audioSource == null) audioSource = GetComponent<AudioSource>();
 
-        // Tulostetaan sijainti, jotta voit kopioida sen jos se on vieläkin hukassa
         Debug.Log("<color=green>TARINAT TALLENTUVAT TÄNNE: </color>" + tiedostoPolku);
     }
 
@@ -63,13 +64,21 @@ public class TarinaManager : MonoBehaviour
         string teksti = syoteInputField.text;
         if (string.IsNullOrWhiteSpace(teksti)) return;
 
+        // TARKISTETAAN SISÄLTÖ
         if (SisaltaakoTorkya(teksti))
         {
-            syoteInputField.text = ""; // Tyhjennetään törkykenttä
+            syoteInputField.text = ""; 
             NaytaVirhe();
+            
+            // SOITETAAN VIRHEÄÄNI
+            if(audioSource != null && virheAani != null)
+            {
+                audioSource.PlayOneShot(virheAani);
+            }
             return; 
         }
 
+        // JOS TEKSTI ON OK, TALLENNETAAN
         TarinaData uusi = new TarinaData {
             teksti = teksti,
             pvm = DateTime.Now.ToString("d.M.yyyy 'klo' HH:mm")
@@ -78,10 +87,16 @@ public class TarinaManager : MonoBehaviour
         tarinat.Add(uusi);
         TallennaTarinatPaikallisesti();
 
+        // NÄYTETÄÄN KIITOSVIESTI JA SOITETAAN ONNISTUMISÄÄNI
         syoteKentta.SetActive(false);
         kiitosViesti.SetActive(true);
         tallennaNappi.SetActive(false);
         kirjoitaNappi.SetActive(true);
+
+        if(audioSource != null && onnistumisAani != null)
+        {
+            audioSource.PlayOneShot(onnistumisAani);
+        }
     }
 
     private bool SisaltaakoTorkya(string syote)
@@ -91,6 +106,7 @@ public class TarinaManager : MonoBehaviour
         foreach (string sana in kielletytSanat)
         {
             if (string.IsNullOrWhiteSpace(sana)) continue;
+            // Käytetään Regexiä sanarajojen tunnistamiseen
             string pattern = sana.Contains(" ") ? Regex.Escape(sana) : @"\b" + Regex.Escape(sana) + @"\b";
             if (Regex.IsMatch(syote, pattern, RegexOptions.IgnoreCase)) return true;
         }
@@ -102,6 +118,8 @@ public class TarinaManager : MonoBehaviour
         if (asiatonViestiPaneeli != null)
         {
             asiatonViestiPaneeli.SetActive(true);
+            if (syoteKentta != null) syoteKentta.SetActive(false); 
+
             CancelInvoke("PiilotaVirhe");
             Invoke("PiilotaVirhe", virheNayttoaika);
         }
@@ -110,6 +128,7 @@ public class TarinaManager : MonoBehaviour
     private void PiilotaVirhe()
     {
         if (asiatonViestiPaneeli != null) asiatonViestiPaneeli.SetActive(false);
+        if (syoteKentta != null) syoteKentta.SetActive(true);
     }
 
     public void AktivoiKirjoitustila()
@@ -152,7 +171,6 @@ public class TarinaManager : MonoBehaviour
             string json = JsonUtility.ToJson(new ListWrapper { tarinat = tarinat }, true);
             File.WriteAllText(tiedostoPolku, json);
             #if UNITY_EDITOR
-                // Tämä pakottaa Unityn päivittämään Project-ikkunan
                 UnityEditor.AssetDatabase.Refresh();
             #endif
         } catch (Exception e) { Debug.LogError("Tallennus kusi: " + e.Message); }
