@@ -2065,7 +2065,6 @@ MonoBehaviour:
   syoteInputField: {fileID: 822129159}
   scrollTeksti: {fileID: 208119143}
   virheNayttoaika: 3
-  audioSource: {fileID: 983450272}
   onnistumisAani: {fileID: 8300000, guid: 77ad01f2238bd26e68d7e277f4278b39, type: 3}
   virheAani: {fileID: 8300000, guid: b4bfa4b09d90944e391d73f599c9bb3a, type: 3}
 --- !u!1001 &1875861282

@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pisteet:'
+  m_text: 'Pisteet: 80'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
@@ -315,11 +315,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c32eeb91c4727adb5a29231b55e43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pistemanageri
+  varmistusPaneeli: {fileID: 0}
   pisteNaytto: {fileID: 6952579086970763639}
-  etuliite: 'Pisteet: '
   audioSource: {fileID: 0}
   kolikkoAani: {fileID: 8300000, guid: 4263cffa5fffda48082c8ae6b6fc983f, type: 3}
+  ostoAani: {fileID: 0}
+  virheAani: {fileID: 0}
   hytkyVoimakkuus: 1.1
   hytkyKesto: 0.16
-  oranssiVari: {r: 1, g: 0.64, b: 0, a: 1}
-  keltainenVari: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
