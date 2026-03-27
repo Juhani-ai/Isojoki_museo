@@ -11,6 +11,10 @@ TagManager:
   - Minipelit
   - Syote
   - Tarina
+  - Kiitos
+  - Skrolli
+  - reset
+  - varoitus
   layers:
   - Default
   - TransparentFX
