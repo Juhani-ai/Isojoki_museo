@@ -26,9 +26,10 @@ public class EsineenAvaaja : MonoBehaviour
             Pistemanageri.kokonaisPisteet -= hinta;
             
             if (Pistemanageri.instance != null) {
-                // Kutsutaan tallennusta ja efektiä Pistemanagerista
                 Pistemanageri.TallennaPisteet();
-                Pistemanageri.instance.KasitteleMuutos(true);
+                
+                // TÄSSÄ ON KORJAUS: Lähetetään tieto, että tämä on osto (true)
+                Pistemanageri.instance.KasitteleMuutos(true, true);
             }
 
             PlayerPrefs.SetInt("Unlocked_" + esineenID, 1);
@@ -36,7 +37,8 @@ public class EsineenAvaaja : MonoBehaviour
             
             StartCoroutine(AvausEfekti());
         } else {
-            if (Pistemanageri.instance != null) Pistemanageri.instance.KasitteleMuutos(false);
+            // Jos rahat ei riitä, lähetetään tieto (ei onnistunut, mutta oli osto-yritys)
+            if (Pistemanageri.instance != null) Pistemanageri.instance.KasitteleMuutos(false, true);
         }
     }
 

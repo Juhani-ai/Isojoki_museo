@@ -2012,6 +2012,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1999752084067599587, guid: f4a49b323b791b652bdc83df2064490f, type: 3}
+      propertyPath: klikkausAanet.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1999752084067599587, guid: f4a49b323b791b652bdc83df2064490f, type: 3}
+      propertyPath: 'klikkausAanet.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0737fc71683f62942bb2adb7e5a7877f, type: 3}
     - target: {fileID: 8025871397806984377, guid: f4a49b323b791b652bdc83df2064490f, type: 3}
       propertyPath: m_Name
       value: AudioManager

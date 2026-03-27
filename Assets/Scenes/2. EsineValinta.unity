@@ -580,6 +580,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1259876865}
+    - target: {fileID: 4317448535516322364, guid: ba0b670b749ca4852932cddd57bf6aed, type: 3}
+      propertyPath: pisteNaytto
+      value: 
+      objectReference: {fileID: 1977475990}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1967,6 +1971,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &1977475990 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6952579086970763639, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
+  m_PrefabInstance: {fileID: 1035095428}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1981814603
 GameObject:
   m_ObjectHideFlags: 0
