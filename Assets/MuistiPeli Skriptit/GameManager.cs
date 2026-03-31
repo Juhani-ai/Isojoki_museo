@@ -3,7 +3,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    public List<Butt> btns = new List<Button>();
+    public List<Button> btns = new List<Button>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
