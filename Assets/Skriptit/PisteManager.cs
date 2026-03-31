@@ -1,59 +1,162 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class Pistemanageri : MonoBehaviour
+public class Pistemanageri : MonoBehaviour, IPointerClickHandler
 {
-    public static int kokonaisPisteet = 0;
+  public static Pistemanageri instance;
+  public static int kokonaisPisteet = 0;
+  
+  [Header("UI-Viitteet")]
+  public GameObject varmistusPaneeli;
+  public TMP_Text pisteNaytto;
+
+  [Header("Äänet")]
+  public AudioSource audioSource;
+  public AudioClip kolikkoAani;
+  public AudioClip ostoAani; // Tämä on se esineen ostoääni
+  public AudioClip virheAani;
+
+  [Header("Efektit")]
+  public float hytkyVoimakkuus = 1.25f;
+  public float hytkyKesto = 0.2f;
+  private Vector3 alkuperainenKoko;
+  private Color alkuperainenVari;
+
+  void Awake() {
+      if (instance == null) {
+          instance = this;
+          DontDestroyOnLoad(gameObject);
+          kokonaisPisteet = PlayerPrefs.GetInt("MuseoPisteet", 0);
+      } else {
+          Destroy(gameObject);
+      }
+  }
+
+  void OnEnable() { SceneManager.sceneLoaded += OnSceneLoaded; }
+  void OnDisable() { SceneManager.sceneLoaded -= OnSceneLoaded; }
+
+  void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+      varmistusPaneeli = null;
+      pisteNaytto = null;
+      StartCoroutine(EtsiUudenSkenenObjektit());
+  }
+
+  IEnumerator EtsiUudenSkenenObjektit() {
+      yield return new WaitForEndOfFrame();
+      GameObject[] kaikki = Resources.FindObjectsOfTypeAll<GameObject>();
     
-    [Header("UI-Elementit")]
-    public TMP_Text pisteNaytto;
-    public string etuliite = "Pisteet: ";
+      foreach (GameObject go in kaikki) {
+          if (go.name == "VaroitusPaneeli") {
+              varmistusPaneeli = go;
+              varmistusPaneeli.SetActive(false);
+          }
+          if (go.name == "Pistelaskuri") {
+              pisteNaytto = go.GetComponent<TMP_Text>();
+              if (pisteNaytto != null) {
+                  alkuperainenKoko = pisteNaytto.transform.localScale;
+                  alkuperainenVari = pisteNaytto.color;
+              }
+          }
+          if (go.name == "Reset -nappi") {
+              Button b = go.GetComponent<Button>();
+              if (b != null) {
+                  b.onClick.RemoveAllListeners();
+                  b.onClick.AddListener(NaytaVarmistus);
+              }
+          }
+      }
 
-    [Header("Ääniasetukset")]
-    public AudioSource audioSource;
-    public AudioClip kolikkoAani;
+      if (varmistusPaneeli != null) {
+          Button[] paneelinNapit = varmistusPaneeli.GetComponentsInChildren<Button>(true);
+          foreach (Button b in paneelinNapit) {
+              if (b.name == "Nollaa -nappi") {
+                  b.onClick.RemoveAllListeners();
+                  b.onClick.AddListener(NollaaKokoPeli);
+              }
+              if (b.name == "Peruuta -nappi") {
+                  b.onClick.RemoveAllListeners();
+                  b.onClick.AddListener(PiilotaVarmistus);
+              }
+          }
+      }
+      PaivitaUI();
+  }
 
-    void Start()
-    {
-        // Jos unohdit vetää AudioSourcen, yritetään etsiä se samasta objektista
-        if (audioSource == null) audioSource = GetComponent<AudioSource>();
-        PaivitaUI();
-    }
+  public void NaytaVarmistus() { if (varmistusPaneeli != null) varmistusPaneeli.SetActive(true); }
+  public void PiilotaVarmistus() { if (varmistusPaneeli != null) varmistusPaneeli.SetActive(false); }
 
-    public static void LisaaPisteita(int maara)
-    {
-        kokonaisPisteet += maara;
-        
-        // Etsitään skenessä oleva manageri
-        Pistemanageri manageri = Object.FindFirstObjectByType<Pistemanageri>();
-        if (manageri != null)
-        {
-            manageri.PaivitaUI();
-            manageri.SoitaPisteAani();
-        }
-    }
+  public void NollaaKokoPeli() {
+      PlayerPrefs.DeleteAll();
+      PlayerPrefs.Save();
+      kokonaisPisteet = 0;
+      SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+  }
 
-    public void PaivitaUI()
-    {
-        if (pisteNaytto != null)
-        {
-            pisteNaytto.text = etuliite + kokonaisPisteet.ToString();
-        }
-    }
+  public void PaivitaUI() { if (pisteNaytto != null) pisteNaytto.text = "Pisteet: " + kokonaisPisteet; }
 
-    public void SoitaPisteAani()
-    {
-        if (audioSource != null && kolikkoAani != null)
-        {
-            // PlayOneShot on paras pisteäänille, ne voivat soida päällekkäin
-            audioSource.PlayOneShot(kolikkoAani);
-        }
-    }
+  public static void LisaaPisteita(int maara) {
+      kokonaisPisteet += maara;
+      // Tavallinen lisäys: false (ei osto)
+      if (instance != null) instance.KasitteleMuutos(true, false);
+      TallennaPisteet();
+  }
 
-    public static void TallennaPisteet()
-    {
-        PlayerPrefs.SetInt("MuseoPisteet", kokonaisPisteet);
-        PlayerPrefs.Save();
-    }
+  public static void TallennaPisteet() {
+      PlayerPrefs.SetInt("MuseoPisteet", kokonaisPisteet);
+      PlayerPrefs.Save();
+  }
+
+  public void KasitteleMuutos(bool onnistui, bool onOsto = false) {
+      PaivitaUI();
+      if (audioSource != null) {
+          AudioClip clip;
+          if (!onnistui) clip = virheAani;
+          else if (onOsto) clip = ostoAani; // Jos osto, soitetaan vain ostoAani
+          else clip = kolikkoAani; // Muuten kolikkoAani
+
+          if (clip != null) audioSource.PlayOneShot(clip);
+      }
+     
+      if (pisteNaytto != null) {
+          StopAllCoroutines();
+          StartCoroutine(Efekti(onnistui));
+      }
+  }
+
+  IEnumerator Efekti(bool onnistui) {
+      if (pisteNaytto == null) yield break;
+      if (!onnistui) {
+          pisteNaytto.color = Color.red;
+          pisteNaytto.transform.localScale = alkuperainenKoko * 1.15f;
+          yield return new WaitForSeconds(0.15f);
+          pisteNaytto.color = alkuperainenVari;
+          pisteNaytto.transform.localScale = alkuperainenKoko;
+          yield break;
+      }
+
+      float aikaaKulunut = 0;
+      float valkeNopeus = 0.05f;
+      Color oranssiVari = new Color(1f, 0.64f, 0f);
+      Color keltainenVari = Color.yellow;
+      pisteNaytto.transform.localScale = alkuperainenKoko * hytkyVoimakkuus;
+
+      while (aikaaKulunut < hytkyKesto) {
+          pisteNaytto.color = oranssiVari;
+          yield return new WaitForSeconds(valkeNopeus);
+          pisteNaytto.color = Color.white;
+          yield return new WaitForSeconds(valkeNopeus);
+          pisteNaytto.color = keltainenVari;
+          yield return new WaitForSeconds(valkeNopeus);
+          aikaaKulunut += valkeNopeus * 3;
+      }
+      pisteNaytto.color = alkuperainenVari;
+      pisteNaytto.transform.localScale = alkuperainenKoko;
+  }
+
+  public void OnPointerClick(PointerEventData eventData) { LisaaPisteita(10); }
 }
 

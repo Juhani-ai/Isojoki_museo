@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &599230436221958184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 27731687736765775}
+  - component: {fileID: 4317448535516322364}
+  m_Layer: 0
+  m_Name: PisteidenAivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &27731687736765775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599230436221958184}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4317448535516322364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599230436221958184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c32eeb91c4727adb5a29231b55e43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pistemanageri
+  varmistusPaneeli: {fileID: 0}
+  pisteNaytto: {fileID: 0}
+  etuliite: 'Pisteet: '
+  audioSource: {fileID: 0}
+  kolikkoAani: {fileID: 8300000, guid: 4263cffa5fffda48082c8ae6b6fc983f, type: 3}
+  ostoAani: {fileID: 8300000, guid: 61f9fda2c09e871c99e246468b5cb4c9, type: 3}
+  virheAani: {fileID: 8300000, guid: 904f9aef6c7ecaef0a5e3824603c7067, type: 3}
+  hytkyVoimakkuus: 1.25
+  hytkyKesto: 0.16
+  oranssiVari: {r: 1, g: 0.64, b: 0, a: 1}
+  keltainenVari: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
