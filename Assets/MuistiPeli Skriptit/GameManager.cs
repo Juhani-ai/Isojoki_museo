@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -12,10 +14,10 @@ public class GameManager : MonoBehaviour
 
    void GetButtons()
     {
-        GameObject[] objects = GameObject.findGameObjectsWithTag("puzzle8tn");
-        for (int i = 0; i < objects.Length; i++)
-        {
-            btns.Add(objects[i].GetComponent<GetButtons>());
+    GameObject[] objects = GameObject.FindGameObjectsWithTag("puzzle8tn");
+    for (int i = 0; i < objects.Length; i++)
+    {
+        btns.Add(objects[i].GetComponent<Button>());
         }
     }
    
