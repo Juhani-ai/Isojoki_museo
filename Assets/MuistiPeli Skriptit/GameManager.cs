@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public List<Button> btns = new List<Button>();
 
-    private bool firstGuess, secondGuess;
+    public bool firstGuess, secondGuess;
 
     private int countGuesses;
     private int countCorrectGuesses;
@@ -38,7 +38,7 @@ private void Awake()
 
    void GetButtons()
     {
-    GameObject[] objects = GameObject.FindGameObjectsWithTag("puzzle8tn");
+    GameObject[] objects = GameObject.FindGameObjectsWithTag("puzzlebtn");
     for (int i = 0; i < objects.Length; i++)
         {
         btns.Add(objects[i].GetComponent<Button>());
@@ -59,29 +59,33 @@ private void Awake()
           gamePuzzles.Add(puzzles[index]);
           index++;
       }
+      Debug.Log("Game Puzzles Count: " + gamePuzzles.Count);
     }
 
     void AddListeners()
     {
         foreach (Button btn in btns)
         {
-            btn.onClick.AddListener(() => PickPuzzle());
+           Debug.Log("Add Listener Button: " + btn.name);
+           btn.onClick.AddListener(() => PickPuzzle());
         }
     }
 
    public void PickPuzzle()
    {
-       // string name = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
+       //string name = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString();
        if(!firstGuess)
        {
-          firstGuess = true;
-          firstGuessIndex = int.Parse(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name);
-          btns[firstGuessIndex].image.sprite = gamePuzzles[firstGuessIndex];
+           Debug.Log("First Guess: " + UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
+           firstGuess = true;
+           firstGuessIndex = int.Parse(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
+           btns[firstGuessIndex].image.sprite = gamePuzzles[firstGuessIndex];
        }
        else if(!secondGuess)
        {
+           Debug.Log("Second Guess: " + UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
            secondGuess = true;
-           secondGuessIndex = int.Parse(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name);
+           secondGuessIndex = int.Parse(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
            btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
        }
    }

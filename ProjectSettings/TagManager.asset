@@ -15,6 +15,7 @@ TagManager:
   - Skrolli
   - reset
   - varoitus
+  - puzzlebtn
   layers:
   - Default
   - TransparentFX
