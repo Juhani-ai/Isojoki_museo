@@ -96,6 +96,18 @@ private void Awake()
            secondGuess = true;
            secondGuessIndex = index;
            btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
+      
+         if(firstGuessPuzzle == secondGuessPuzzle)
+        {
+            print("puzzles match");
+        }
+        else
+        {
+            print("puzzles don't match");
+        }
+      
+      
+      
        }
    }
 
