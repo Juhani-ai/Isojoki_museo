@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     private int firstGuessIndex, secondGuessIndex;
 
     private string firstGuessPuzzle, secondGuessPuzzle;
+
+    public GameObject UudestaanNappi;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 private void Awake()
@@ -144,9 +147,23 @@ private void Awake()
         if(countCorrectGuesses == gameGuesses)
         {
             print("Game Finished");
+            UudestaanNappi.SetActive(true);
+
             print("it took you " + countGuesses + " ");
         }
    }
+
+public void SeuraavaNappi()
+    {
+        print("Seuraava ");
+    }
+    
+  
+
+public void UudestaanNappi()
+{
+  print("Uudestaan ");
+}
 
    void Shuffled(List<Sprite> list)
     {
