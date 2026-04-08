@@ -87,6 +87,18 @@ private void Awake()
            secondGuess = true;
            secondGuessIndex = int.Parse(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
            btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
+      
+         if(firstGuessPuzzle == secondGuessPuzzle)
+        {
+            print("puzzles match");
+        }
+        else
+        {
+            print("puzzles don't match");
+        }
+      
+      
+      
        }
    }
 
