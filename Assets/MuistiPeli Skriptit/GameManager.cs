@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     private string firstGuessPuzzle, secondGuessPuzzle;
 
-    public GameObject UudestaanNappi;
+    public GameObject UudestaanNappi1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 private void Awake()
@@ -147,7 +147,7 @@ private void Awake()
         if(countCorrectGuesses == gameGuesses)
         {
             print("Game Finished");
-            UudestaanNappi.SetActive(true);
+            UudestaanNappi1.SetActive(true);
 
             print("it took you " + countGuesses + " ");
         }
@@ -160,7 +160,7 @@ public void SeuraavaNappi()
     
   
 
-public void UudestaanNappi()
+public void f()
 {
   print("Uudestaan ");
 }
