@@ -96,11 +96,13 @@ private void Awake()
         {
             print("puzzles don't match");
         }
-      
-      
-      
        }
    }
-
-
+ 
+   // POISTA MYÖHEMMIN!!!!!!!!!!!!!!!
+   //IEnumerator CheckThePuzzleMatch()
+  // {
+   //    btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
+    //   btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
+  // }
 }
