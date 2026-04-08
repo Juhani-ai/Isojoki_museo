@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +38,8 @@ private void Awake()
         GetButtons();
         AddListeners();
         AddGamePuzzles();
+        Shuffled(gamePuzzles);
+        gameGuesses = gamePuzzles.Count / 2;
     }
 
    void GetButtons()
@@ -62,7 +65,6 @@ private void Awake()
           gamePuzzles.Add(puzzles[index]);
           index++;
       }
-      Debug.Log("Game Puzzles Count: " + gamePuzzles.Count);
     }
 
     void AddListeners()
@@ -84,6 +86,7 @@ private void Awake()
        {
            firstGuess = true;
            firstGuessIndex = index;
+              firstGuessPuzzle = gamePuzzles[firstGuessIndex].name;
            btns[firstGuessIndex].image.sprite = gamePuzzles[firstGuessIndex];
            return;
        }
@@ -95,9 +98,11 @@ private void Awake()
        {
            secondGuess = true;
            secondGuessIndex = index;
+           secondGuessPuzzle = gamePuzzles[secondGuessIndex].name;
            btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
-      
-         if(firstGuessPuzzle == secondGuessPuzzle)
+        
+        Debug.Log("First guess: " + firstGuessPuzzle + ", Second guess: " + secondGuessPuzzle);
+        if(firstGuessPuzzle == secondGuessPuzzle)
         {
             print("puzzles match");
         }
@@ -105,13 +110,53 @@ private void Awake()
         {
             print("puzzles don't match");
         }
+
+        StartCoroutine(CheckThePuzzleMatch());  
        }
    }
- 
-   // POISTA MYÖHEMMIN!!!!!!!!!!!!!!!
-   //IEnumerator CheckThePuzzleMatch()
-  // {
-   //    btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
-    //   btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
-  // }
+   IEnumerator CheckThePuzzleMatch()
+   {
+      yield return new WaitForSeconds(0.5f);   
+      if(firstGuessPuzzle == secondGuessPuzzle)
+      {
+        btns[firstGuessIndex].interactable = false;
+        btns[secondGuessIndex].interactable = false;
+      
+      btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
+      btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
+
+    CheckTheGameFinished();
+
+      }
+      else
+        {
+            btns[firstGuessIndex].image.sprite = bgImage;
+            btns[secondGuessIndex].image.sprite = bgImage;
+        }
+        yield return new WaitForSeconds(0.5f);
+
+        firstGuess = secondGuess = false;   
+   }
+
+   void CheckTheGameFinished()
+   {
+      countCorrectGuesses++;
+        if(countCorrectGuesses == gameGuesses)
+        {
+            print("Game Finished");
+            print("it took you " + countGuesses + " ");
+        }
+   }
+
+   void Shuffled(List<Sprite> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+           Sprite temp = list[i];
+           int randomIndex = Random.Range(i, list.Count); 
+              list[i] = list[randomIndex];
+              list[randomIndex] = temp;
+        }
+    }
 }
+
