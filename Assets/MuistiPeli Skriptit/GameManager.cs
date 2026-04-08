@@ -31,6 +31,9 @@ private void Awake()
 
     void Start()
     {
+        firstGuess = false;
+        secondGuess = false;
+
         GetButtons();
         AddListeners();
         AddGamePuzzles();
@@ -64,28 +67,34 @@ private void Awake()
 
     void AddListeners()
     {
-        foreach (Button btn in btns)
+        for (int i = 0; i < btns.Count; i++)
         {
-           Debug.Log("Add Listener Button: " + btn.name);
-           btn.onClick.AddListener(() => PickPuzzle());
+            int index = i; // capture correct index
+            btns[i].onClick.RemoveAllListeners(); // prevent duplicates
+            btns[i].onClick.AddListener(() => PickPuzzle(index));
         }
     }
 
-   public void PickPuzzle()
+   public void PickPuzzle(int index)
    {
-       //string name = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString();
-       if(!firstGuess)
+       // Ignore input if second card already picked (until you resolve match/mismatch)
+       if (secondGuess) return;
+
+       if (!firstGuess)
        {
-           Debug.Log("First Guess: " + UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
            firstGuess = true;
-           firstGuessIndex = int.Parse(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
+           firstGuessIndex = index;
            btns[firstGuessIndex].image.sprite = gamePuzzles[firstGuessIndex];
+           return;
        }
-       else if(!secondGuess)
+
+       // Prevent selecting same card twice
+       if (index == firstGuessIndex) return;
+
+       if (!secondGuess)
        {
-           Debug.Log("Second Guess: " + UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
            secondGuess = true;
-           secondGuessIndex = int.Parse(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name.ToString());
+           secondGuessIndex = index;
            btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
        }
    }
