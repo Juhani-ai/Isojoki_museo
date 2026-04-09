@@ -200,6 +200,7 @@ public void SeuraavaNappi()
     {
         Debug.Log("Seuraava ");
     }
+
    void Shuffled(List<Sprite> list)
     {
         for (int i = 0; i < list.Count; i++)

@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 662, y: -182}
+  m_AnchoredPosition: {x: 216, y: -182}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &42293674
@@ -3538,6 +3538,7 @@ MonoBehaviour:
   firstGuess: 0
   secondGuess: 0
   UudestaanNappi1: {fileID: 1402271742}
+  "P\xE4\xE4valikko": MainMenu
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
