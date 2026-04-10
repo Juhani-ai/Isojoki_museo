@@ -1,5 +1,6 @@
 using UnityEngine;
-using TMPro;
+using TMP_Text = TMPro.TMP_Text;
+using TMP_InputField = TMPro.TMP_InputField;
 using System.Collections.Generic;
 using System.IO;
 using System;
@@ -23,6 +24,11 @@ public class TarinaManager : MonoBehaviour
 
     [Header("Asetukset")]
     public float virheNayttoaika = 3f;
+
+    [Header("Äänet")]
+    // Nyt vain AudioClipit, koska Master hoitaa sourcen
+    public AudioClip onnistumisAani; 
+    public AudioClip virheAani;      
 
     private string tiedostoPolku;
     private string filtteriPolku;
@@ -58,13 +64,18 @@ public class TarinaManager : MonoBehaviour
         string teksti = syoteInputField.text;
         if (string.IsNullOrWhiteSpace(teksti)) return;
 
+        // TARKISTETAAN SISÄLTÖ
         if (SisaltaakoTorkya(teksti))
         {
             syoteInputField.text = ""; 
             NaytaVirhe();
+            
+            // KORJATTU ÄÄNILOGIIKKA
+            SoitaMasterinKautta(virheAani);
             return; 
         }
 
+        // JOS TEKSTI ON OK, TALLENNETAAN
         TarinaData uusi = new TarinaData {
             teksti = teksti,
             pvm = DateTime.Now.ToString("d.M.yyyy 'klo' HH:mm")
@@ -73,10 +84,28 @@ public class TarinaManager : MonoBehaviour
         tarinat.Add(uusi);
         TallennaTarinatPaikallisesti();
 
+        // NÄYTETÄÄN KIITOSVIESTI
         syoteKentta.SetActive(false);
         kiitosViesti.SetActive(true);
         tallennaNappi.SetActive(false);
         kirjoitaNappi.SetActive(true);
+
+        // KORJATTU ÄÄNILOGIIKKA
+        SoitaMasterinKautta(onnistumisAani);
+    }
+
+    // UUSI APUMETODI ÄÄNELLE
+    private void SoitaMasterinKautta(AudioClip klippi)
+    {
+        if (klippi != null && KaikkiYhdessaMaster.Instance != null)
+        {
+            // Etsitään Masterin SFX-source (se toinen koodilla luotu AudioSource)
+            AudioSource[] sourcet = KaikkiYhdessaMaster.Instance.GetComponents<AudioSource>();
+            if (sourcet.Length > 1) 
+            {
+                sourcet[1].PlayOneShot(klippi);
+            }
+        }
     }
 
     private bool SisaltaakoTorkya(string syote)
@@ -97,7 +126,7 @@ public class TarinaManager : MonoBehaviour
         if (asiatonViestiPaneeli != null)
         {
             asiatonViestiPaneeli.SetActive(true);
-            if (syoteKentta != null) syoteKentta.SetActive(false); // Piilotetaan syötekenttä
+            if (syoteKentta != null) syoteKentta.SetActive(false); 
 
             CancelInvoke("PiilotaVirhe");
             Invoke("PiilotaVirhe", virheNayttoaika);
@@ -107,7 +136,7 @@ public class TarinaManager : MonoBehaviour
     private void PiilotaVirhe()
     {
         if (asiatonViestiPaneeli != null) asiatonViestiPaneeli.SetActive(false);
-        if (syoteKentta != null) syoteKentta.SetActive(true); // Tuodaan syötekenttä takaisin
+        if (syoteKentta != null) syoteKentta.SetActive(true);
     }
 
     public void AktivoiKirjoitustila()
@@ -123,12 +152,12 @@ public class TarinaManager : MonoBehaviour
 
     public void AvaaSelaa()
     {
-        syoteKentta.SetActive(false);
-        kiitosViesti.SetActive(false);
-        scrollPaneeli.SetActive(true);
+        if(syoteKentta != null) syoteKentta.SetActive(false);
+        if(kiitosViesti != null) kiitosViesti.SetActive(false);
+        if(scrollPaneeli != null) scrollPaneeli.SetActive(true);
         if(asiatonViestiPaneeli != null) asiatonViestiPaneeli.SetActive(false);
-        tallennaNappi.SetActive(false);
-        kirjoitaNappi.SetActive(true);
+        if(tallennaNappi != null) tallennaNappi.SetActive(false);
+        if(kirjoitaNappi != null) kirjoitaNappi.SetActive(true);
         PaivitaScrollTeksti();
     }
 
@@ -149,9 +178,6 @@ public class TarinaManager : MonoBehaviour
         try {
             string json = JsonUtility.ToJson(new ListWrapper { tarinat = tarinat }, true);
             File.WriteAllText(tiedostoPolku, json);
-            #if UNITY_EDITOR
-                UnityEditor.AssetDatabase.Refresh();
-            #endif
         } catch (Exception e) { Debug.LogError("Tallennus kusi: " + e.Message); }
     }
 
