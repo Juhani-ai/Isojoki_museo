@@ -13,11 +13,9 @@ public class QuestionPanel : MonoBehaviour
 
     [SerializeField] private Button nextButton;
     [SerializeField] private TMP_Text nextText;
-    [SerializeField] private TMP_Text rightText;
     [SerializeField] private TMP_Text wrongText;
     [SerializeField] private Button answerButton;
     [SerializeField] private TMP_Text answerText;
-    [SerializeField] private RawImage answerImage;
     [SerializeField] private TMP_Text answerbuttonText;
 
     void Start()
@@ -38,34 +36,34 @@ public class QuestionPanel : MonoBehaviour
     void WrongClicked(Button btn)
     {
         nextButton.interactable = true;
-    
-        correctButton.gameObject.SetActive(false);
-        wrongButton1.gameObject.SetActive(false);
-        wrongButton2.gameObject.SetActive(false);
-        wrongButton3.gameObject.SetActive(false);
+
+        correctButton.interactable = false;
+        wrongButton1.interactable = false;
+        wrongButton2.interactable = false;
+        wrongButton3.interactable = false;
+
+        answerButton.gameObject.SetActive(true);
+
+        btn.image.color = Color.red;
 
         nextButton.image.color = Color.white;
         nextButton.onClick.AddListener(() => Debug.Log("Toimii"));
 
-        wrongText.gameObject.SetActive(true);
-        answerButton.gameObject.SetActive(true);
-        answerText.gameObject.SetActive(true);
-        answerImage.gameObject.SetActive(true);
     }
 
     void CorrectClicked()
     {
-        rightText.gameObject.SetActive(true);
-
         nextButton.interactable = true;
-        correctButton.gameObject.SetActive(false);
-        wrongButton1.gameObject.SetActive(false);
-        wrongButton2.gameObject.SetActive(false);
-        wrongButton3.gameObject.SetActive(false);
+
+        correctButton.interactable = false;
+        wrongButton1.interactable = false;
+        wrongButton2.interactable = false;
+        wrongButton3.interactable = false;
+
+        correctButton.image.color = Color.green;
 
         nextText.color = Color.black;
         nextButton.image.color = Color.white;
-        rightText.gameObject.SetActive(true);
 
         nextButton.onClick.RemoveAllListeners();
         nextButton.onClick.AddListener(() => Debug.Log("Toimii "));
@@ -76,17 +74,17 @@ public class QuestionPanel : MonoBehaviour
         if (answerbuttonText.text == "Paljasta oikea vastaus")
         {
             answerbuttonText.text = "Piilota oikea vastaus";
-            answerButton.image.color = Color.red;
+            answerButton.image.color = Color.grey;
 
-            answerImage.gameObject.SetActive(false);
+            correctButton.image.color = Color.green;
         }
 
         else if (answerbuttonText.text == "Piilota oikea vastaus")
         {
             answerbuttonText.text = "Paljasta oikea vastaus";
-            answerButton.image.color = Color.green;
+            answerButton.image.color = Color.white;
 
-            answerImage.gameObject.SetActive(true);
+            correctButton.image.color = Color.white;
         }
        
     }
