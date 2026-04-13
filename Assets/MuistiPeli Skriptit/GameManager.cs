@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.UI;  
 
 
 public class GameManager : MonoBehaviour
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     private string firstGuessPuzzle, secondGuessPuzzle;
 
     public GameObject UudestaanNappi1;
-
+    private MuistipeliScoreScript scoreScript;
     [Header("Scene Navigation")]
     [SerializeField] private string Päävalikko = "MainMenu";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 private void Awake()
     {
         puzzles = Resources.LoadAll<Sprite>("Kuvat/Esineet");
+        scoreScript = GetComponent<MuistipeliScoreScript>();
     }
 
     public void RestartGame()
@@ -155,10 +156,12 @@ private void Awake()
 
       if (isMatch)
       {
+
         btns[firstGuessIndex].interactable = false;
         btns[secondGuessIndex].interactable = false;
         btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
         btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
+        scoreScript.HandleScore();
         CheckTheGameFinished();
       }
       else
@@ -179,20 +182,13 @@ private void Awake()
             Debug.Log("Game Finished");
             UudestaanNappi1.SetActive(true);
 
-            Debug.Log("it took you " + countGuesses + " ");
+            Debug.Log("it took you " + scoreScript.GetGuesses() + " guesses to finish the game");
         }
    }
 
+
    public void PoistuNappi()
-    {       
-        Time.timeScale = 1f;
-
-        if (string.IsNullOrWhiteSpace(Päävalikko))
-        {
-            Debug.LogWarning("Main menu scene name is empty. Set 'Main Menu Scene Name' in the Inspector.");
-            return;
-        }
-
+    {
         SceneManager.LoadScene(Päävalikko);
     }
 
@@ -212,4 +208,3 @@ public void SeuraavaNappi()
         }
     }
 }
-
