@@ -5,10 +5,10 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;  
-
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
+
 {
     [SerializeField] 
     private Sprite bgImage;

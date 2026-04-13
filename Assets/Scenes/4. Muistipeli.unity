@@ -3796,6 +3796,7 @@ GameObject:
   - component: {fileID: 2096772005}
   - component: {fileID: 2096772006}
   - component: {fileID: 2096772007}
+  - component: {fileID: 2096772008}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3852,6 +3853,18 @@ MonoBehaviour:
   secondGuess: 0
   UudestaanNappi1: {fileID: 1402271742}
   "P\xE4\xE4valikko": MainMenu
+--- !u!114 &2096772008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096772004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7417df5c8d4ac40883f79abd9e66da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuistipeliScoreScript
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
