@@ -15,6 +15,7 @@ public class ObjectRotation : MonoBehaviour
 
     [SerializeField] private RawImage targetImage;       // RawImage, jonka päällä rotaatio alkaa
     [SerializeField] private GraphicRaycaster raycaster; // Canvasin raycaster
+    
 
     private Vector2 rotation;
     private bool rotateAllowed;

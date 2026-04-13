@@ -18,6 +18,10 @@ public class QuestionPanel : MonoBehaviour
     [SerializeField] private TMP_Text answerText;
     [SerializeField] private TMP_Text answerbuttonText;
 
+    [SerializeField] private Button endButton;
+
+    private bool onVastattu = false; 
+
     void Start()
     {
  
@@ -31,10 +35,16 @@ public class QuestionPanel : MonoBehaviour
         
         answerButton.onClick.AddListener(AnswerClicked);
        
+        endButton.onClick.AddListener(EndClicked);
     }
 
     void WrongClicked(Button btn)
     {
+        if (onVastattu) return;
+        onVastattu = true;
+
+        Pistemanageri.LisaaPisteita(-5);
+
         nextButton.interactable = true;
 
         correctButton.interactable = false;
@@ -47,13 +57,15 @@ public class QuestionPanel : MonoBehaviour
         btn.image.color = Color.red;
 
         nextButton.image.color = Color.white;
-        nextButton.onClick.AddListener(() => Debug.Log("Toimii"));
 
     }
 
     void CorrectClicked()
     {
-        nextButton.interactable = true;
+        if (onVastattu) return;
+        onVastattu = true;
+        
+        Pistemanageri.LisaaPisteita(10);
 
         correctButton.interactable = false;
         wrongButton1.interactable = false;
@@ -66,7 +78,8 @@ public class QuestionPanel : MonoBehaviour
         nextButton.image.color = Color.white;
 
         nextButton.onClick.RemoveAllListeners();
-        nextButton.onClick.AddListener(() => Debug.Log("Toimii "));
+        
+        nextButton.interactable = true;
     }
 
     void AnswerClicked()
@@ -85,7 +98,12 @@ public class QuestionPanel : MonoBehaviour
             answerButton.image.color = Color.white;
 
             correctButton.image.color = Color.white;
-        }
+        } 
        
+    }
+
+    void EndClicked()
+    {
+        Pistemanageri.TallennaPisteet();
     }
 }
