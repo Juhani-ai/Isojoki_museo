@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     private string firstGuessPuzzle, secondGuessPuzzle;
 
     public GameObject UudestaanNappi1;
-    private MuistipeliScoreScript scoreScript;
+    [SerializeField] private MuistipeliScoreScript scoreScript;
     [Header("Scene Navigation")]
     [SerializeField] private string Päävalikko = "MainMenu";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -38,7 +38,21 @@ public class GameManager : MonoBehaviour
 private void Awake()
     {
         puzzles = Resources.LoadAll<Sprite>("Kuvat/Esineet");
-        scoreScript = GetComponent<MuistipeliScoreScript>();
+
+        if (scoreScript == null)
+        {
+            scoreScript = GetComponent<MuistipeliScoreScript>();
+        }
+
+        if (scoreScript == null)
+        {
+            scoreScript = FindAnyObjectByType<MuistipeliScoreScript>();
+        }
+
+        if (scoreScript == null)
+        {
+            Debug.LogError("GameManager: No MuistipeliScoreScript found. Score will not increase.");
+        }
     }
 
     public void RestartGame()
@@ -161,7 +175,10 @@ private void Awake()
         btns[secondGuessIndex].interactable = false;
         btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
         btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
-        scoreScript.HandleScore();
+                if (scoreScript != null)
+                {
+                        scoreScript.OnPairMatched();
+                }
         CheckTheGameFinished();
       }
       else
@@ -182,7 +199,10 @@ private void Awake()
             Debug.Log("Game Finished");
             UudestaanNappi1.SetActive(true);
 
-            Debug.Log("it took you " + scoreScript.GetGuesses() + " guesses to finish the game");
+            if (scoreScript != null)
+            {
+                Debug.Log("Final score: " + scoreScript.GetScore() + ", pairs found: " + scoreScript.GetPairsFound());
+            }
         }
    }
 
