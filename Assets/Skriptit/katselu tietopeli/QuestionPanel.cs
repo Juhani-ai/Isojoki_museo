@@ -13,12 +13,9 @@ public class QuestionPanel : MonoBehaviour
 
     [SerializeField] private Button nextButton;
     [SerializeField] private TMP_Text nextText;
-    [SerializeField] private TMP_Text wrongText;
     [SerializeField] private Button answerButton;
-    [SerializeField] private TMP_Text answerText;
-    [SerializeField] private TMP_Text answerbuttonText;
 
-    [SerializeField] private Button endButton;
+    [SerializeField] private TMP_Text answerbuttonText;
 
     private bool onVastattu = false; 
 
@@ -35,7 +32,6 @@ public class QuestionPanel : MonoBehaviour
         
         answerButton.onClick.AddListener(AnswerClicked);
        
-        endButton.onClick.AddListener(EndClicked);
     }
 
     void WrongClicked(Button btn)
@@ -66,6 +62,8 @@ public class QuestionPanel : MonoBehaviour
         onVastattu = true;
         
         Pistemanageri.LisaaPisteita(10);
+        
+        nextButton.interactable = true;
 
         correctButton.interactable = false;
         wrongButton1.interactable = false;
@@ -76,10 +74,7 @@ public class QuestionPanel : MonoBehaviour
 
         nextText.color = Color.black;
         nextButton.image.color = Color.white;
-
-        nextButton.onClick.RemoveAllListeners();
         
-        nextButton.interactable = true;
     }
 
     void AnswerClicked()
@@ -100,10 +95,5 @@ public class QuestionPanel : MonoBehaviour
             correctButton.image.color = Color.white;
         } 
        
-    }
-
-    void EndClicked()
-    {
-        Pistemanageri.TallennaPisteet();
     }
 }
