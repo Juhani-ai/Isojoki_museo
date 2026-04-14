@@ -667,7 +667,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeScript
   timerText: {fileID: 267856819}
-  remainingTime: 121
+  remainingTime: 14
+  restartOnGameOver: 1
+  restartDelaySeconds: 2
+  gameOverMessage: Peli ohi!
 --- !u!1 &342086011
 GameObject:
   m_ObjectHideFlags: 0
