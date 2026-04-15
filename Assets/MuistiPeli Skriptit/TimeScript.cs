@@ -13,10 +13,28 @@ public class TimeScript : MonoBehaviour
     [SerializeField] private bool restartOnGameOver = true;
     [SerializeField] private float restartDelaySeconds = 2f;
     [SerializeField] private string gameOverMessage = "Peli ohi";
-
+    [SerializeField] private MuistipeliScoreScript scoreScript;
     private bool gameOverTriggered;
     
-        
+private void Awake()
+    {
+        if (scoreScript == null)
+        {
+            scoreScript = GetComponent<MuistipeliScoreScript>();
+        }
+
+        if (scoreScript == null)
+        {
+            scoreScript = FindAnyObjectByType<MuistipeliScoreScript>();
+        }
+
+        if (scoreScript == null)
+        {
+            Debug.LogError("GameManager: No MuistipeliScoreScript found. Score will not increase.");
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -48,7 +66,8 @@ public class TimeScript : MonoBehaviour
             timerText.color = Color.red;
             timerText.text = gameOverMessage;
         }
-
+        Debug.Log("Final score: " + scoreScript.GetScore() + ", pairs found: " + scoreScript.GetPairsFound());
+        scoreScript.OnGameFinished();
         if (restartOnGameOver)
         {
             StartCoroutine(RestartAfterDelay());

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -199,10 +200,11 @@ private void Awake()
             Debug.Log("Game Finished");
             UudestaanNappi1.SetActive(true);
 
-            if (scoreScript != null)
-            {
+            //if (scoreScript != null)
+            //{
                 Debug.Log("Final score: " + scoreScript.GetScore() + ", pairs found: " + scoreScript.GetPairsFound());
-            }
+                scoreScript.OnGameFinished();
+            //}
         }
    }
 
