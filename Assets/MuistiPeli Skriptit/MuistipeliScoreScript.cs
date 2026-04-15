@@ -15,8 +15,6 @@ public class MuistipeliScoreScript : MonoBehaviour
 
     [Header("Final Score (optional)")]
     [SerializeField] private TextMeshProUGUI finalScoreText;
-    //[SerializeField] private string finalFormat = "Sait: {0} Pistettä!";
-    //[SerializeField] private float finalCountStepDelay = 0.1f;
 
     private int score;
     private int pairsFound;
@@ -38,7 +36,6 @@ public class MuistipeliScoreScript : MonoBehaviour
         {
             Debug.LogWarning("MuistipeliScoreScript: scoreText is not assigned. Score will update internally but won't be visible on UI.");
         }
-        //UpdateScoreText();
     }
 
     public void OnPairMatched()
@@ -80,6 +77,7 @@ public class MuistipeliScoreScript : MonoBehaviour
             StopCoroutine(finalCountRoutine);
             finalCountRoutine = null;
         }
+        scoreText = null;
 
         //string scoreTextValue = scoreText != null ? scoreText.text : $"{label}: {score}";
         target.text = $"Kokonaispisteet: {score}";

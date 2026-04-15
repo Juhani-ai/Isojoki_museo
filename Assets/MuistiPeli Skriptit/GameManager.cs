@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] 
     private Sprite bgImage;
 
+    [Header("Reveal Timing")]
+    [SerializeField] private float firstCardRevealSeconds = 1.5f;
+
     public Sprite[] puzzles;
 
     public List<Sprite> gamePuzzles = new List<Sprite>();
@@ -29,6 +32,8 @@ public class GameManager : MonoBehaviour
     private int firstGuessIndex, secondGuessIndex;
 
     private string firstGuessPuzzle, secondGuessPuzzle;
+
+    private Coroutine firstRevealRoutine;
 
     public GameObject UudestaanNappi1;
     [SerializeField] private MuistipeliScoreScript scoreScript;
@@ -149,6 +154,12 @@ private void Awake()
            firstGuess = true;
            firstGuessIndex = index;
            btns[firstGuessIndex].image.sprite = gamePuzzles[firstGuessIndex];
+
+           if (firstRevealRoutine != null)
+           {
+               StopCoroutine(firstRevealRoutine);
+           }
+           firstRevealRoutine = StartCoroutine(AutoHideFirstGuess(firstGuessIndex));
            return;
        }
 
@@ -158,11 +169,32 @@ private void Awake()
        secondGuessIndex = index;
        btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
 
+       if (firstRevealRoutine != null)
+       {
+           StopCoroutine(firstRevealRoutine);
+           firstRevealRoutine = null;
+       }
+
        bool isMatch = GetPuzzleId(gamePuzzles[firstGuessIndex]) == GetPuzzleId(gamePuzzles[secondGuessIndex]);
        Debug.Log($"First guess: {gamePuzzles[firstGuessIndex].name}, Second guess: {gamePuzzles[secondGuessIndex].name}, " +
                   (isMatch ? "puzzles match" : "puzzles don't match"));
 
        StartCoroutine(CheckThePuzzleMatch());
+   }
+
+   private IEnumerator AutoHideFirstGuess(int index)
+   {
+       float wait = Mathf.Max(0f, firstCardRevealSeconds);
+       yield return new WaitForSeconds(wait);
+
+       // If player hasn't chosen the second card in time, hide the first one.
+       if (firstGuess && !secondGuess && firstGuessIndex == index)
+       {
+           btns[index].image.sprite = bgImage;
+           firstGuess = false;
+       }
+
+       firstRevealRoutine = null;
    }
    IEnumerator CheckThePuzzleMatch()
    {
