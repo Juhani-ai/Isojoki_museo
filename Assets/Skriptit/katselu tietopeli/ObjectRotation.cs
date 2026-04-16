@@ -30,7 +30,7 @@ public class ObjectRotation : MonoBehaviour
     private void Update()
     {
         
-        if (Mouse.current.leftButton.isPressed && !rotateAllowed && IsPointerOverRawImage())
+        if (Mouse.current.leftButton.wasPressedThisFrame && !rotateAllowed && IsPointerOverRawImage())
         {
             StartCoroutine(Rotate());
         }

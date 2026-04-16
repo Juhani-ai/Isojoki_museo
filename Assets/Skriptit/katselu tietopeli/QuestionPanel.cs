@@ -4,6 +4,7 @@ using TMPro;
 
 public class QuestionPanel : MonoBehaviour
 {
+    [Header ("Kysymykset")]
     [SerializeField] private TMP_Text questionText;
 
     [SerializeField] private Button correctButton;
@@ -11,17 +12,21 @@ public class QuestionPanel : MonoBehaviour
     [SerializeField] private Button wrongButton2;
     [SerializeField] private Button wrongButton3;
 
+    [Header ("Seuraava")]
     [SerializeField] private Button nextButton;
     [SerializeField] private TMP_Text nextText;
+    
+    [Header ("Vastaus")]
     [SerializeField] private Button answerButton;
-
     [SerializeField] private TMP_Text answerbuttonText;
+
+    [Header ("Pisteet")]
+    [SerializeField] private TMP_Text pointText;
 
     private bool onVastattu = false; 
 
     void Start()
     {
- 
         nextButton.interactable = false;
 
         correctButton.onClick.AddListener(CorrectClicked);
@@ -31,7 +36,8 @@ public class QuestionPanel : MonoBehaviour
         nextButton.onClick.AddListener(() => Debug.Log("Toimii"));
         
         answerButton.onClick.AddListener(AnswerClicked);
-       
+
+        pointText.text = "Pisteet: " + Pistemanageri.kokonaisPisteet;
     }
 
     void WrongClicked(Button btn)
@@ -39,7 +45,12 @@ public class QuestionPanel : MonoBehaviour
         if (onVastattu) return;
         onVastattu = true;
 
-        Pistemanageri.LisaaPisteita(-5);
+        if (Pistemanageri.kokonaisPisteet > 0)
+        {
+            Pistemanageri.LisaaPisteita(-5);
+        }
+        
+        pointText.text = "Pisteet: " + Pistemanageri.kokonaisPisteet;
 
         nextButton.interactable = true;
 
@@ -49,6 +60,7 @@ public class QuestionPanel : MonoBehaviour
         wrongButton3.interactable = false;
 
         answerButton.gameObject.SetActive(true);
+        answerButton.interactable = true;
 
         btn.image.color = Color.red;
 
@@ -58,11 +70,16 @@ public class QuestionPanel : MonoBehaviour
 
     void CorrectClicked()
     {
-        if (onVastattu) return;
+        if (onVastattu) return; 
         onVastattu = true;
         
+        Debug.Log("Pisteet ennen: " + Pistemanageri.kokonaisPisteet);
         Pistemanageri.LisaaPisteita(10);
-        
+        Debug.Log("Pisteet jälkeen: " + Pistemanageri.kokonaisPisteet);
+        Debug.Log("Teksti nyt: " + Pistemanageri.instance.pisteNaytto.text);
+
+        pointText.text = "Pisteet: " + Pistemanageri.kokonaisPisteet;
+
         nextButton.interactable = true;
 
         correctButton.interactable = false;
@@ -74,6 +91,7 @@ public class QuestionPanel : MonoBehaviour
 
         nextText.color = Color.black;
         nextButton.image.color = Color.white;
+
         
     }
 
