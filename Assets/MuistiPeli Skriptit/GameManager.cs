@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     private string firstGuessPuzzle, secondGuessPuzzle;
 
     private Coroutine firstRevealRoutine;
+    private Sprite[] namePuzzles; // from EsineidenNimet
+
 
     public GameObject UudestaanNappi1;
     [SerializeField] private MuistipeliScoreScript scoreScript;
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         puzzles = Resources.LoadAll<Sprite>("Kuvat/Esineet");
+        namePuzzles = Resources.LoadAll<Sprite>("Kuvat/EsineidenNimet");
 
         if (scoreScript == null)
         {
@@ -75,13 +78,20 @@ public class GameManager : MonoBehaviour
         }
         if (scoreScript == null)
         {
-              scoreScript = FindAnyObjectByType<MuistipeliScoreScript>();
+            scoreScript = FindAnyObjectByType<MuistipeliScoreScript>();
         }
         if (scoreScript == null)
         {
             Debug.LogError("GameManager: No MuistipeliScoreScript found. Score will not increase.");
         }
     }
+
+    private struct Card
+    {
+        public string id;
+        public Sprite front;
+    }
+    private readonly List<Card> cards = new();
 
     public void RestartGame()
     {
@@ -106,23 +116,25 @@ public class GameManager : MonoBehaviour
          */
     }
     // Called by UI buttons
-  public void StartEasy()
-{
-    StartGame(2, 2);
-    timeScript?.StartTimer(easySeconds);
-}
+    public void StartEasy()
+    {
+        StartGame(2, 2);
+        timeScript?.StartTimer(easySeconds);
+    }
 
-public void StartMedium()
-{
-    StartGame(4, 4);
-    timeScript?.StartTimer(mediumSeconds);
-}
+    public void StartMedium()
+    {
+        StartGame(4, 4);
+        timeScript?.StartTimer(mediumSeconds);
+    }
 
-public void StartHard()
-{
-    StartGame(4, 4);
-    timeScript?.StartTimer(hardSeconds);
-}
+    public void StartHard()
+    {
+        StartGame(4, 4); // or whatever
+        if (!TryAddGamePuzzlesHard()) { Debug.LogError("Not enough unique puzzle types for hard difficulty."); return; }
+        AddListeners();
+        timeScript?.StartTimer(hardSeconds);
+    }
 
     private void StartGame(int r, int c)
     {
@@ -145,6 +157,19 @@ public void StartHard()
         }
 
         Shuffled(gamePuzzles);
+        cards.Clear();
+        for (int i = 0; i < gamePuzzles.Count; i++)
+        {
+            cards.Add(new Card
+            {
+                id = GetPuzzleId(gamePuzzles[i]),
+                front = gamePuzzles[i]
+            });
+        }
+        
+        if (cards.Count != btns.Count)
+            Debug.LogError($"Deck size mismatch: cards={cards.Count}, buttons={btns.Count}");
+
         AddListeners();
 
         gameGuesses = btns.Count / 2; // use button count, not gamePuzzles.Count
@@ -179,7 +204,55 @@ public void StartHard()
         }
         return true;
     }
+    private bool TryAddGamePuzzlesHard()
+    {
+        cards.Clear();
+        int neededPairs = btns.Count / 2;
 
+        // Photos grouped by id
+        var photoGroups = puzzles
+            .Where(p => p != null)
+            .GroupBy(p => GetPuzzleId(p))
+            .Where(g => !string.IsNullOrEmpty(g.Key))
+            .ToList();
+
+        // Names mapped by id (take first per id)
+        var nameMap = namePuzzles
+            .Where(p => p != null)
+            .GroupBy(p => GetPuzzleId(p))
+            .Where(g => !string.IsNullOrEmpty(g.Key))
+            .ToDictionary(g => g.Key, g => g.First());
+
+        // Only ids that exist in BOTH folders
+        var available = photoGroups.Where(g => nameMap.ContainsKey(g.Key)).ToList();
+        if (available.Count < neededPairs) return false;
+
+        // shuffle available (same way you shuffle now)
+        for (int i = 0; i < available.Count; i++)
+        {
+            int r = Random.Range(i, available.Count);
+            (available[i], available[r]) = (available[r], available[i]);
+        }
+
+        for (int i = 0; i < neededPairs; i++)
+        {
+            string id = available[i].Key;
+            Sprite photo = available[i].First();
+            Sprite nameSprite = nameMap[id];
+
+            cards.Add(new Card { id = id, front = photo });
+            cards.Add(new Card { id = id, front = nameSprite });
+        }
+
+        // shuffle cards so photo/name positions are random
+        for (int i = 0; i < cards.Count; i++)
+        {
+            int r = Random.Range(i, cards.Count);
+            (cards[i], cards[r]) = (cards[r], cards[i]);
+        }
+
+        return true;
+    }
     void GetButtons()
     {
         GameObject[] objects = GameObject.FindGameObjectsWithTag("puzzlebtn");
@@ -275,7 +348,7 @@ public void StartHard()
         {
             firstGuess = true;
             firstGuessIndex = index;
-            btns[firstGuessIndex].image.sprite = gamePuzzles[firstGuessIndex];
+            btns[firstGuessIndex].image.sprite = cards[index].front;
 
             if (firstRevealRoutine != null)
             {
@@ -289,7 +362,7 @@ public void StartHard()
 
         secondGuess = true;
         secondGuessIndex = index;
-        btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
+        btns[secondGuessIndex].image.sprite = cards[index].front;
 
         if (firstRevealRoutine != null)
         {
@@ -321,7 +394,7 @@ public void StartHard()
     IEnumerator CheckThePuzzleMatch()
     {
         yield return new WaitForSeconds(0.5f);
-        bool isMatch = GetPuzzleId(gamePuzzles[firstGuessIndex]) == GetPuzzleId(gamePuzzles[secondGuessIndex]);
+        bool isMatch = cards[firstGuessIndex].id == cards[secondGuessIndex].id;
 
         if (isMatch)
         {
@@ -356,7 +429,7 @@ public void StartHard()
 
             //if (scoreScript != null)
             //{
-        
+
             Debug.Log("Final score: " + scoreScript.GetScore() + ", pairs found: " + scoreScript.GetPairsFound());
             scoreScript.OnGameFinished();
             timeScript?.StopTimer();
