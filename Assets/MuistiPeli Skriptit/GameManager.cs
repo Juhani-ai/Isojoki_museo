@@ -15,6 +15,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform boardParent;      // GridLayoutGroup parent
     [SerializeField] private int rows = 4;
     [SerializeField] private int cols = 4;
+    [SerializeField] private TimeScript timeScript;
+
+    [Header("Difficulty Timers (seconds)")]
+    [SerializeField] private float easySeconds = 10f;
+    [SerializeField] private float mediumSeconds = 60f;
+    [SerializeField] private float hardSeconds = 120f;
     [SerializeField]
     private Sprite bgImage;
 
@@ -63,6 +69,18 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("GameManager: No MuistipeliScoreScript found. Score will not increase.");
         }
+        if (timeScript == null)
+        {
+            timeScript = FindAnyObjectByType<TimeScript>();
+        }
+        if (scoreScript == null)
+        {
+              scoreScript = FindAnyObjectByType<MuistipeliScoreScript>();
+        }
+        if (scoreScript == null)
+        {
+            Debug.LogError("GameManager: No MuistipeliScoreScript found. Score will not increase.");
+        }
     }
 
     public void RestartGame()
@@ -88,9 +106,23 @@ public class GameManager : MonoBehaviour
          */
     }
     // Called by UI buttons
-    public void StartEasy() => StartGame(2, 2);
-    public void StartMedium() => StartGame(4, 4); // your “standard”
-    public void StartHard() => StartGame(6, 6);
+  public void StartEasy()
+{
+    StartGame(2, 2);
+    timeScript?.StartTimer(easySeconds);
+}
+
+public void StartMedium()
+{
+    StartGame(4, 4);
+    timeScript?.StartTimer(mediumSeconds);
+}
+
+public void StartHard()
+{
+    StartGame(4, 4);
+    timeScript?.StartTimer(hardSeconds);
+}
 
     private void StartGame(int r, int c)
     {
@@ -324,8 +356,10 @@ public class GameManager : MonoBehaviour
 
             //if (scoreScript != null)
             //{
+        
             Debug.Log("Final score: " + scoreScript.GetScore() + ", pairs found: " + scoreScript.GetPairsFound());
             scoreScript.OnGameFinished();
+            timeScript?.StopTimer();
             //}
         }
     }

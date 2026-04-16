@@ -14,48 +14,57 @@ public class TimeScript : MonoBehaviour
     [SerializeField] private float restartDelaySeconds = 2f;
     [SerializeField] private string gameOverMessage = "Peli ohi";
     [SerializeField] private MuistipeliScoreScript scoreScript;
+    private bool running;
     private bool gameOverTriggered;
     
-private void Awake()
+private void Start()
     {
-        if (scoreScript == null)
-        {
-            scoreScript = GetComponent<MuistipeliScoreScript>();
-        }
-
-        if (scoreScript == null)
-        {
-            scoreScript = FindAnyObjectByType<MuistipeliScoreScript>();
-        }
-
-        if (scoreScript == null)
-        {
-            Debug.LogError("GameManager: No MuistipeliScoreScript found. Score will not increase.");
-        }
+        running = false;          // stay still until difficulty button pressed
+        gameOverTriggered = false;
+        UpdateTimerText();
     }
 
+    public void StartTimer(float seconds)
+    {
+        remainingTime = Mathf.Max(0f, seconds);
+        gameOverTriggered = false;
+        running = true;
 
-    // Update is called once per frame
+        if (timerText != null) timerText.color = Color.white;
+        UpdateTimerText();
+    }
+
+    public void StopTimer()
+    {
+        running = false;
+    }
+
     void Update()
     {
-        if (gameOverTriggered) return;
+        if (!running || gameOverTriggered) return;
 
         remainingTime -= Time.deltaTime;
-
-        if (remainingTime <= 0)
+        if (remainingTime <= 0f)
         {
-            remainingTime = 0;
+            remainingTime = 0f;
+            UpdateTimerText();
             GameOver();
             return;
         }
+
+        UpdateTimerText();
+    }
+
+    private void UpdateTimerText()
+    {
         int minutes = Mathf.FloorToInt(remainingTime / 60);
         int seconds = Mathf.FloorToInt(remainingTime % 60);
-
         if (timerText != null)
-        {
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        }
+            timerText.text = $"{minutes:00}:{seconds:00}";
     }
+
+    // keep your existing GameOver() / RestartAfterDelay() as-is
+
 
     private void GameOver()
     {
