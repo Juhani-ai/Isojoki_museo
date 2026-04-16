@@ -16,6 +16,7 @@ TagManager:
   - reset
   - varoitus
   - puzzlebtn
+  - ScoreText
   layers:
   - Default
   - TransparentFX

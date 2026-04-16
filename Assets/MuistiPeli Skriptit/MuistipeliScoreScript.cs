@@ -19,14 +19,18 @@ public class MuistipeliScoreScript : MonoBehaviour
     private int score;
     private int pairsFound;
     private Coroutine finalCountRoutine;
+    private bool gameFinished;
 
     private void Awake()
     {
-        // Convenience: if this script is attached to the same GameObject as the TMP text,
-        // auto-wire it so the user doesn't have to drag the reference.
+        // Convenience: if not assigned in the Inspector, try to find the TMP text by tag.
         if (scoreText == null)
         {
-            scoreText = GetComponent<TextMeshProUGUI>();
+            var scoreGO = GameObject.FindGameObjectWithTag("ScoreText");
+            if (scoreGO != null)
+            {
+                scoreText = scoreGO.GetComponent<TextMeshProUGUI>();
+            }
         }
     }
 
@@ -59,12 +63,8 @@ public class MuistipeliScoreScript : MonoBehaviour
 
     public void OnGameFinished()
     {
-        TextMeshProUGUI target = ResolveFinalTargetText();
-        if (target == null)
-        {
-            Debug.LogWarning("MuistipeliScoreScript: No UI Text assigned for final score (finalScoreText/scoreText). Final score will not be visible.");
-            return;
-        }
+        if (gameFinished) return;
+        gameFinished = true;
 
         // If the final score text is on an end panel that starts disabled, make sure it becomes visible.
         if (finalScoreText != null && !finalScoreText.gameObject.activeInHierarchy)
@@ -78,51 +78,10 @@ public class MuistipeliScoreScript : MonoBehaviour
             finalCountRoutine = null;
         }
         scoreText = null;
-
-        //string scoreTextValue = scoreText != null ? scoreText.text : $"{label}: {score}";
-        target.text = $"Kokonaispisteet: {score}";
-    }
-
-    private TextMeshProUGUI ResolveFinalTargetText()
-    {
-        if (finalScoreText != null) return finalScoreText;
-        if (scoreText != null) return scoreText;
-
-        // Try to find a TMP text on this object or its children (including inactive).
-        var local = GetComponentInChildren<TextMeshProUGUI>(true);
-        if (local != null) return local;
-
-        // As a last resort, search the scene for a likely score text.
-        var allTexts = FindObjectsByType<TextMeshProUGUI>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        if (allTexts == null || allTexts.Length == 0) return null;
-
-        TextMeshProUGUI best = null;
-        int bestScore = int.MinValue;
-
-        foreach (var t in allTexts)
+        if (finalScoreText != null)
         {
-            if (t == null) continue;
-
-            int s = 0;
-            string n = t.gameObject.name.ToLowerInvariant();
-            if (n.Contains("score")) s += 5;
-            if (n.Contains("piste")) s += 5;
-            if (n.Contains("pisteet")) s += 5;
-            if (n.Contains("kokonais")) s += 3;
-            if (n.Contains("final")) s += 3;
-            if (n.Contains("loppu")) s += 3;
-            if (t.GetComponentInParent<Canvas>() != null) s += 2;
-            if (t.gameObject.activeInHierarchy) s += 1;
-
-            if (s > bestScore)
-            {
-                bestScore = s;
-                best = t;
-            }
+            finalScoreText.text = $"Kokonaispisteet: {score}";
         }
-
-        // Only use the heuristic match if it looked at least somewhat like a score text.
-        return bestScore >= 5 ? best : null;
     }
 
     private void UpdateScoreText()

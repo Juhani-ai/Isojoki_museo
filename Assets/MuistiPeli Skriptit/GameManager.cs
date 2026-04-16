@@ -11,6 +11,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 
 {
+    [SerializeField] private GameObject puzzleBtnPrefab; // PuzzleBtn
+    [SerializeField] private Transform boardParent;      // GridLayoutGroup parent
+    [SerializeField] private int rows = 4;
+    [SerializeField] private int cols = 4;
     [SerializeField] 
     private Sprite bgImage;
 
@@ -75,7 +79,8 @@ private void Awake()
         firstGuess = false;
         secondGuess = false;
 
-        GetButtons();
+        CreateBoard(rows, cols);     // <-- uusi
+        //GetButtons();
         AddListeners();
         AddGamePuzzles();
         Shuffled(gamePuzzles);
@@ -91,6 +96,28 @@ private void Awake()
         btns[i].image.sprite = bgImage;
         }
     }
+    void CreateBoard(int r, int c)
+{
+    btns.Clear();
+
+    int total = r * c;
+    if (total % 2 != 0)
+    {
+        Debug.LogError("Board size must be even (pairs).");
+        return;
+    }
+
+    // (valinnainen) tyhjennä vanhat napit jos vaihdat kokoa lennosta
+    // foreach (Transform child in boardParent) Destroy(child.gameObject);
+
+    for (int i = 0; i < total; i++)
+    {
+        var go = Instantiate(puzzleBtnPrefab, boardParent);
+        var btn = go.GetComponent<Button>();
+        btn.image.sprite = bgImage;
+        btns.Add(btn);
+    }
+}
 
     void AddGamePuzzles()
     {
