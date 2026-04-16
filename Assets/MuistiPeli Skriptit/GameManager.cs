@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float easySeconds = 10f;
     [SerializeField] private float mediumSeconds = 60f;
     [SerializeField] private float hardSeconds = 120f;
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip pickCardClip;
     [SerializeField]
     private Sprite bgImage;
 
@@ -84,6 +86,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("GameManager: No MuistipeliScoreScript found. Score will not increase.");
         }
+
     }
 
     private struct Card
@@ -166,7 +169,7 @@ public class GameManager : MonoBehaviour
                 front = gamePuzzles[i]
             });
         }
-        
+
         if (cards.Count != btns.Count)
             Debug.LogError($"Deck size mismatch: cards={cards.Count}, buttons={btns.Count}");
 

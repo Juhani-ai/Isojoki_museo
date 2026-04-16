@@ -75,7 +75,7 @@ private void Start()
             timerText.color = Color.red;
             timerText.text = gameOverMessage;
         }
-        Debug.Log("Final score: " + scoreScript.GetScore() + ", pairs found: " + scoreScript.GetPairsFound());
+        
         scoreScript.OnGameFinished();
         if (restartOnGameOver)
         {
