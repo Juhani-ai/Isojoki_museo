@@ -86,7 +86,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("GameManager: No MuistipeliScoreScript found. Score will not increase.");
         }
-
+        infoById = objectInfos
+            .Where(e => !string.IsNullOrWhiteSpace(e.id))
+            .ToDictionary(
+                e => e.id.Trim().ToLowerInvariant(),
+                e => e.info ?? ""
+            );
     }
 
     private struct Card
@@ -176,6 +181,29 @@ public class GameManager : MonoBehaviour
         AddListeners();
 
         gameGuesses = btns.Count / 2; // use button count, not gamePuzzles.Count
+    }
+    private void ShowInfoPopup(string id)
+    {
+        if (infoPopupPanel == null || infoPopupText == null) return;
+
+        string key = (id ?? "").Trim().ToLowerInvariant();
+        string text = infoById != null && infoById.TryGetValue(key, out var t) && !string.IsNullOrWhiteSpace(t)
+            ? t
+            : key; // fallback
+
+        infoPopupText.text = text;
+        infoPopupPanel.SetActive(true);
+
+        if (infoRoutine != null) StopCoroutine(infoRoutine);
+        infoRoutine = StartCoroutine(HideInfoPopupAfter());
+    }
+    private enum Difficulty { None, Easy, Medium, Hard }
+    private Difficulty currentDifficulty;
+    private IEnumerator HideInfoPopupAfter()
+    {
+        yield return new WaitForSeconds(infoPopupSeconds);
+        if (infoPopupPanel != null) infoPopupPanel.SetActive(false);
+        infoRoutine = null;
     }
 
     private bool TryAddGamePuzzles()
@@ -336,11 +364,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    [System.Serializable]
+    public class ObjectInfoEntry
+    {
+        public string id;                 // e.g. "sahtikulho" (same as GetPuzzleId output)
+        [TextArea] public string info;    // the popup text
+    }
+
+    [SerializeField] private GameObject infoPopupPanel;
+    [SerializeField] private TMP_Text infoPopupText;
+    [SerializeField] private float infoPopupSeconds = 2f;
+    [SerializeField] private List<ObjectInfoEntry> objectInfos = new();
+
+    private Dictionary<string, string> infoById;
+    private Coroutine infoRoutine;
     private string GetPuzzleId(Sprite s)
     {
         if (s == null) return string.Empty;
         // "Sahtikulho 4" -> "Sahtikulho"
         return Regex.Replace(s.name, @"\s+\d+$", "").Trim().ToLowerInvariant();
+
     }
 
     public void PickPuzzle(int index)
@@ -378,6 +422,8 @@ public class GameManager : MonoBehaviour
                    (isMatch ? "puzzles match" : "puzzles don't match"));
 
         StartCoroutine(CheckThePuzzleMatch());
+        if (currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium)
+            ShowInfoPopup(cards[firstGuessIndex].id);
     }
 
     private IEnumerator AutoHideFirstGuess(int index)
@@ -439,7 +485,6 @@ public class GameManager : MonoBehaviour
             //}
         }
     }
-
 
     public void PoistuNappi()
     {
