@@ -126,18 +126,21 @@ public class GameManager : MonoBehaviour
     // Called by UI buttons
     public void StartEasy()
     {
+        currentDifficulty = Difficulty.Easy;
         StartGame(2, 2);
         timeScript?.StartTimer(easySeconds);
     }
 
     public void StartMedium()
     {
+        currentDifficulty = Difficulty.Medium;
         StartGame(4, 4);
         timeScript?.StartTimer(mediumSeconds);
     }
 
     public void StartHard()
     {
+        currentDifficulty = Difficulty.Hard;
         StartGame(4, 4); // or whatever
         if (!TryAddGamePuzzlesHard()) { Debug.LogError("Not enough unique puzzle types for hard difficulty."); return; }
         AddListeners();
@@ -422,8 +425,6 @@ public class GameManager : MonoBehaviour
                    (isMatch ? "puzzles match" : "puzzles don't match"));
 
         StartCoroutine(CheckThePuzzleMatch());
-        if (currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium)
-            ShowInfoPopup(cards[firstGuessIndex].id);
     }
 
     private IEnumerator AutoHideFirstGuess(int index)
@@ -457,6 +458,10 @@ public class GameManager : MonoBehaviour
                 scoreScript.OnPairMatched();
             }
             CheckTheGameFinished();
+            if (currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium)
+            {
+                ShowInfoPopup(cards[firstGuessIndex].id);
+            }
         }
         else
         {
