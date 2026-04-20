@@ -1,16 +1,32 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PäävalikkoScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Scene to load")]
+    [SerializeField] private string paavalikkoSceneName = "Päävalikko";
+
+    [Header("Optional: auto-wire UI button")]
+    [SerializeField] private Button paavalikkoNappi;
+
+    private void Awake()
     {
-        
+        if (paavalikkoNappi != null)
+        {
+            paavalikkoNappi.onClick.AddListener(AvaaPaavalikko);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    // Hook this up to the Button's OnClick() event.
+    public void AvaaPaavalikko()
     {
-        
+        if (string.IsNullOrWhiteSpace(paavalikkoSceneName))
+        {
+            Debug.LogError($"{nameof(PäävalikkoScript)}: Scene name is empty.");
+            return;
+        }
+
+        SceneManager.LoadScene(paavalikkoSceneName);
     }
 }
