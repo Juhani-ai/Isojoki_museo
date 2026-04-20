@@ -21,6 +21,29 @@ public class MuistipeliScoreScript : MonoBehaviour
     private Coroutine finalCountRoutine;
     private bool gameFinished;
 
+    public void ResetScore()
+    {
+        score = 0;
+        pairsFound = 0;
+        gameFinished = false;
+
+        if (scoreText == null)
+        {
+            var scoreGO = GameObject.FindGameObjectWithTag("ScoreText");
+            if (scoreGO != null)
+            {
+                scoreText = scoreGO.GetComponent<TextMeshProUGUI>();
+            }
+        }
+
+        if (finalScoreText != null)
+        {
+            finalScoreText.text = "";
+        }
+
+        UpdateScoreText();
+    }
+
     private void Awake()
     {
         // Convenience: if not assigned in the Inspector, try to find the TMP text by tag.
@@ -77,7 +100,6 @@ public class MuistipeliScoreScript : MonoBehaviour
             StopCoroutine(finalCountRoutine);
             finalCountRoutine = null;
         }
-        scoreText = null;
         if (finalScoreText != null)
         {
             finalScoreText.text = $"Kokonaispisteet: {score}";

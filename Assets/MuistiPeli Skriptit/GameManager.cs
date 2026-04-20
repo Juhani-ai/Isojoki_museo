@@ -97,7 +97,32 @@ public class GameManager : MonoBehaviour
                 e => e.info ?? ""
             );
 
+        WireEndButtons();
         SetEndButtonsVisible(false);
+    }
+
+    private void WireEndButtons()
+    {
+        var restartBtn = UudestaanNappi1 != null ? UudestaanNappi1.GetComponent<Button>() : null;
+        if (restartBtn != null)
+        {
+            restartBtn.onClick.RemoveListener(UudestaanNappi);
+            restartBtn.onClick.AddListener(UudestaanNappi);
+        }
+
+        var nextBtn = SeuraavaNappiObj != null ? SeuraavaNappiObj.GetComponent<Button>() : null;
+        if (nextBtn != null)
+        {
+            nextBtn.onClick.RemoveListener(SeuraavaNappi);
+            nextBtn.onClick.AddListener(SeuraavaNappi);
+        }
+
+        var menuBtn = PaavalikkoNappiObj != null ? PaavalikkoNappiObj.GetComponent<Button>() : null;
+        if (menuBtn != null)
+        {
+            menuBtn.onClick.RemoveListener(PoistuNappi);
+            menuBtn.onClick.AddListener(PoistuNappi);
+        }
     }
 
     private struct Card
@@ -175,6 +200,8 @@ public class GameManager : MonoBehaviour
         countCorrectGuesses = 0;
         roundFinished = false;
         SetEndButtonsVisible(false);
+
+        scoreScript?.ResetScore();
 
         // Rebuild board
         CreateBoard(rows, cols);
@@ -335,7 +362,9 @@ public class GameManager : MonoBehaviour
         {
             var go = Instantiate(puzzleBtnPrefab, boardParent);
             var btn = go.GetComponent<Button>();
+            btn.interactable = true;
             btn.image.sprite = bgImage;
+            btn.image.color = Color.white;
             btns.Add(btn);
         }
     }
@@ -439,9 +468,9 @@ public class GameManager : MonoBehaviour
             firstRevealRoutine = null;
         }
 
-        bool isMatch = GetPuzzleId(gamePuzzles[firstGuessIndex]) == GetPuzzleId(gamePuzzles[secondGuessIndex]);
-        Debug.Log($"First guess: {gamePuzzles[firstGuessIndex].name}, Second guess: {gamePuzzles[secondGuessIndex].name}, " +
-                   (isMatch ? "puzzles match" : "puzzles don't match"));
+        bool isMatch = cards[firstGuessIndex].id == cards[secondGuessIndex].id;
+        Debug.Log($"First guess index: {firstGuessIndex}, Second guess index: {secondGuessIndex}, " +
+               (isMatch ? "puzzles match" : "puzzles don't match"));
 
         StartCoroutine(CheckThePuzzleMatch());
     }
