@@ -50,9 +50,13 @@ public class GameManager : MonoBehaviour
 
 
     public GameObject UudestaanNappi1;
+
+    [Header("End-of-round buttons")]
+    [SerializeField] private GameObject SeuraavaNappiObj;
+    [SerializeField] private GameObject PaavalikkoNappiObj;
     [SerializeField] private MuistipeliScoreScript scoreScript;
     [Header("Scene Navigation")]
-    [SerializeField] private string Päävalikko = "MainMenu";
+    [SerializeField] private string Päävalikko = "Päävalikko";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
@@ -92,6 +96,8 @@ public class GameManager : MonoBehaviour
                 e => e.id.Trim().ToLowerInvariant(),
                 e => e.info ?? ""
             );
+
+        SetEndButtonsVisible(false);
     }
 
     private struct Card
@@ -100,6 +106,18 @@ public class GameManager : MonoBehaviour
         public Sprite front;
     }
     private readonly List<Card> cards = new();
+
+    private bool roundFinished;
+
+    private void SetEndButtonsVisible(bool visible)
+    {
+        if (UudestaanNappi1 != null) UudestaanNappi1.SetActive(visible);
+        if (PaavalikkoNappiObj != null) PaavalikkoNappiObj.SetActive(visible);
+
+        // "Seuraava" only makes sense if there is a next difficulty.
+        bool hasNext = currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium;
+        if (SeuraavaNappiObj != null) SeuraavaNappiObj.SetActive(visible && hasNext);
+    }
 
     public void RestartGame()
     {
@@ -155,7 +173,8 @@ public class GameManager : MonoBehaviour
         // Reset state
         firstGuess = secondGuess = false;
         countCorrectGuesses = 0;
-        UudestaanNappi1.SetActive(false);
+        roundFinished = false;
+        SetEndButtonsVisible(false);
 
         // Rebuild board
         CreateBoard(rows, cols);
@@ -479,7 +498,8 @@ public class GameManager : MonoBehaviour
         if (countCorrectGuesses == gameGuesses)
         {
             Debug.Log("Game Finished");
-            UudestaanNappi1.SetActive(true);
+            roundFinished = true;
+            SetEndButtonsVisible(true);
 
             //if (scoreScript != null)
             //{
@@ -498,7 +518,54 @@ public class GameManager : MonoBehaviour
 
     public void SeuraavaNappi()
     {
-        Debug.Log("Seuraava ");
+        if (!roundFinished)
+        {
+            Debug.LogWarning("SeuraavaNappi pressed but round is not finished yet.");
+            return;
+        }
+
+        switch (currentDifficulty)
+        {
+            case Difficulty.Easy:
+                StartMedium();
+                break;
+            case Difficulty.Medium:
+                StartHard();
+                break;
+            case Difficulty.Hard:
+            case Difficulty.None:
+            default:
+                // No next difficulty; keep it simple and go back to main menu.
+                PoistuNappi();
+                break;
+        }
+    }
+
+    // Hook this to "UudestaanNappi1" if you want to replay the same difficulty without reloading the whole scene.
+    public void UudestaanNappi()
+    {
+        if (!roundFinished)
+        {
+            Debug.LogWarning("UudestaanNappi pressed but round is not finished yet.");
+            return;
+        }
+
+        switch (currentDifficulty)
+        {
+            case Difficulty.Easy:
+                StartEasy();
+                break;
+            case Difficulty.Medium:
+                StartMedium();
+                break;
+            case Difficulty.Hard:
+                StartHard();
+                break;
+            case Difficulty.None:
+            default:
+                RestartGame();
+                break;
+        }
     }
 
     void Shuffled(List<Sprite> list)
