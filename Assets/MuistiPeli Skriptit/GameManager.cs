@@ -542,7 +542,7 @@ public class GameManager : MonoBehaviour
 
     public void PoistuNappi()
     {
-        SceneManager.LoadScene(Päävalikko);
+        SceneManager.LoadScene("1. Päävalikko");
     }
 
     public void SeuraavaNappi()

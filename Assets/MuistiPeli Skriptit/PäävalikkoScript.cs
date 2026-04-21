@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PäävalikkoScript : MonoBehaviour
 {
     [Header("Scene to load")]
-    [SerializeField] private string paavalikkoSceneName = "Päävalikko";
+    [SerializeField] private string paavalikkoSceneName = "1. Päävalikko";
 
     [Header("Optional: auto-wire UI button")]
     [SerializeField] private Button paavalikkoNappi;
