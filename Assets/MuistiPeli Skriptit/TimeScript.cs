@@ -84,7 +84,9 @@ private void Start()
         {
             scoreScript.OnGameFinished();
         }
-        if (restartOnGameOver)
+        // If something listens to TimerExpired, it likely wants to handle the end-of-round UI
+        // (e.g., show restart/next/menu buttons). In that case, don't auto-restart the scene.
+        if (restartOnGameOver && TimerExpired == null)
         {
             StartCoroutine(RestartAfterDelay());
         }

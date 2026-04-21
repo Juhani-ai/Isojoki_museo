@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
     [Header("End-of-round buttons")]
     [SerializeField] private GameObject SeuraavaNappiObj;
     [SerializeField] private GameObject PaavalikkoNappiObj;
+    [Header("Info panel")]
+    [SerializeField] private GameObject OhjeetNappiObj;
     [SerializeField] private MuistipeliScoreScript scoreScript;
     [Header("Scene Navigation")]
     [SerializeField] private string Päävalikko = "Päävalikko";
@@ -105,6 +107,8 @@ public class GameManager : MonoBehaviour
 
         WireEndButtons();
         SetEndButtonsVisible(false);
+
+        WireOhjeetButton();
     }
 
     private void WireEndButtons()
@@ -128,6 +132,16 @@ public class GameManager : MonoBehaviour
         {
             menuBtn.onClick.RemoveListener(PoistuNappi);
             menuBtn.onClick.AddListener(PoistuNappi);
+        }
+    }
+
+    private void WireOhjeetButton()
+    {
+        var ohjeBtn = OhjeetNappiObj != null ? OhjeetNappiObj.GetComponent<Button>() : null;
+        if (ohjeBtn != null)
+        {
+            ohjeBtn.onClick.RemoveListener(OhjeetNappi);
+            ohjeBtn.onClick.AddListener(OhjeetNappi);
         }
     }
 
@@ -156,6 +170,13 @@ public class GameManager : MonoBehaviour
         // "Seuraava" only makes sense if there is a next difficulty.
         bool hasNext = currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium;
         if (SeuraavaNappiObj != null) SeuraavaNappiObj.SetActive(visible && hasNext);
+    }
+
+    private void SetEndButtonsVisibleOnTimeout()
+    {
+        if (UudestaanNappi1 != null) UudestaanNappi1.SetActive(true);
+        if (PaavalikkoNappiObj != null) PaavalikkoNappiObj.SetActive(true);
+        if (SeuraavaNappiObj != null) SeuraavaNappiObj.SetActive(true);
     }
 
     public void RestartGame()
@@ -215,7 +236,9 @@ public class GameManager : MonoBehaviour
         roundFinished = false;
         SetEndButtonsVisible(false);
 
-        ClearInfoPopup();
+        // Starting a new difficulty should return the info panel to normal (pair list) mode.
+        showOhjeet = false;
+        ClearMatchedInfo();
 
         scoreScript?.ResetScore();
 
@@ -250,18 +273,54 @@ public class GameManager : MonoBehaviour
 
     private void HandleTimerExpired()
     {
-        ClearInfoPopup();
+        // Timer hit zero: end the round even if not all pairs were found.
+        if (roundFinished) return;
+
+        roundFinished = true;
+        ClearMatchedInfo();
+
+        // Freeze the board so the player can't keep matching after time is up.
+        if (firstRevealRoutine != null)
+        {
+            StopCoroutine(firstRevealRoutine);
+            firstRevealRoutine = null;
+        }
+        firstGuess = secondGuess = false;
+        for (int i = 0; i < btns.Count; i++)
+        {
+            if (btns[i] != null) btns[i].interactable = false;
+        }
+
+        // Show all three buttons as requested (Restart / Next / Main menu).
+        SetEndButtonsVisibleOnTimeout();
     }
 
-    private void ClearInfoPopup()
+    private void ClearMatchedInfo()
     {
-        if (infoPopupText != null) infoPopupText.text = "";
-        if (infoPopupPanel != null) infoPopupPanel.SetActive(false);
-        if (infoRoutine != null)
+        matchedInfoText = "";
+        RefreshInfoPanel();
+    }
+
+    private void RefreshInfoPanel()
+    {
+        if (infoPopupPanel == null || infoPopupText == null) return;
+
+        if (showOhjeet)
         {
-            StopCoroutine(infoRoutine);
-            infoRoutine = null;
+            infoPopupText.text = ohjeetTeksti ?? "";
+            infoPopupPanel.SetActive(true);
+            return;
         }
+
+        if (string.IsNullOrWhiteSpace(matchedInfoText))
+        {
+            infoPopupText.text = "";
+            infoPopupPanel.SetActive(false);
+            return;
+        }
+
+        infoPopupText.text = matchedInfoText;
+        infoPopupPanel.SetActive(true);
     }
 
     private void ShowInfoPopup(string id)
@@ -274,16 +333,14 @@ public class GameManager : MonoBehaviour
             : key; // fallback
 
         // Accumulate matched pair names/info. Only clear on timer expiry, round end, or difficulty change.
-        if (string.IsNullOrWhiteSpace(infoPopupText.text))
-        {
-            infoPopupText.text = text;
-        }
+        if (string.IsNullOrWhiteSpace(matchedInfoText))
+            matchedInfoText = text;
         else
-        {
-            infoPopupText.text += "\n" + text;
-        }
+            matchedInfoText += "\n" + text;
 
-        infoPopupPanel.SetActive(true);
+        // If instructions are currently shown, keep them on screen; the pair list continues accumulating.
+        if (!showOhjeet)
+            RefreshInfoPanel();
     }
     private enum Difficulty { None, Easy, Medium, Hard }
     private Difficulty currentDifficulty;
@@ -460,10 +517,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text infoPopupText;
     [SerializeField] private float infoPopupSeconds = 2f;
     [SerializeField] private float clearInfoOnWinDelaySeconds = 1.5f;
+    [Header("Ohjeet")]
+    [TextArea]
+    [SerializeField] private string ohjeetTeksti = "Etsi kaikki parit ennen kuin aika loppuu.\n\nKäytä hiirtä pelaamiseen.\n\nHelpossa ja keskitasossa etsi kuvaparit. Vaikeassa etsi kuvan esineen nimi.";
     [SerializeField] private List<ObjectInfoEntry> objectInfos = new();
 
     private Dictionary<string, string> infoById;
     private Coroutine infoRoutine;
+    private string matchedInfoText = "";
+    private bool showOhjeet;
+
+    // Can be wired directly from the Button's OnClick in the Inspector.
+    public void OhjeetNappi()
+    {
+        showOhjeet = !showOhjeet;
+        RefreshInfoPanel();
+    }
 
     private void ScheduleClearInfoPopup(float delaySeconds)
     {
@@ -483,7 +552,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(delaySeconds);
 
         infoRoutine = null;
-        ClearInfoPopup();
+        ClearMatchedInfo();
     }
     private string GetPuzzleId(Sprite s)
     {
