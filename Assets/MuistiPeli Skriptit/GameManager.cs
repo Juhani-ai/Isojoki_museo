@@ -253,7 +253,10 @@ public class GameManager : MonoBehaviour
     {
         if (UudestaanNappi1 != null) UudestaanNappi1.SetActive(true);
         if (PaavalikkoNappiObj != null) PaavalikkoNappiObj.SetActive(true);
-        if (SeuraavaNappiObj != null) SeuraavaNappiObj.SetActive(true);
+
+        // "Seuraava" only makes sense if there is a next difficulty.
+        bool hasNext = currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium;
+        if (SeuraavaNappiObj != null) SeuraavaNappiObj.SetActive(hasNext);
     }
 
     public void RestartGame()
