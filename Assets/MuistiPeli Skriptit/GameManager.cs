@@ -51,6 +51,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject UudestaanNappi1;
 
+    [Header("Difficulty buttons")]
+    [SerializeField] private GameObject HelppoNappiObj;
+    [SerializeField] private GameObject KeskiTasoNappiObj;
+    [SerializeField] private GameObject VaikeaNappiObj;
+    [SerializeField] private GameObject PoistuTasoihinNappiObj;
+
     [Header("End-of-round buttons")]
     [SerializeField] private GameObject SeuraavaNappiObj;
     [SerializeField] private GameObject PaavalikkoNappiObj;
@@ -109,6 +115,77 @@ public class GameManager : MonoBehaviour
         SetEndButtonsVisible(false);
 
         WireOhjeetButton();
+
+        WireDifficultyButtons();
+        SetDifficultySelectionVisible(true);
+    }
+
+    private void WireDifficultyButtons()
+    {
+        var easyBtn = HelppoNappiObj != null ? HelppoNappiObj.GetComponent<Button>() : null;
+        if (easyBtn != null)
+        {
+            easyBtn.onClick.RemoveListener(StartEasy);
+            easyBtn.onClick.AddListener(StartEasy);
+        }
+
+        var mediumBtn = KeskiTasoNappiObj != null ? KeskiTasoNappiObj.GetComponent<Button>() : null;
+        if (mediumBtn != null)
+        {
+            mediumBtn.onClick.RemoveListener(StartMedium);
+            mediumBtn.onClick.AddListener(StartMedium);
+        }
+
+        var hardBtn = VaikeaNappiObj != null ? VaikeaNappiObj.GetComponent<Button>() : null;
+        if (hardBtn != null)
+        {
+            hardBtn.onClick.RemoveListener(StartHard);
+            hardBtn.onClick.AddListener(StartHard);
+        }
+
+        var backBtn = PoistuTasoihinNappiObj != null ? PoistuTasoihinNappiObj.GetComponent<Button>() : null;
+        if (backBtn != null)
+        {
+            backBtn.onClick.RemoveListener(PoistuTasoihinNappi);
+            backBtn.onClick.AddListener(PoistuTasoihinNappi);
+        }
+    }
+
+    private void SetDifficultySelectionVisible(bool visible)
+    {
+        if (HelppoNappiObj != null) HelppoNappiObj.SetActive(visible);
+        if (KeskiTasoNappiObj != null) KeskiTasoNappiObj.SetActive(visible);
+        if (VaikeaNappiObj != null) VaikeaNappiObj.SetActive(visible);
+
+        // This button is shown at end-of-round (win/timeout), not while playing.
+        if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
+    }
+
+    public void PoistuTasoihinNappi()
+    {
+        // Stop the current run and let the player choose a new difficulty.
+        timeScript?.StopTimer();
+        showOhjeet = false;
+        ClearMatchedInfo();
+        SetEndButtonsVisible(false);
+        roundFinished = false;
+        currentDifficulty = Difficulty.None;
+
+        // Freeze the board while choosing difficulty again.
+        if (firstRevealRoutine != null)
+        {
+            StopCoroutine(firstRevealRoutine);
+            firstRevealRoutine = null;
+        }
+        firstGuess = secondGuess = false;
+        for (int i = 0; i < btns.Count; i++)
+        {
+            if (btns[i] != null) btns[i].interactable = false;
+        }
+
+        SetDifficultySelectionVisible(true);
+
+        if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
     }
 
     private void WireEndButtons()
@@ -204,6 +281,8 @@ public class GameManager : MonoBehaviour
     // Called by UI buttons
     public void StartEasy()
     {
+        SetDifficultySelectionVisible(false);
+        if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
         currentDifficulty = Difficulty.Easy;
         StartGame(2, 2);
         timeScript?.StartTimer(easySeconds);
@@ -211,6 +290,8 @@ public class GameManager : MonoBehaviour
 
     public void StartMedium()
     {
+        SetDifficultySelectionVisible(false);
+        if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
         currentDifficulty = Difficulty.Medium;
         StartGame(4, 4);
         timeScript?.StartTimer(mediumSeconds);
@@ -218,6 +299,8 @@ public class GameManager : MonoBehaviour
 
     public void StartHard()
     {
+        SetDifficultySelectionVisible(false);
+        if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
         currentDifficulty = Difficulty.Hard;
         StartGame(4, 4); // or whatever
         if (!TryAddGamePuzzlesHard()) { Debug.LogError("Not enough unique puzzle types for hard difficulty."); return; }
@@ -293,6 +376,9 @@ public class GameManager : MonoBehaviour
 
         // Show all three buttons as requested (Restart / Next / Main menu).
         SetEndButtonsVisibleOnTimeout();
+
+        // Also show "back to difficulties".
+        if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(true);
     }
 
     private void ClearMatchedInfo()
@@ -652,6 +738,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Finished");
             roundFinished = true;
             SetEndButtonsVisible(true);
+
+            if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(true);
 
             // Let the player briefly see the full stacked list, then clear.
             ScheduleClearInfoPopup(clearInfoOnWinDelaySeconds);
