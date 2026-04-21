@@ -29,6 +29,11 @@ public class GameManager : MonoBehaviour
     [Header("Reveal Timing")]
     [SerializeField] private float firstCardRevealSeconds = 1.5f;
 
+    [Header("Win Effect")]
+    [SerializeField] private ParticleSystem allPairsParticles;
+    [SerializeField] private Transform allPairsParticlesAnchor;
+    [SerializeField] private bool stopParticlesBeforePlay = true;
+
     public Sprite[] puzzles;
 
     public List<Sprite> gamePuzzles = new List<Sprite>();
@@ -118,6 +123,12 @@ public class GameManager : MonoBehaviour
 
         WireDifficultyButtons();
         SetDifficultySelectionVisible(true);
+
+        // Optional convenience: if not set in Inspector, try to find a ParticleSystem under this GameObject.
+        if (allPairsParticles == null)
+        {
+            allPairsParticles = GetComponentInChildren<ParticleSystem>(true);
+        }
     }
 
     private void WireDifficultyButtons()
@@ -740,6 +751,23 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Game Finished");
             roundFinished = true;
+
+            if (allPairsParticles != null)
+            {
+                if (allPairsParticlesAnchor != null)
+                    allPairsParticles.transform.position = allPairsParticlesAnchor.position;
+
+                if (!allPairsParticles.gameObject.activeInHierarchy)
+                    allPairsParticles.gameObject.SetActive(true);
+
+                if (stopParticlesBeforePlay) allPairsParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                allPairsParticles.Play(true);
+            }
+            else
+            {
+                Debug.LogWarning("GameManager: allPairsParticles is not assigned/found, win effect won't play.");
+            }
+
             SetEndButtonsVisible(true);
 
             if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(true);
