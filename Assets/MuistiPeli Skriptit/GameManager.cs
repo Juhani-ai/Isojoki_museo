@@ -82,6 +82,12 @@ public class GameManager : MonoBehaviour
         {
             timeScript = FindAnyObjectByType<TimeScript>();
         }
+
+        if (timeScript != null)
+        {
+            timeScript.TimerExpired -= HandleTimerExpired;
+            timeScript.TimerExpired += HandleTimerExpired;
+        }
         if (scoreScript == null)
         {
             scoreScript = FindAnyObjectByType<MuistipeliScoreScript>();
@@ -133,6 +139,14 @@ public class GameManager : MonoBehaviour
     private readonly List<Card> cards = new();
 
     private bool roundFinished;
+
+    private void OnDestroy()
+    {
+        if (timeScript != null)
+        {
+            timeScript.TimerExpired -= HandleTimerExpired;
+        }
+    }
 
     private void SetEndButtonsVisible(bool visible)
     {
@@ -201,6 +215,8 @@ public class GameManager : MonoBehaviour
         roundFinished = false;
         SetEndButtonsVisible(false);
 
+        ClearInfoPopup();
+
         scoreScript?.ResetScore();
 
         // Rebuild board
@@ -231,6 +247,23 @@ public class GameManager : MonoBehaviour
 
         gameGuesses = btns.Count / 2; // use button count, not gamePuzzles.Count
     }
+
+    private void HandleTimerExpired()
+    {
+        ClearInfoPopup();
+    }
+
+    private void ClearInfoPopup()
+    {
+        if (infoPopupText != null) infoPopupText.text = "";
+        if (infoPopupPanel != null) infoPopupPanel.SetActive(false);
+        if (infoRoutine != null)
+        {
+            StopCoroutine(infoRoutine);
+            infoRoutine = null;
+        }
+    }
+
     private void ShowInfoPopup(string id)
     {
         if (infoPopupPanel == null || infoPopupText == null) return;
@@ -240,20 +273,20 @@ public class GameManager : MonoBehaviour
             ? t
             : key; // fallback
 
-        infoPopupText.text = text;
-        infoPopupPanel.SetActive(true);
+        // Accumulate matched pair names/info. Only clear on timer expiry, round end, or difficulty change.
+        if (string.IsNullOrWhiteSpace(infoPopupText.text))
+        {
+            infoPopupText.text = text;
+        }
+        else
+        {
+            infoPopupText.text += "\n" + text;
+        }
 
-        if (infoRoutine != null) StopCoroutine(infoRoutine);
-        infoRoutine = StartCoroutine(HideInfoPopupAfter());
+        infoPopupPanel.SetActive(true);
     }
     private enum Difficulty { None, Easy, Medium, Hard }
     private Difficulty currentDifficulty;
-    private IEnumerator HideInfoPopupAfter()
-    {
-        yield return new WaitForSeconds(infoPopupSeconds);
-        if (infoPopupPanel != null) infoPopupPanel.SetActive(false);
-        infoRoutine = null;
-    }
 
     private bool TryAddGamePuzzles()
     {
@@ -426,10 +459,32 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject infoPopupPanel;
     [SerializeField] private TMP_Text infoPopupText;
     [SerializeField] private float infoPopupSeconds = 2f;
+    [SerializeField] private float clearInfoOnWinDelaySeconds = 1.5f;
     [SerializeField] private List<ObjectInfoEntry> objectInfos = new();
 
     private Dictionary<string, string> infoById;
     private Coroutine infoRoutine;
+
+    private void ScheduleClearInfoPopup(float delaySeconds)
+    {
+        if (infoRoutine != null)
+        {
+            StopCoroutine(infoRoutine);
+            infoRoutine = null;
+        }
+
+        float delay = Mathf.Max(0f, delaySeconds);
+        infoRoutine = StartCoroutine(ClearInfoPopupAfter(delay));
+    }
+
+    private IEnumerator ClearInfoPopupAfter(float delaySeconds)
+    {
+        if (delaySeconds > 0f)
+            yield return new WaitForSeconds(delaySeconds);
+
+        infoRoutine = null;
+        ClearInfoPopup();
+    }
     private string GetPuzzleId(Sprite s)
     {
         if (s == null) return string.Empty;
@@ -506,10 +561,9 @@ public class GameManager : MonoBehaviour
                 scoreScript.OnPairMatched();
             }
             CheckTheGameFinished();
-            if (currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium)
-            {
+
                 ShowInfoPopup(cards[firstGuessIndex].id);
-            }
+            
         }
         else
         {
@@ -530,8 +584,8 @@ public class GameManager : MonoBehaviour
             roundFinished = true;
             SetEndButtonsVisible(true);
 
-            //if (scoreScript != null)
-            //{
+            // Let the player briefly see the full stacked list, then clear.
+            ScheduleClearInfoPopup(clearInfoOnWinDelaySeconds);
 
             Debug.Log("Final score: " + scoreScript.GetScore() + ", pairs found: " + scoreScript.GetPairsFound());
             scoreScript.OnGameFinished();

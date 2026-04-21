@@ -16,6 +16,8 @@ public class TimeScript : MonoBehaviour
     [SerializeField] private MuistipeliScoreScript scoreScript;
     private bool running;
     private bool gameOverTriggered;
+
+    public event System.Action TimerExpired;
     
 private void Start()
     {
@@ -70,13 +72,18 @@ private void Start()
     {
         gameOverTriggered = true;
 
+        TimerExpired?.Invoke();
+
         if (timerText != null)
         {
             timerText.color = Color.red;
             timerText.text = gameOverMessage;
         }
         
-        scoreScript.OnGameFinished();
+        if (scoreScript != null)
+        {
+            scoreScript.OnGameFinished();
+        }
         if (restartOnGameOver)
         {
             StartCoroutine(RestartAfterDelay());
