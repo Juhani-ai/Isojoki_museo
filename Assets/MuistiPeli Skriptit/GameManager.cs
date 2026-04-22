@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviour
     [Header("End-of-round buttons")]
     [SerializeField] private GameObject SeuraavaNappiObj;
     [SerializeField] private GameObject PaavalikkoNappiObj;
+    [Header("Start menu")]
+    [SerializeField] private GameObject AloitaPeliNappiObj;
     [Header("Info panel")]
     [SerializeField] private GameObject OhjeetNappiObj;
     [SerializeField] private MuistipeliScoreScript scoreScript;
@@ -123,8 +125,14 @@ public class GameManager : MonoBehaviour
 
         WireOhjeetButton();
 
+        WireAloitaPeliButton();
+
         WireDifficultyButtons();
-        SetDifficultySelectionVisible(true);
+
+        // Initial view: show start menu (Aloita + Ohjeet + Poistu), hide difficulty selection until Aloita.
+        SetDifficultySelectionVisible(false);
+        SetStartMenuVisible(true);
+        SetMenuChromeVisible(true);
 
         // Optional convenience: if not set in Inspector, try to find a ParticleSystem under this GameObject.
         if (allPairsParticles == null)
@@ -200,12 +208,22 @@ public class GameManager : MonoBehaviour
         if (KeskiTasoNappiObj != null) KeskiTasoNappiObj.SetActive(visible);
         if (VaikeaNappiObj != null) VaikeaNappiObj.SetActive(visible);
 
-        // Instructions button is only available in the difficulty selection view.
+        // This button is shown at end-of-round (win/timeout), not while playing.
+        if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
+    }
+
+    private void SetStartMenuVisible(bool visible)
+    {
+        if (AloitaPeliNappiObj != null) AloitaPeliNappiObj.SetActive(visible);
+    }
+
+    private void SetMenuChromeVisible(bool visible)
+    {
         ResolveOhjeetButtonRefIfNeeded();
         if (OhjeetNappiObj != null) OhjeetNappiObj.SetActive(visible);
 
-        // This button is shown at end-of-round (win/timeout), not while playing.
-        if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
+        // "PoistuNappi" in UI is the same as the main-menu button we use at end-of-round.
+        if (PaavalikkoNappiObj != null) PaavalikkoNappiObj.SetActive(visible);
     }
 
     public void PoistuTasoihinNappi()
@@ -230,7 +248,9 @@ public class GameManager : MonoBehaviour
             if (btns[i] != null) btns[i].interactable = false;
         }
 
+        SetStartMenuVisible(false);
         SetDifficultySelectionVisible(true);
+        SetMenuChromeVisible(true);
 
         if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
     }
@@ -257,6 +277,39 @@ public class GameManager : MonoBehaviour
             menuBtn.onClick.RemoveListener(PoistuNappi);
             menuBtn.onClick.AddListener(PoistuNappi);
         }
+    }
+
+    private void WireAloitaPeliButton()
+    {
+        var startBtn = AloitaPeliNappiObj != null ? AloitaPeliNappiObj.GetComponent<Button>() : null;
+        if (startBtn == null && AloitaPeliNappiObj != null)
+            startBtn = AloitaPeliNappiObj.GetComponentInChildren<Button>(true);
+
+        if (startBtn == null) return;
+
+        int persistentCount = startBtn.onClick.GetPersistentEventCount();
+        for (int i = 0; i < persistentCount; i++)
+        {
+            var target = startBtn.onClick.GetPersistentTarget(i);
+            var method = startBtn.onClick.GetPersistentMethodName(i);
+            if (target == (UnityEngine.Object)this && method == nameof(AloitaPeliNappi))
+            {
+                return;
+            }
+        }
+
+        startBtn.onClick.RemoveListener(AloitaPeliNappi);
+        startBtn.onClick.AddListener(AloitaPeliNappi);
+    }
+
+    public void AloitaPeliNappi()
+    {
+        // Show difficulty selection after player chooses to start.
+        SetStartMenuVisible(false);
+        SetDifficultySelectionVisible(true);
+        SetMenuChromeVisible(true);
+        showOhjeet = false;
+        RefreshInfoPanel();
     }
 
     private void WireOhjeetButton()
@@ -358,7 +411,9 @@ public class GameManager : MonoBehaviour
     // Called by UI buttons
     public void StartEasy()
     {
+        SetStartMenuVisible(false);
         SetDifficultySelectionVisible(false);
+        SetMenuChromeVisible(false);
         if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
         currentDifficulty = Difficulty.Easy;
         StartGame(2, 2);
@@ -367,7 +422,9 @@ public class GameManager : MonoBehaviour
 
     public void StartMedium()
     {
+        SetStartMenuVisible(false);
         SetDifficultySelectionVisible(false);
+        SetMenuChromeVisible(false);
         if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
         currentDifficulty = Difficulty.Medium;
         StartGame(4, 4);
@@ -376,7 +433,9 @@ public class GameManager : MonoBehaviour
 
     public void StartHard()
     {
+        SetStartMenuVisible(false);
         SetDifficultySelectionVisible(false);
+        SetMenuChromeVisible(false);
         if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
         currentDifficulty = Difficulty.Hard;
         StartGame(4, 4); // or whatever
@@ -393,6 +452,10 @@ public class GameManager : MonoBehaviour
         // Gameplay active: hide instructions button. It will reappear only when returning to difficulties.
         ResolveOhjeetButtonRefIfNeeded();
         if (OhjeetNappiObj != null) OhjeetNappiObj.SetActive(false);
+
+        // Also hide the start/menu chrome during active gameplay.
+        if (AloitaPeliNappiObj != null) AloitaPeliNappiObj.SetActive(false);
+        if (PaavalikkoNappiObj != null) PaavalikkoNappiObj.SetActive(false);
 
         // Reset state
         firstGuess = secondGuess = false;
@@ -860,10 +923,6 @@ public class GameManager : MonoBehaviour
     public void PoistuNappi()
     {
         SceneManager.LoadScene("1. Päävalikko");
-            
-                    if (Debug.isDebugBuild)
-                        Debug.Log($"GameManager: Showing ohjeetTeksti (len={(ohjeetTeksti ?? "").Length}).");
-            
     }
 
     public void SeuraavaNappi()
