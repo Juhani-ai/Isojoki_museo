@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
         puzzles = Resources.LoadAll<Sprite>("Kuvat/Esineet");
         namePuzzles = Resources.LoadAll<Sprite>("Kuvat/EsineidenNimet");
 
+        ResolveOhjeetButtonRefIfNeeded();
+
         if (scoreScript == null)
         {
             scoreScript = GetComponent<MuistipeliScoreScript>();
@@ -131,6 +133,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void ResolveOhjeetButtonRefIfNeeded()
+    {
+        if (OhjeetNappiObj != null) return;
+
+        // Prefer an exact name match if possible.
+        var byName = GameObject.Find("OhjeetNappi");
+        if (byName != null)
+        {
+            OhjeetNappiObj = byName;
+            return;
+        }
+
+        // Fallback: find a scene Button whose name contains "ohje" (works even if the object is inactive).
+        var buttons = Resources.FindObjectsOfTypeAll<Button>();
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var button = buttons[i];
+            if (button == null) continue;
+            if (!button.gameObject.scene.IsValid()) continue; // skip prefabs/assets
+
+            if (button.name.IndexOf("ohje", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                OhjeetNappiObj = button.gameObject;
+                return;
+            }
+        }
+
+        Debug.LogWarning("GameManager: OhjeetNappiObj is not assigned and could not be auto-found. Assign the Ohjeet button GameObject in the Inspector so it can be hidden during gameplay.");
+    }
+
     private void WireDifficultyButtons()
     {
         var easyBtn = HelppoNappiObj != null ? HelppoNappiObj.GetComponent<Button>() : null;
@@ -167,6 +199,10 @@ public class GameManager : MonoBehaviour
         if (HelppoNappiObj != null) HelppoNappiObj.SetActive(visible);
         if (KeskiTasoNappiObj != null) KeskiTasoNappiObj.SetActive(visible);
         if (VaikeaNappiObj != null) VaikeaNappiObj.SetActive(visible);
+
+        // Instructions button is only available in the difficulty selection view.
+        ResolveOhjeetButtonRefIfNeeded();
+        if (OhjeetNappiObj != null) OhjeetNappiObj.SetActive(visible);
 
         // This button is shown at end-of-round (win/timeout), not while playing.
         if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
@@ -225,12 +261,39 @@ public class GameManager : MonoBehaviour
 
     private void WireOhjeetButton()
     {
-        var ohjeBtn = OhjeetNappiObj != null ? OhjeetNappiObj.GetComponent<Button>() : null;
-        if (ohjeBtn != null)
+        ResolveOhjeetButtonRefIfNeeded();
+        if (OhjeetNappiObj == null) return;
+
+        // The serialized reference may point to a parent container OR a child (e.g., the label Text).
+        // Try self, children, then parents.
+        var ohjeBtn = OhjeetNappiObj.GetComponent<Button>();
+        if (ohjeBtn == null) ohjeBtn = OhjeetNappiObj.GetComponentInChildren<Button>(true);
+        if (ohjeBtn == null) ohjeBtn = OhjeetNappiObj.GetComponentInParent<Button>(true);
+
+        if (ohjeBtn == null)
         {
-            ohjeBtn.onClick.RemoveListener(OhjeetNappi);
-            ohjeBtn.onClick.AddListener(OhjeetNappi);
+            Debug.LogWarning("GameManager: OhjeetNappiObj does not resolve to a UI Button (self/children/parents). Assign the actual Button GameObject in the Inspector.");
+            return;
         }
+
+        // Normalize so future SetActive() hits the actual clickable button.
+        OhjeetNappiObj = ohjeBtn.gameObject;
+
+        // If the button is already wired in the Inspector (persistent event), don't add a duplicate
+        // runtime listener. Duplicate listeners would toggle showOhjeet twice and effectively do nothing.
+        int persistentCount = ohjeBtn.onClick.GetPersistentEventCount();
+        for (int i = 0; i < persistentCount; i++)
+        {
+            var target = ohjeBtn.onClick.GetPersistentTarget(i);
+            var method = ohjeBtn.onClick.GetPersistentMethodName(i);
+            if (target == (UnityEngine.Object)this && method == nameof(OhjeetNappi))
+            {
+                return;
+            }
+        }
+
+        ohjeBtn.onClick.RemoveListener(OhjeetNappi);
+        ohjeBtn.onClick.AddListener(OhjeetNappi);
     }
 
     private struct Card
@@ -326,6 +389,10 @@ public class GameManager : MonoBehaviour
     {
         rows = r;
         cols = c;
+
+        // Gameplay active: hide instructions button. It will reappear only when returning to difficulties.
+        ResolveOhjeetButtonRefIfNeeded();
+        if (OhjeetNappiObj != null) OhjeetNappiObj.SetActive(false);
 
         // Reset state
         firstGuess = secondGuess = false;
@@ -631,6 +698,14 @@ public class GameManager : MonoBehaviour
     public void OhjeetNappi()
     {
         showOhjeet = !showOhjeet;
+
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log($"GameManager: OhjeetNappi pressed -> showOhjeet={showOhjeet}, " +
+                      $"infoPopupPanel={(infoPopupPanel != null ? infoPopupPanel.name : "<null>")}, " +
+                      $"infoPopupText={(infoPopupText != null ? infoPopupText.name : "<null>")}");
+        }
+
         RefreshInfoPanel();
     }
 
@@ -785,6 +860,10 @@ public class GameManager : MonoBehaviour
     public void PoistuNappi()
     {
         SceneManager.LoadScene("1. Päävalikko");
+            
+                    if (Debug.isDebugBuild)
+                        Debug.Log($"GameManager: Showing ohjeetTeksti (len={(ohjeetTeksti ?? "").Length}).");
+            
     }
 
     public void SeuraavaNappi()
