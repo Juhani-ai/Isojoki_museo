@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 315007550}
   - component: {fileID: 315007549}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: HelppoTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6373,7 +6373,7 @@ GameObject:
   - component: {fileID: 781466738}
   - component: {fileID: 781466737}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ValitseTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6510,7 +6510,7 @@ GameObject:
   - component: {fileID: 809049621}
   - component: {fileID: 809049620}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: OhjeetjaNimetTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6739,7 +6739,7 @@ GameObject:
   - component: {fileID: 893256654}
   - component: {fileID: 893256653}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: KeskiTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7032,7 +7032,7 @@ GameObject:
   - component: {fileID: 943087980}
   - component: {fileID: 943087979}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: VaikeaTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7681,7 +7681,7 @@ GameObject:
   - component: {fileID: 1059406564}
   - component: {fileID: 1059406563}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ValikkoTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7963,7 +7963,7 @@ GameObject:
   - component: {fileID: 1179010589}
   - component: {fileID: 1179010588}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: UudestaanTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8100,7 +8100,7 @@ GameObject:
   - component: {fileID: 1347077655}
   - component: {fileID: 1347077654}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: OhjeetTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8370,7 +8370,7 @@ GameObject:
   - component: {fileID: 1431911368}
   - component: {fileID: 1431911367}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SeuraavaTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8507,7 +8507,7 @@ GameObject:
   - component: {fileID: 1555476830}
   - component: {fileID: 1555476829}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: PoistuTeksti
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
