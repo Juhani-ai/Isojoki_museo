@@ -62,6 +62,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject VaikeaNappiObj;
     [SerializeField] private GameObject PoistuTasoihinNappiObj;
 
+    [Header("Difficulty selection label")]
+    [SerializeField] private GameObject TasonValintaTekstiObj;
+
     [Header("End-of-round buttons")]
     [SerializeField] private GameObject SeuraavaNappiObj;
     [SerializeField] private GameObject PaavalikkoNappiObj;
@@ -207,6 +210,8 @@ public class GameManager : MonoBehaviour
         if (HelppoNappiObj != null) HelppoNappiObj.SetActive(visible);
         if (KeskiTasoNappiObj != null) KeskiTasoNappiObj.SetActive(visible);
         if (VaikeaNappiObj != null) VaikeaNappiObj.SetActive(visible);
+
+        if (TasonValintaTekstiObj != null) TasonValintaTekstiObj.SetActive(visible);
 
         // This button is shown at end-of-round (win/timeout), not while playing.
         if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
