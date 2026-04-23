@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float easySeconds = 10f;
     [SerializeField] private float mediumSeconds = 60f;
     [SerializeField] private float hardSeconds = 120f;
+
+    [Header("Difficulty Scoring")]
+    [SerializeField] private int easyMediumPointsPerPair = 10;
+    [SerializeField] private int hardPointsPerPair = 20;
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioClip pickCardClip;
     [SerializeField]
@@ -629,6 +633,13 @@ public class GameManager : MonoBehaviour
         // Starting a new difficulty should return the info panel to normal (pair list) mode.
         showOhjeet = false;
         ClearMatchedInfo();
+
+        // Configure scoring per difficulty (easy/medium vs hard).
+        if (scoreScript != null)
+        {
+            int ppp = currentDifficulty == Difficulty.Hard ? hardPointsPerPair : easyMediumPointsPerPair;
+            scoreScript.SetPointsPerPair(ppp);
+        }
 
         scoreScript?.ResetScore();
 

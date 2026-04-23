@@ -21,6 +21,11 @@ public class MuistipeliScoreScript : MonoBehaviour
     private Coroutine finalCountRoutine;
     private bool gameFinished;
 
+    public void SetPointsPerPair(int points)
+    {
+        pointsPerPair = Mathf.Max(0, points);
+    }
+
     public void ResetScore()
     {
         score = 0;
