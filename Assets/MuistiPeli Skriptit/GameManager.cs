@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float hardSeconds = 120f;
 
     [Header("Difficulty Scoring")]
-    [SerializeField] private int easyMediumPointsPerPair = 10;
+    [SerializeField] private int easyPointsPerPair = 5;
+    [SerializeField] private int mediumPointsPerPair = 10;
     [SerializeField] private int hardPointsPerPair = 20;
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioClip pickCardClip;
@@ -637,7 +638,13 @@ public class GameManager : MonoBehaviour
         // Configure scoring per difficulty (easy/medium vs hard).
         if (scoreScript != null)
         {
-            int ppp = currentDifficulty == Difficulty.Hard ? hardPointsPerPair : easyMediumPointsPerPair;
+            int ppp = currentDifficulty switch
+            {
+                Difficulty.Easy => easyPointsPerPair,
+                Difficulty.Medium => mediumPointsPerPair,
+                Difficulty.Hard => hardPointsPerPair,
+                _ => mediumPointsPerPair
+            };
             scoreScript.SetPointsPerPair(ppp);
         }
 
