@@ -1033,7 +1033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -19, y: -3}
+  m_AnchoredPosition: {x: -14, y: -3}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &343305629
@@ -4189,7 +4189,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -681, y: -92}
+  m_AnchoredPosition: {x: -12, y: -99}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1685967455
@@ -4782,6 +4782,8 @@ MonoBehaviour:
   TasonValintaTekstiObj: {fileID: 718663759}
   SeuraavaNappiObj: {fileID: 42293672}
   PaavalikkoNappiObj: {fileID: 402521320}
+  TuloksetNappiObj: {fileID: 1685967453}
+  tuloksetShowWhenCompletedAtLeast: 1
   AloitaPeliNappiObj: {fileID: 343305627}
   OhjeetNappiObj: {fileID: 1729076207}
   scoreScript: {fileID: 0}

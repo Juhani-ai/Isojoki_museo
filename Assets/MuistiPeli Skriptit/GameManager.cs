@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
     [Header("End-of-round buttons")]
     [SerializeField] private GameObject SeuraavaNappiObj;
     [SerializeField] private GameObject PaavalikkoNappiObj;
+
+    [Header("Results")]
+    [SerializeField] private GameObject TuloksetNappiObj;
+    [Tooltip("How many different difficulties must be completed before TuloksetNappi becomes visible. Set to 0 to use 'most' (2/3) automatically.")]
+    [SerializeField] private int tuloksetShowWhenCompletedAtLeast = 0;
     [Header("Start menu")]
     [SerializeField] private GameObject AloitaPeliNappiObj;
     [Header("Info panel")]
@@ -76,6 +81,8 @@ public class GameManager : MonoBehaviour
     [Header("Scene Navigation")]
     [SerializeField] private string Päävalikko = "Päävalikko";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private readonly Dictionary<Difficulty, int> completedScoreByDifficulty = new();
 
     private void Awake()
     {
@@ -132,6 +139,9 @@ public class GameManager : MonoBehaviour
 
         WireDifficultyButtons();
 
+        WireTuloksetButton();
+        UpdateTuloksetButtonVisibility();
+
         // Initial view: show start menu (Aloita + Ohjeet + Poistu), hide difficulty selection until Aloita.
         SetDifficultySelectionVisible(false);
         SetStartMenuVisible(true);
@@ -141,6 +151,98 @@ public class GameManager : MonoBehaviour
         if (allPairsParticles == null)
         {
             allPairsParticles = GetComponentInChildren<ParticleSystem>(true);
+        }
+    }
+
+    private void ResolveTuloksetButtonRefIfNeeded()
+    {
+        if (TuloksetNappiObj != null) return;
+
+        var byName = GameObject.Find("TuloksetNappi");
+        if (byName != null)
+        {
+            TuloksetNappiObj = byName;
+            return;
+        }
+
+        var buttons = Resources.FindObjectsOfTypeAll<Button>();
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var button = buttons[i];
+            if (button == null) continue;
+            if (!button.gameObject.scene.IsValid()) continue;
+
+            if (button.name.IndexOf("tulos", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                TuloksetNappiObj = button.gameObject;
+                return;
+            }
+        }
+    }
+
+    private void WireTuloksetButton()
+    {
+        ResolveTuloksetButtonRefIfNeeded();
+        if (TuloksetNappiObj == null) return;
+
+        var btn = TuloksetNappiObj.GetComponent<Button>();
+        if (btn == null) btn = TuloksetNappiObj.GetComponentInChildren<Button>(true);
+        if (btn == null) return;
+
+        TuloksetNappiObj = btn.gameObject;
+        btn.onClick.RemoveListener(TuloksetNappi);
+        btn.onClick.AddListener(TuloksetNappi);
+    }
+
+    private int GetTotalDifficultiesCount()
+    {
+        // Excluding None.
+        return 3;
+    }
+
+    private int GetTuloksetRequiredCompletedCount()
+    {
+        int total = GetTotalDifficultiesCount();
+        int required = tuloksetShowWhenCompletedAtLeast;
+        if (required <= 0)
+        {
+            // “Most” difficulties (2/3 rounded up).
+            required = Mathf.CeilToInt(total * 2f / 3f);
+        }
+
+        return Mathf.Clamp(required, 1, total);
+    }
+
+    private bool ShouldShowTuloksetButton()
+    {
+        return completedScoreByDifficulty.Count >= GetTuloksetRequiredCompletedCount();
+    }
+
+    private void UpdateTuloksetButtonVisibility(bool forceHide = false)
+    {
+        ResolveTuloksetButtonRefIfNeeded();
+        if (TuloksetNappiObj == null) return;
+
+        bool show = !forceHide && ShouldShowTuloksetButton();
+        TuloksetNappiObj.SetActive(show);
+    }
+
+    private void SaveCompletedScoreForCurrentDifficulty()
+    {
+        if (currentDifficulty == Difficulty.None) return;
+        if (scoreScript == null) return;
+
+        completedScoreByDifficulty[currentDifficulty] = Mathf.Max(0, scoreScript.GetScore());
+        UpdateTuloksetButtonVisibility();
+    }
+
+    private void RemoveCompletedScoreForDifficulty(Difficulty difficulty)
+    {
+        if (difficulty == Difficulty.None) return;
+
+        if (completedScoreByDifficulty.Remove(difficulty))
+        {
+            UpdateTuloksetButtonVisibility();
         }
     }
 
@@ -215,6 +317,12 @@ public class GameManager : MonoBehaviour
 
         // This button is shown at end-of-round (win/timeout), not while playing.
         if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(false);
+
+        // Show results button only after enough difficulties are completed.
+        if (TuloksetNappiObj != null)
+        {
+            TuloksetNappiObj.SetActive(visible && ShouldShowTuloksetButton());
+        }
     }
 
     private void SetStartMenuVisible(bool visible)
@@ -379,6 +487,11 @@ public class GameManager : MonoBehaviour
         // "Seuraava" only makes sense if there is a next difficulty.
         bool hasNext = currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium;
         if (SeuraavaNappiObj != null) SeuraavaNappiObj.SetActive(visible && hasNext);
+
+        if (TuloksetNappiObj != null)
+        {
+            TuloksetNappiObj.SetActive(visible && ShouldShowTuloksetButton());
+        }
     }
 
     private void SetEndButtonsVisibleOnTimeout()
@@ -389,6 +502,9 @@ public class GameManager : MonoBehaviour
         // "Seuraava" only makes sense if there is a next difficulty.
         bool hasNext = currentDifficulty == Difficulty.Easy || currentDifficulty == Difficulty.Medium;
         if (SeuraavaNappiObj != null) SeuraavaNappiObj.SetActive(hasNext);
+
+        // Timeout is not “completed”, so keep results button hidden.
+        if (TuloksetNappiObj != null) TuloksetNappiObj.SetActive(false);
     }
 
     public void RestartGame()
@@ -457,6 +573,9 @@ public class GameManager : MonoBehaviour
         // Gameplay active: hide instructions button. It will reappear only when returning to difficulties.
         ResolveOhjeetButtonRefIfNeeded();
         if (OhjeetNappiObj != null) OhjeetNappiObj.SetActive(false);
+
+        // Hide results while actively playing.
+        UpdateTuloksetButtonVisibility(forceHide: true);
 
         // Also hide the start/menu chrome during active gameplay.
         if (AloitaPeliNappiObj != null) AloitaPeliNappiObj.SetActive(false);
@@ -895,6 +1014,9 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Finished");
             roundFinished = true;
 
+            // Store this difficulty's score for the combined total.
+            SaveCompletedScoreForCurrentDifficulty();
+
             if (allPairsParticles != null)
             {
                 if (allPairsParticlesAnchor != null)
@@ -923,6 +1045,27 @@ public class GameManager : MonoBehaviour
             timeScript?.StopTimer();
             //}
         }
+    }
+
+    // Hook this to TuloksetNappi (or we auto-wire by name).
+    public void TuloksetNappi()
+    {
+        int total = 0;
+        foreach (var kvp in completedScoreByDifficulty)
+        {
+            total += Mathf.Max(0, kvp.Value);
+        }
+
+        if (scoreScript != null)
+        {
+            scoreScript.ShowCombinedTotal(total);
+            return;
+        }
+
+        // Fallback: show in the info popup.
+        matchedInfoText = $"Kokonaispisteet (kaikki tasot): {total}";
+        showOhjeet = false;
+        RefreshInfoPanel();
     }
 
     public void PoistuNappi()
@@ -963,6 +1106,9 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("UudestaanNappi pressed but round is not finished yet.");
             return;
         }
+
+        // Replaying a difficulty should remove its previous completed score from the combined results.
+        RemoveCompletedScoreForDifficulty(currentDifficulty);
 
         switch (currentDifficulty)
         {

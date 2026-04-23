@@ -106,6 +106,22 @@ public class MuistipeliScoreScript : MonoBehaviour
         }
     }
 
+    public void ShowCombinedTotal(int totalScore, string labelOverride = null)
+    {
+        if (finalScoreText == null) return;
+
+        if (!finalScoreText.gameObject.activeInHierarchy)
+        {
+            finalScoreText.gameObject.SetActive(true);
+        }
+
+        string usedLabel = string.IsNullOrWhiteSpace(labelOverride)
+            ? "Kokonaispisteet (kaikki tasot)"
+            : labelOverride;
+
+        finalScoreText.text = $"{usedLabel}: {Mathf.Max(0, totalScore)}";
+    }
+
     private void UpdateScoreText()
     {
         if (scoreText == null) return;
