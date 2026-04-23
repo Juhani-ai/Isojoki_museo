@@ -4310,7 +4310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -444, y: -155}
+  m_AnchoredPosition: {x: -444, y: -172}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1729076209
@@ -4783,7 +4783,7 @@ MonoBehaviour:
   SeuraavaNappiObj: {fileID: 42293672}
   PaavalikkoNappiObj: {fileID: 402521320}
   TuloksetNappiObj: {fileID: 1685967453}
-  tuloksetShowWhenCompletedAtLeast: 1
+  tuloksetShowWhenCompletedAtLeast: 3
   AloitaPeliNappiObj: {fileID: 343305627}
   OhjeetNappiObj: {fileID: 1729076207}
   scoreScript: {fileID: 0}
