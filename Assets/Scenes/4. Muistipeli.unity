@@ -1167,7 +1167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1175, y: -136}
+  m_AnchoredPosition: {x: 681, y: -136}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &402521322
@@ -4189,7 +4189,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -12, y: -99}
+  m_AnchoredPosition: {x: -14, y: -99}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1685967455
@@ -4235,7 +4235,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1685967456}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2096772007}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: TuloksetNappi
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1685967456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4310,7 +4322,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -444, y: -172}
+  m_AnchoredPosition: {x: -444, y: -155}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1729076209
@@ -4783,7 +4795,7 @@ MonoBehaviour:
   SeuraavaNappiObj: {fileID: 42293672}
   PaavalikkoNappiObj: {fileID: 402521320}
   TuloksetNappiObj: {fileID: 1685967453}
-  tuloksetShowWhenCompletedAtLeast: 3
+  tuloksetShowWhenCompletedAtLeast: 0
   AloitaPeliNappiObj: {fileID: 343305627}
   OhjeetNappiObj: {fileID: 1729076207}
   scoreScript: {fileID: 0}

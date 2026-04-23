@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Results")]
     [SerializeField] private GameObject TuloksetNappiObj;
-    [Tooltip("How many different difficulties must be completed before TuloksetNappi becomes visible. Set to 0 to use 'most' (2/3) automatically.")]
+    [Tooltip("How many different difficulties must be completed before TuloksetNappi becomes visible. Set to 0 to show after ANY 1 completed difficulty.")]
     [SerializeField] private int tuloksetShowWhenCompletedAtLeast = 0;
     [Header("Start menu")]
     [SerializeField] private GameObject AloitaPeliNappiObj;
@@ -158,7 +158,8 @@ public class GameManager : MonoBehaviour
     {
         if (TuloksetNappiObj != null) return;
 
-        var byName = GameObject.Find("TuloksetNappi");
+        // NOTE: GameObject.Find() only finds ACTIVE objects, so we also have an inactive-capable fallback below.
+        var byName = GameObject.Find("TuloksetNappi") ?? GameObject.Find("TulosteetNappi");
         if (byName != null)
         {
             TuloksetNappiObj = byName;
@@ -166,6 +167,38 @@ public class GameManager : MonoBehaviour
         }
 
         var buttons = Resources.FindObjectsOfTypeAll<Button>();
+
+        // 1) Prefer exact-name matches (case-insensitive)
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var button = buttons[i];
+            if (button == null) continue;
+            if (!button.gameObject.scene.IsValid()) continue;
+
+            if (string.Equals(button.name, "TuloksetNappi", System.StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(button.name, "TulosteetNappi", System.StringComparison.OrdinalIgnoreCase))
+            {
+                TuloksetNappiObj = button.gameObject;
+                return;
+            }
+        }
+
+        // 2) Then prefer more specific substrings
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var button = buttons[i];
+            if (button == null) continue;
+            if (!button.gameObject.scene.IsValid()) continue;
+
+            if (button.name.IndexOf("tulokset", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                button.name.IndexOf("tulosteet", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                TuloksetNappiObj = button.gameObject;
+                return;
+            }
+        }
+
+        // 3) Final fallback: any "tulos" substring
         for (int i = 0; i < buttons.Length; i++)
         {
             var button = buttons[i];
@@ -206,8 +239,8 @@ public class GameManager : MonoBehaviour
         int required = tuloksetShowWhenCompletedAtLeast;
         if (required <= 0)
         {
-            // “Most” difficulties (2/3 rounded up).
-            required = Mathf.CeilToInt(total * 2f / 3f);
+            // Show after ANY 1 completed difficulty.
+            required = 1;
         }
 
         return Mathf.Clamp(required, 1, total);
@@ -225,6 +258,12 @@ public class GameManager : MonoBehaviour
 
         bool show = !forceHide && ShouldShowTuloksetButton();
         TuloksetNappiObj.SetActive(show);
+
+        // If the button is activeSelf but still not visible, it is likely under an inactive parent.
+        if (show && !TuloksetNappiObj.activeInHierarchy)
+        {
+            Debug.LogWarning("GameManager: TuloksetNappi was enabled but is not visible (inactive parent in hierarchy). Move the button under an active Canvas/panel or assign TuloksetNappiObj to the correct object.");
+        }
     }
 
     private void SaveCompletedScoreForCurrentDifficulty()
