@@ -51,6 +51,7 @@ public class MuistipeliScoreScript : MonoBehaviour
 
     private void Awake()
     {
+        scoreText = null;
         // Convenience: if not assigned in the Inspector, try to find the TMP text by tag.
         if (scoreText == null)
         {
@@ -130,6 +131,6 @@ public class MuistipeliScoreScript : MonoBehaviour
     private void UpdateScoreText()
     {
         if (scoreText == null) return;
-        scoreText.text = $"{label}: {score}";
+        scoreText.text = $"Pisteet: {score}";
     }
 }
