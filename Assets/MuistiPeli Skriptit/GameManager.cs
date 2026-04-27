@@ -100,6 +100,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite palkinto3Sprite;
     [Tooltip("An Image component inside the info panel used to display the reward sprite.")]
     [SerializeField] private Image palkintoImageInInfoPanel;
+
+    [Tooltip("Text shown on win screen when a reward is available (e.g., 'Sait palkinnon!').")]
+    [SerializeField] private GameObject saitPalkinnonTekstiObj;
+
+    [Tooltip("Text shown on win screen when the player wins (e.g., 'Voitit!').")]
+    [SerializeField] private GameObject voititTekstiObj;
     [Header("Scene Navigation")]
     [SerializeField] private string Päävalikko = "Päävalikko";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -169,6 +175,8 @@ public class GameManager : MonoBehaviour
         ResolvePalkintoRefsIfNeeded();
         WirePalkintoButtons();
         HideAllPalkintoButtons();
+        SetSaitPalkinnonVisible(false);
+        SetVoititVisible(false);
         ClearPalkintoFromInfoPanel();
 
         // Initial view: show start menu (Aloita + Ohjeet + Poistu), hide difficulty selection until Aloita.
@@ -230,6 +238,54 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        // "Sait palkinnon!" text: optional auto-find by text content.
+        if (saitPalkinnonTekstiObj == null)
+        {
+            var texts = Resources.FindObjectsOfTypeAll<TMP_Text>();
+            for (int i = 0; i < texts.Length; i++)
+            {
+                var t = texts[i];
+                if (t == null) continue;
+                if (!t.gameObject.scene.IsValid()) continue;
+
+                if (string.Equals((t.text ?? "").Trim(), "Sait palkinnon!", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    saitPalkinnonTekstiObj = t.gameObject;
+                    break;
+                }
+            }
+        }
+
+        // "Voitit!" text: optional auto-find by text content.
+        if (voititTekstiObj == null)
+        {
+            var texts = Resources.FindObjectsOfTypeAll<TMP_Text>();
+            for (int i = 0; i < texts.Length; i++)
+            {
+                var t = texts[i];
+                if (t == null) continue;
+                if (!t.gameObject.scene.IsValid()) continue;
+
+                if (string.Equals((t.text ?? "").Trim(), "Voitit!", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    voititTekstiObj = t.gameObject;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void SetSaitPalkinnonVisible(bool visible)
+    {
+        ResolvePalkintoRefsIfNeeded();
+        if (saitPalkinnonTekstiObj != null) saitPalkinnonTekstiObj.SetActive(visible);
+    }
+
+    private void SetVoititVisible(bool visible)
+    {
+        ResolvePalkintoRefsIfNeeded();
+        if (voititTekstiObj != null) voititTekstiObj.SetActive(visible);
     }
 
     private void WirePalkintoButtons()
@@ -275,17 +331,21 @@ public class GameManager : MonoBehaviour
     {
         // Only show one at a time.
         HideAllPalkintoButtons();
+        SetSaitPalkinnonVisible(false);
 
         switch (difficulty)
         {
             case Difficulty.Easy:
                 if (PalkintoNappi3Obj != null) PalkintoNappi3Obj.SetActive(true);
+                SetSaitPalkinnonVisible(true);
                 break;
             case Difficulty.Medium:
                 if (PalkintoNappi2Obj != null) PalkintoNappi2Obj.SetActive(true);
+                SetSaitPalkinnonVisible(true);
                 break;
             case Difficulty.Hard:
                 if (PalkintoNappi1Obj != null) PalkintoNappi1Obj.SetActive(true);
+                SetSaitPalkinnonVisible(true);
                 break;
             case Difficulty.None:
             default:
@@ -585,6 +645,8 @@ public class GameManager : MonoBehaviour
         showOhjeet = false;
         ClearMatchedInfo();
         HideAllPalkintoButtons();
+        SetSaitPalkinnonVisible(false);
+        SetVoititVisible(false);
         ClearPalkintoFromInfoPanel();
         SetEndButtonsVisible(false);
         roundFinished = false;
@@ -832,6 +894,8 @@ public class GameManager : MonoBehaviour
         showOhjeet = false;
         ClearMatchedInfo();
         HideAllPalkintoButtons();
+        SetSaitPalkinnonVisible(false);
+        SetVoititVisible(false);
         ClearPalkintoFromInfoPanel();
 
         // Configure scoring per difficulty (easy/medium vs hard).
@@ -903,6 +967,8 @@ public class GameManager : MonoBehaviour
 
         // No rewards on timeout.
         HideAllPalkintoButtons();
+        SetSaitPalkinnonVisible(false);
+        SetVoititVisible(false);
         ClearPalkintoFromInfoPanel();
 
         // Also show "back to difficulties".
@@ -1287,6 +1353,9 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Game Finished");
             roundFinished = true;
+
+            // Win text should appear only on an actual win (all pairs found).
+            SetVoititVisible(true);
 
             // Store this difficulty's score for the combined total.
             SaveCompletedScoreForCurrentDifficulty();
