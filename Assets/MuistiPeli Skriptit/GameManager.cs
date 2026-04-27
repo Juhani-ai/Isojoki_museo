@@ -83,11 +83,30 @@ public class GameManager : MonoBehaviour
     [Header("Info panel")]
     [SerializeField] private GameObject OhjeetNappiObj;
     [SerializeField] private MuistipeliScoreScript scoreScript;
+
+    [Header("Rewards (Palkinnot)")]
+    [Tooltip("Reward button shown after HARD is completed.")]
+    [SerializeField] private GameObject PalkintoNappi1Obj;
+    [Tooltip("Reward button shown after MEDIUM is completed.")]
+    [SerializeField] private GameObject PalkintoNappi2Obj;
+    [Tooltip("Reward button shown after EASY is completed.")]
+    [SerializeField] private GameObject PalkintoNappi3Obj;
+
+    [Tooltip("Sprite shown in the info panel when PalkintoNappi1 is pressed.")]
+    [SerializeField] private Sprite palkinto1Sprite;
+    [Tooltip("Sprite shown in the info panel when PalkintoNappi2 is pressed.")]
+    [SerializeField] private Sprite palkinto2Sprite;
+    [Tooltip("Sprite shown in the info panel when PalkintoNappi3 is pressed.")]
+    [SerializeField] private Sprite palkinto3Sprite;
+    [Tooltip("An Image component inside the info panel used to display the reward sprite.")]
+    [SerializeField] private Image palkintoImageInInfoPanel;
     [Header("Scene Navigation")]
     [SerializeField] private string Päävalikko = "Päävalikko";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private readonly Dictionary<Difficulty, int> completedScoreByDifficulty = new();
+
+    private bool showPalkinto;
 
     private void Awake()
     {
@@ -147,6 +166,11 @@ public class GameManager : MonoBehaviour
         WireTuloksetButton();
         UpdateTuloksetButtonVisibility();
 
+        ResolvePalkintoRefsIfNeeded();
+        WirePalkintoButtons();
+        HideAllPalkintoButtons();
+        ClearPalkintoFromInfoPanel();
+
         // Initial view: show start menu (Aloita + Ohjeet + Poistu), hide difficulty selection until Aloita.
         SetDifficultySelectionVisible(false);
         SetStartMenuVisible(true);
@@ -157,6 +181,177 @@ public class GameManager : MonoBehaviour
         {
             allPairsParticles = GetComponentInChildren<ParticleSystem>(true);
         }
+    }
+
+    private void ResolvePalkintoRefsIfNeeded()
+    {
+        // Reward buttons: try by exact name first.
+        if (PalkintoNappi1Obj == null) PalkintoNappi1Obj = GameObject.Find("PalkintoNappi1");
+        if (PalkintoNappi2Obj == null) PalkintoNappi2Obj = GameObject.Find("PalkintoNappi2");
+        if (PalkintoNappi3Obj == null) PalkintoNappi3Obj = GameObject.Find("PalkintoNappi3");
+
+        // GameObject.Find only finds active objects; fallback to searching all Buttons in the scene.
+        if (PalkintoNappi1Obj == null || PalkintoNappi2Obj == null || PalkintoNappi3Obj == null)
+        {
+            var buttons = Resources.FindObjectsOfTypeAll<Button>();
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                var button = buttons[i];
+                if (button == null) continue;
+                if (!button.gameObject.scene.IsValid()) continue;
+
+                if (PalkintoNappi1Obj == null && string.Equals(button.name, "PalkintoNappi1", System.StringComparison.OrdinalIgnoreCase))
+                    PalkintoNappi1Obj = button.gameObject;
+                else if (PalkintoNappi2Obj == null && string.Equals(button.name, "PalkintoNappi2", System.StringComparison.OrdinalIgnoreCase))
+                    PalkintoNappi2Obj = button.gameObject;
+                else if (PalkintoNappi3Obj == null && string.Equals(button.name, "PalkintoNappi3", System.StringComparison.OrdinalIgnoreCase))
+                    PalkintoNappi3Obj = button.gameObject;
+
+                if (PalkintoNappi1Obj != null && PalkintoNappi2Obj != null && PalkintoNappi3Obj != null)
+                    break;
+            }
+        }
+
+        // Reward image in info panel: optional auto-find by name.
+        if (palkintoImageInInfoPanel == null)
+        {
+            var images = Resources.FindObjectsOfTypeAll<Image>();
+            for (int i = 0; i < images.Length; i++)
+            {
+                var img = images[i];
+                if (img == null) continue;
+                if (!img.gameObject.scene.IsValid()) continue;
+
+                if (string.Equals(img.name, "PalkintoKuva", System.StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(img.name, "PalkintoImage", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    palkintoImageInInfoPanel = img;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void WirePalkintoButtons()
+    {
+        ResolvePalkintoRefsIfNeeded();
+
+        var b1 = PalkintoNappi1Obj != null ? PalkintoNappi1Obj.GetComponent<Button>() : null;
+        if (b1 == null && PalkintoNappi1Obj != null) b1 = PalkintoNappi1Obj.GetComponentInChildren<Button>(true);
+        if (b1 != null)
+        {
+            PalkintoNappi1Obj = b1.gameObject;
+            b1.onClick.RemoveListener(PalkintoNappi1);
+            b1.onClick.AddListener(PalkintoNappi1);
+        }
+
+        var b2 = PalkintoNappi2Obj != null ? PalkintoNappi2Obj.GetComponent<Button>() : null;
+        if (b2 == null && PalkintoNappi2Obj != null) b2 = PalkintoNappi2Obj.GetComponentInChildren<Button>(true);
+        if (b2 != null)
+        {
+            PalkintoNappi2Obj = b2.gameObject;
+            b2.onClick.RemoveListener(PalkintoNappi2);
+            b2.onClick.AddListener(PalkintoNappi2);
+        }
+
+        var b3 = PalkintoNappi3Obj != null ? PalkintoNappi3Obj.GetComponent<Button>() : null;
+        if (b3 == null && PalkintoNappi3Obj != null) b3 = PalkintoNappi3Obj.GetComponentInChildren<Button>(true);
+        if (b3 != null)
+        {
+            PalkintoNappi3Obj = b3.gameObject;
+            b3.onClick.RemoveListener(PalkintoNappi3);
+            b3.onClick.AddListener(PalkintoNappi3);
+        }
+    }
+
+    private void HideAllPalkintoButtons()
+    {
+        if (PalkintoNappi1Obj != null) PalkintoNappi1Obj.SetActive(false);
+        if (PalkintoNappi2Obj != null) PalkintoNappi2Obj.SetActive(false);
+        if (PalkintoNappi3Obj != null) PalkintoNappi3Obj.SetActive(false);
+    }
+
+    private void ShowPalkintoButtonForDifficulty(Difficulty difficulty)
+    {
+        // Only show one at a time.
+        HideAllPalkintoButtons();
+
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                if (PalkintoNappi3Obj != null) PalkintoNappi3Obj.SetActive(true);
+                break;
+            case Difficulty.Medium:
+                if (PalkintoNappi2Obj != null) PalkintoNappi2Obj.SetActive(true);
+                break;
+            case Difficulty.Hard:
+                if (PalkintoNappi1Obj != null) PalkintoNappi1Obj.SetActive(true);
+                break;
+            case Difficulty.None:
+            default:
+                break;
+        }
+    }
+
+    private void ClearPalkintoFromInfoPanel()
+    {
+        showPalkinto = false;
+        if (palkintoImageInInfoPanel != null)
+        {
+            palkintoImageInInfoPanel.sprite = null;
+            palkintoImageInInfoPanel.gameObject.SetActive(false);
+        }
+
+        // Make sure the panel state is consistent immediately.
+        RefreshInfoPanel();
+    }
+
+    private void ShowPalkintoInInfoPanel(Sprite sprite)
+    {
+        ResolvePalkintoRefsIfNeeded();
+        if (palkintoImageInInfoPanel == null)
+        {
+            Debug.LogWarning("GameManager: palkintoImageInInfoPanel is not assigned/found. Assign an Image inside the info panel to display rewards.");
+            return;
+        }
+
+        if (sprite == null)
+        {
+            Debug.LogWarning("GameManager: Reward sprite is not assigned. Assign palkintoXSprite in the Inspector.");
+            return;
+        }
+
+        // Reward view should take over the info panel.
+        showOhjeet = false;
+        matchedInfoText = "";
+        showPalkinto = true;
+        palkintoImageInInfoPanel.sprite = sprite;
+        palkintoImageInInfoPanel.preserveAspect = true;
+        palkintoImageInInfoPanel.gameObject.SetActive(true);
+
+        // Make sure panel becomes visible.
+        if (infoPopupPanel != null && !infoPopupPanel.activeInHierarchy)
+            infoPopupPanel.SetActive(true);
+
+        RefreshInfoPanel();
+    }
+
+    public void PalkintoNappi1()
+    {
+        HideAllPalkintoButtons();
+        ShowPalkintoInInfoPanel(palkinto1Sprite);
+    }
+
+    public void PalkintoNappi2()
+    {
+        HideAllPalkintoButtons();
+        ShowPalkintoInInfoPanel(palkinto2Sprite);
+    }
+
+    public void PalkintoNappi3()
+    {
+        HideAllPalkintoButtons();
+        ShowPalkintoInInfoPanel(palkinto3Sprite);
     }
 
     private void ResolveTuloksetButtonRefIfNeeded()
@@ -389,6 +584,8 @@ public class GameManager : MonoBehaviour
         timeScript?.StopTimer();
         showOhjeet = false;
         ClearMatchedInfo();
+        HideAllPalkintoButtons();
+        ClearPalkintoFromInfoPanel();
         SetEndButtonsVisible(false);
         roundFinished = false;
         currentDifficulty = Difficulty.None;
@@ -634,6 +831,8 @@ public class GameManager : MonoBehaviour
         // Starting a new difficulty should return the info panel to normal (pair list) mode.
         showOhjeet = false;
         ClearMatchedInfo();
+        HideAllPalkintoButtons();
+        ClearPalkintoFromInfoPanel();
 
         // Configure scoring per difficulty (easy/medium vs hard).
         if (scoreScript != null)
@@ -702,6 +901,10 @@ public class GameManager : MonoBehaviour
         // Show all three buttons as requested (Restart / Next / Main menu).
         SetEndButtonsVisibleOnTimeout();
 
+        // No rewards on timeout.
+        HideAllPalkintoButtons();
+        ClearPalkintoFromInfoPanel();
+
         // Also show "back to difficulties".
         if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(true);
     }
@@ -718,10 +921,24 @@ public class GameManager : MonoBehaviour
 
         if (showOhjeet)
         {
+            if (palkintoImageInInfoPanel != null) palkintoImageInInfoPanel.gameObject.SetActive(false);
             infoPopupText.text = ohjeetTeksti ?? "";
             infoPopupPanel.SetActive(true);
             return;
         }
+
+        if (showPalkinto)
+        {
+            // Reward mode: keep panel visible even if there is no text.
+            infoPopupText.text = string.IsNullOrWhiteSpace(matchedInfoText) ? "" : matchedInfoText;
+            if (palkintoImageInInfoPanel != null && palkintoImageInInfoPanel.sprite != null)
+                palkintoImageInInfoPanel.gameObject.SetActive(true);
+
+            infoPopupPanel.SetActive(true);
+            return;
+        }
+
+        if (palkintoImageInInfoPanel != null) palkintoImageInInfoPanel.gameObject.SetActive(false);
 
         if (string.IsNullOrWhiteSpace(matchedInfoText))
         {
@@ -1091,6 +1308,9 @@ public class GameManager : MonoBehaviour
             }
 
             SetEndButtonsVisible(true);
+
+            // Show reward button for this completed difficulty.
+            ShowPalkintoButtonForDifficulty(currentDifficulty);
 
             if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(true);
 
