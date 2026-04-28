@@ -101,6 +101,14 @@ public class GameManager : MonoBehaviour
     [Tooltip("An Image component inside the info panel used to display the reward sprite.")]
     [SerializeField] private Image palkintoImageInInfoPanel;
 
+    [Header("Reward image layout")]
+    [Tooltip("If true, uses the sprite's native size and only scales down to fit inside the info panel.")]
+    [SerializeField] private bool palkintoUseNativeSize = true;
+    [Tooltip("Used when native size is disabled or sprite size cannot be determined.")]
+    [SerializeField] private Vector2 palkintoFallbackSize = new Vector2(256f, 256f);
+    [Tooltip("Padding (in UI units) between the reward image and the info panel edges when fitting.")]
+    [SerializeField] private float palkintoFitPadding = 10f;
+
     [Tooltip("Text shown on win screen when a reward is available (e.g., 'Sait palkinnon!').")]
     [SerializeField] private GameObject saitPalkinnonTekstiObj;
 
@@ -239,6 +247,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // If nothing is assigned/found, create a dedicated image under the info panel at runtime.
+        EnsurePalkintoImageInInfoPanel();
+
         // "Sait palkinnon!" text: optional auto-find by text content.
         if (saitPalkinnonTekstiObj == null)
         {
@@ -356,6 +367,7 @@ public class GameManager : MonoBehaviour
     private void ClearPalkintoFromInfoPanel()
     {
         showPalkinto = false;
+        EnsurePalkintoImageInInfoPanel();
         if (palkintoImageInInfoPanel != null)
         {
             palkintoImageInInfoPanel.sprite = null;
@@ -369,6 +381,7 @@ public class GameManager : MonoBehaviour
     private void ShowPalkintoInInfoPanel(Sprite sprite)
     {
         ResolvePalkintoRefsIfNeeded();
+        EnsurePalkintoImageInInfoPanel();
         if (palkintoImageInInfoPanel == null)
         {
             Debug.LogWarning("GameManager: palkintoImageInInfoPanel is not assigned/found. Assign an Image inside the info panel to display rewards.");
@@ -389,11 +402,93 @@ public class GameManager : MonoBehaviour
         palkintoImageInInfoPanel.preserveAspect = true;
         palkintoImageInInfoPanel.gameObject.SetActive(true);
 
+        ConfigurePalkintoImageLayout();
+
         // Make sure panel becomes visible.
         if (infoPopupPanel != null && !infoPopupPanel.activeInHierarchy)
             infoPopupPanel.SetActive(true);
 
         RefreshInfoPanel();
+    }
+
+    private void ConfigurePalkintoImageLayout()
+    {
+        if (palkintoImageInInfoPanel == null) return;
+        if (infoPopupPanel == null) return;
+
+        var panelRt = infoPopupPanel.transform as RectTransform;
+        var imgRt = palkintoImageInInfoPanel.transform as RectTransform;
+        if (panelRt == null || imgRt == null) return;
+
+        // Center the image; do not stretch to the panel.
+        imgRt.anchorMin = new Vector2(0.5f, 0.5f);
+        imgRt.anchorMax = new Vector2(0.5f, 0.5f);
+        imgRt.pivot = new Vector2(0.5f, 0.5f);
+        imgRt.anchoredPosition = Vector2.zero;
+
+        if (palkintoUseNativeSize)
+        {
+            // Sets sizeDelta based on the sprite pixel size.
+            palkintoImageInInfoPanel.SetNativeSize();
+        }
+        else
+        {
+            imgRt.sizeDelta = palkintoFallbackSize;
+        }
+
+        // Fit inside the panel with padding; never scale up beyond native/fallback size.
+        Vector2 size = imgRt.sizeDelta;
+        if (size.x <= 0f || size.y <= 0f)
+            size = palkintoFallbackSize;
+
+        float padding = Mathf.Max(0f, palkintoFitPadding);
+        float maxW = Mathf.Max(1f, panelRt.rect.width - 2f * padding);
+        float maxH = Mathf.Max(1f, panelRt.rect.height - 2f * padding);
+        float scale = Mathf.Min(1f, maxW / size.x, maxH / size.y);
+        imgRt.sizeDelta = size * scale;
+    }
+
+    private void EnsurePalkintoImageInInfoPanel()
+    {
+        if (palkintoImageInInfoPanel != null) return;
+        if (infoPopupPanel == null) return;
+
+        // Prefer an existing child image named appropriately.
+        var childImages = infoPopupPanel.GetComponentsInChildren<Image>(true);
+        for (int i = 0; i < childImages.Length; i++)
+        {
+            var img = childImages[i];
+            if (img == null) continue;
+
+            if (string.Equals(img.name, "PalkintoKuva", System.StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(img.name, "PalkintoImage", System.StringComparison.OrdinalIgnoreCase))
+            {
+                palkintoImageInInfoPanel = img;
+                palkintoImageInInfoPanel.raycastTarget = false;
+                return;
+            }
+        }
+
+        // Otherwise create one.
+        var go = new GameObject("PalkintoKuva", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        go.transform.SetParent(infoPopupPanel.transform, false);
+
+        var rt = go.GetComponent<RectTransform>();
+        rt.anchorMin = new Vector2(0.5f, 0.5f);
+        rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = Vector2.zero;
+        rt.sizeDelta = palkintoFallbackSize;
+
+        var imgComp = go.GetComponent<Image>();
+        imgComp.raycastTarget = false;
+        imgComp.preserveAspect = true;
+
+        // Put it behind existing children (e.g., text), so reward text can still be shown if desired.
+        go.transform.SetSiblingIndex(0);
+        go.SetActive(false);
+
+        palkintoImageInInfoPanel = imgComp;
     }
 
     public void PalkintoNappi1()

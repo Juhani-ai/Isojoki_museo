@@ -2861,7 +2861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 414, y: 86}
+  m_AnchoredPosition: {x: 414, y: 92}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472454196
@@ -3772,10 +3772,13 @@ MonoBehaviour:
   PalkintoNappi1Obj: {fileID: 731091498}
   PalkintoNappi2Obj: {fileID: 196649057}
   PalkintoNappi3Obj: {fileID: 1451578964}
-  palkinto1Sprite: {fileID: 0}
-  palkinto2Sprite: {fileID: 0}
-  palkinto3Sprite: {fileID: 0}
+  palkinto1Sprite: {fileID: 21300000, guid: 66a13c67b8b275723808693173baaa78, type: 3}
+  palkinto2Sprite: {fileID: 21300000, guid: a29be5f14bfc8c744aabc28eaceafb74, type: 3}
+  palkinto3Sprite: {fileID: 21300000, guid: f574be493681f14f0b2cba1b12990db2, type: 3}
   palkintoImageInInfoPanel: {fileID: 0}
+  palkintoUseNativeSize: 0
+  palkintoFallbackSize: {x: 500, y: 500}
+  palkintoFitPadding: 10
   saitPalkinnonTekstiObj: {fileID: 1472454194}
   voititTekstiObj: {fileID: 2110607849}
   "P\xE4\xE4valikko": "1. P\xE4\xE4valikko"
