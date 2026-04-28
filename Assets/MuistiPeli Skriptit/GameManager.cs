@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Used when native size is disabled or sprite size cannot be determined.")]
     [SerializeField] private Vector2 palkintoFallbackSize = new Vector2(256f, 256f);
     [Tooltip("Padding (in UI units) between the reward image and the info panel edges when fitting.")]
-    [SerializeField] private float palkintoFitPadding = 10f;
+    [SerializeField] private float palkintoFitPadding = 0f;
 
     [Tooltip("Text shown on win screen when a reward is available (e.g., 'Sait palkinnon!').")]
     [SerializeField] private GameObject saitPalkinnonTekstiObj;
