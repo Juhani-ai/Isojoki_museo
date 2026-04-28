@@ -112,6 +112,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("Text shown on win screen when a reward is available (e.g., 'Sait palkinnon!').")]
     [SerializeField] private GameObject saitPalkinnonTekstiObj;
 
+    [Tooltip("Text shown when ALL rewards have been unlocked (e.g., 'Sait kaikki palkinnot!').")]
+    [SerializeField] private GameObject saitKaikkiPalkinnotTekstiObj;
+
     [Tooltip("Text shown on win screen when the player wins (e.g., 'Voitit!').")]
     [SerializeField] private GameObject voititTekstiObj;
     [Header("Scene Navigation")]
@@ -119,6 +122,9 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private readonly Dictionary<Difficulty, int> completedScoreByDifficulty = new();
+
+    private readonly HashSet<Difficulty> unlockedRewards = new();
+    private bool resetRewardsPending;
 
     private bool showPalkinto;
 
@@ -184,6 +190,7 @@ public class GameManager : MonoBehaviour
         WirePalkintoButtons();
         HideAllPalkintoButtons();
         SetSaitPalkinnonVisible(false);
+        SetSaitKaikkiPalkinnotVisible(false);
         SetVoititVisible(false);
         ClearPalkintoFromInfoPanel();
 
@@ -268,6 +275,24 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // "Sait kaikki palkinnot!" text: optional auto-find by text content.
+        if (saitKaikkiPalkinnotTekstiObj == null)
+        {
+            var texts = Resources.FindObjectsOfTypeAll<TMP_Text>();
+            for (int i = 0; i < texts.Length; i++)
+            {
+                var t = texts[i];
+                if (t == null) continue;
+                if (!t.gameObject.scene.IsValid()) continue;
+
+                if (string.Equals((t.text ?? "").Trim(), "Sait kaikki palkinnot!", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    saitKaikkiPalkinnotTekstiObj = t.gameObject;
+                    break;
+                }
+            }
+        }
+
         // "Voitit!" text: optional auto-find by text content.
         if (voititTekstiObj == null)
         {
@@ -291,6 +316,12 @@ public class GameManager : MonoBehaviour
     {
         ResolvePalkintoRefsIfNeeded();
         if (saitPalkinnonTekstiObj != null) saitPalkinnonTekstiObj.SetActive(visible);
+    }
+
+    private void SetSaitKaikkiPalkinnotVisible(bool visible)
+    {
+        ResolvePalkintoRefsIfNeeded();
+        if (saitKaikkiPalkinnotTekstiObj != null) saitKaikkiPalkinnotTekstiObj.SetActive(visible);
     }
 
     private void SetVoititVisible(bool visible)
@@ -338,30 +369,56 @@ public class GameManager : MonoBehaviour
         if (PalkintoNappi3Obj != null) PalkintoNappi3Obj.SetActive(false);
     }
 
-    private void ShowPalkintoButtonForDifficulty(Difficulty difficulty)
+    private void UpdatePalkintoButtonsVisibility(bool visible)
     {
-        // Only show one at a time.
+        if (!visible)
+        {
+            HideAllPalkintoButtons();
+            return;
+        }
+
+        // Show all unlocked rewards (one per completed difficulty).
+        if (PalkintoNappi1Obj != null) PalkintoNappi1Obj.SetActive(unlockedRewards.Contains(Difficulty.Hard));
+        if (PalkintoNappi2Obj != null) PalkintoNappi2Obj.SetActive(unlockedRewards.Contains(Difficulty.Medium));
+        if (PalkintoNappi3Obj != null) PalkintoNappi3Obj.SetActive(unlockedRewards.Contains(Difficulty.Easy));
+    }
+
+    private void UnlockRewardForDifficulty(Difficulty difficulty)
+    {
+        if (difficulty == Difficulty.None) return;
+
+        unlockedRewards.Add(difficulty);
+
+        // If all three are unlocked, reset should happen on the next transition (so the player can still click/view on this win screen).
+        if (unlockedRewards.Contains(Difficulty.Easy) && unlockedRewards.Contains(Difficulty.Medium) && unlockedRewards.Contains(Difficulty.Hard))
+        {
+            resetRewardsPending = true;
+            SetSaitPalkinnonVisible(false);
+            SetSaitKaikkiPalkinnotVisible(true);
+        }
+    }
+
+    private bool AreAllRewardsUnlocked()
+    {
+        return unlockedRewards.Contains(Difficulty.Easy) &&
+               unlockedRewards.Contains(Difficulty.Medium) &&
+               unlockedRewards.Contains(Difficulty.Hard);
+    }
+
+    private void ApplyPendingRewardResetIfNeeded()
+    {
+        if (!resetRewardsPending) return;
+        resetRewardsPending = false;
+        ResetRewards();
+    }
+
+    private void ResetRewards()
+    {
+        unlockedRewards.Clear();
         HideAllPalkintoButtons();
         SetSaitPalkinnonVisible(false);
-
-        switch (difficulty)
-        {
-            case Difficulty.Easy:
-                if (PalkintoNappi3Obj != null) PalkintoNappi3Obj.SetActive(true);
-                SetSaitPalkinnonVisible(true);
-                break;
-            case Difficulty.Medium:
-                if (PalkintoNappi2Obj != null) PalkintoNappi2Obj.SetActive(true);
-                SetSaitPalkinnonVisible(true);
-                break;
-            case Difficulty.Hard:
-                if (PalkintoNappi1Obj != null) PalkintoNappi1Obj.SetActive(true);
-                SetSaitPalkinnonVisible(true);
-                break;
-            case Difficulty.None:
-            default:
-                break;
-        }
+        SetSaitKaikkiPalkinnotVisible(false);
+        ClearPalkintoFromInfoPanel();
     }
 
     private void ClearPalkintoFromInfoPanel()
@@ -493,19 +550,16 @@ public class GameManager : MonoBehaviour
 
     public void PalkintoNappi1()
     {
-        HideAllPalkintoButtons();
         ShowPalkintoInInfoPanel(palkinto1Sprite);
     }
 
     public void PalkintoNappi2()
     {
-        HideAllPalkintoButtons();
         ShowPalkintoInInfoPanel(palkinto2Sprite);
     }
 
     public void PalkintoNappi3()
     {
-        HideAllPalkintoButtons();
         ShowPalkintoInInfoPanel(palkinto3Sprite);
     }
 
@@ -735,11 +789,13 @@ public class GameManager : MonoBehaviour
 
     public void PoistuTasoihinNappi()
     {
+        ApplyPendingRewardResetIfNeeded();
+
         // Stop the current run and let the player choose a new difficulty.
         timeScript?.StopTimer();
         showOhjeet = false;
         ClearMatchedInfo();
-        HideAllPalkintoButtons();
+        UpdatePalkintoButtonsVisibility(true);
         SetSaitPalkinnonVisible(false);
         SetVoititVisible(false);
         ClearPalkintoFromInfoPanel();
@@ -907,6 +963,9 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        // Leaving/restarting the minigame should reset rewards.
+        ResetRewards();
+
         // If you ever pause the game with Time.timeScale, this makes sure it resumes.
         Time.timeScale = 1f;
 
@@ -930,6 +989,7 @@ public class GameManager : MonoBehaviour
     // Called by UI buttons
     public void StartEasy()
     {
+        ApplyPendingRewardResetIfNeeded();
         SetStartMenuVisible(false);
         SetDifficultySelectionVisible(false);
         SetMenuChromeVisible(false);
@@ -941,6 +1001,7 @@ public class GameManager : MonoBehaviour
 
     public void StartMedium()
     {
+        ApplyPendingRewardResetIfNeeded();
         SetStartMenuVisible(false);
         SetDifficultySelectionVisible(false);
         SetMenuChromeVisible(false);
@@ -952,6 +1013,7 @@ public class GameManager : MonoBehaviour
 
     public void StartHard()
     {
+        ApplyPendingRewardResetIfNeeded();
         SetStartMenuVisible(false);
         SetDifficultySelectionVisible(false);
         SetMenuChromeVisible(false);
@@ -988,8 +1050,10 @@ public class GameManager : MonoBehaviour
         // Starting a new difficulty should return the info panel to normal (pair list) mode.
         showOhjeet = false;
         ClearMatchedInfo();
+        // Rewards are not shown during active gameplay.
         HideAllPalkintoButtons();
         SetSaitPalkinnonVisible(false);
+        SetSaitKaikkiPalkinnotVisible(false);
         SetVoititVisible(false);
         ClearPalkintoFromInfoPanel();
 
@@ -1061,7 +1125,7 @@ public class GameManager : MonoBehaviour
         SetEndButtonsVisibleOnTimeout();
 
         // No rewards on timeout.
-        HideAllPalkintoButtons();
+        UpdatePalkintoButtonsVisibility(true);
         SetSaitPalkinnonVisible(false);
         SetVoititVisible(false);
         ClearPalkintoFromInfoPanel();
@@ -1473,8 +1537,12 @@ public class GameManager : MonoBehaviour
 
             SetEndButtonsVisible(true);
 
-            // Show reward button for this completed difficulty.
-            ShowPalkintoButtonForDifficulty(currentDifficulty);
+            // Unlock this difficulty's reward and show all unlocked rewards.
+            UnlockRewardForDifficulty(currentDifficulty);
+            UpdatePalkintoButtonsVisibility(true);
+            bool allUnlockedNow = AreAllRewardsUnlocked();
+            SetSaitKaikkiPalkinnotVisible(allUnlockedNow);
+            SetSaitPalkinnonVisible(!allUnlockedNow);
 
             if (PoistuTasoihinNappiObj != null) PoistuTasoihinNappiObj.SetActive(true);
 
@@ -1511,6 +1579,8 @@ public class GameManager : MonoBehaviour
 
     public void PoistuNappi()
     {
+        // Quitting the minigame should reset reward progress.
+        ResetRewards();
         SceneManager.LoadScene("1. Päävalikko");
     }
 
