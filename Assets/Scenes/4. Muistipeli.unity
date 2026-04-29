@@ -2862,7 +2862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 230, y: -25}
+  m_AnchoredPosition: {x: 239, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472454196
@@ -2979,7 +2979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2871399782817423267, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_text
-      value: Salainen
+      value: Salainen nappi
       objectReference: {fileID: 0}
     - target: {fileID: 2871399782817423267, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_fontColor.b
@@ -3051,11 +3051,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.2
+      value: 1.18
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalScale.z
@@ -4061,7 +4061,7 @@ MonoBehaviour:
   PoistuTasoihinNappiObj: {fileID: 358612269}
   TasonValintaTekstiObj: {fileID: 718663759}
   SalainenNappiObj: {fileID: 1559297587}
-  salainenEasterEggTeksti: "L\xF6ysit salaisen napin. \n\nHyvin tehty!"
+  salainenEasterEggTeksti: "L\xF6ysit t\xE4m\xE4n salaisen napin. \n\nHyvin tehty!"
   SeuraavaNappiObj: {fileID: 1178817422}
   PaavalikkoNappiObj: {fileID: 0}
   TuloksetNappiObj: {fileID: 1070250111}
