@@ -1,3 +1,40 @@
 {
-    "tarinat": []
+    "tarinat": [
+        {
+            "teksti": "moi",
+            "pvm": "23.4.2026 klo 12.11"
+        },
+        {
+            "teksti": "taas",
+            "pvm": "23.4.2026 klo 12.12"
+        },
+        {
+            "teksti": "ja taas",
+            "pvm": "23.4.2026 klo 12.22"
+        },
+        {
+            "teksti": "joo",
+            "pvm": "23.4.2026 klo 12.23"
+        },
+        {
+            "teksti": "ha",
+            "pvm": "23.4.2026 klo 12.24"
+        },
+        {
+            "teksti": "jpp",
+            "pvm": "23.4.2026 klo 12.25"
+        },
+        {
+            "teksti": "ja",
+            "pvm": "23.4.2026 klo 12.30"
+        },
+        {
+            "teksti": "moi",
+            "pvm": "23.4.2026 klo 12.32"
+        },
+        {
+            "teksti": "kiitos",
+            "pvm": "23.4.2026 klo 12.34"
+        }
+    ]
 }
