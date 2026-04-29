@@ -3877,8 +3877,8 @@ MonoBehaviour:
   cols: 4
   timeScript: {fileID: 0}
   easySeconds: 8
-  mediumSeconds: 60
-  hardSeconds: 91
+  mediumSeconds: 66
+  hardSeconds: 61
   easyPointsPerPair: 5
   mediumPointsPerPair: 10
   hardPointsPerPair: 20
