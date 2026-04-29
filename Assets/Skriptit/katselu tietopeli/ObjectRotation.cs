@@ -15,7 +15,12 @@ public class ObjectRotation : MonoBehaviour
 
     [SerializeField] private RawImage targetImage;       // RawImage, jonka päällä rotaatio alkaa
     [SerializeField] private GraphicRaycaster raycaster; // Canvasin raycaster
-    
+
+    [Header("Zoom Settings")]
+
+    [SerializeField] private float zoomSpeed = 10f;
+    [SerializeField] private float minScale = 100f;
+    [SerializeField] private float maxScale = 2000f;
 
     private Vector2 rotation;
     private bool rotateAllowed;
@@ -44,7 +49,21 @@ public class ObjectRotation : MonoBehaviour
         {
             rotation = Vector2.zero;
         }
+
+        if (IsPointerOverRawImage())
+        {
+            float scroll = Mouse.current.scroll.ReadValue().y;
+                if (scroll != 0f)
+                {
+                    float scrollDir = Mathf.Sign(scroll);
+                    float currentScale = transform.localScale.x;
+                    float newScale = Mathf.Clamp(currentScale + scrollDir * zoomSpeed, minScale, maxScale);
+                    transform.localScale = Vector3.one * newScale;
+                }
+        }
     }
+
+    
 
     private bool IsPointerOverRawImage()
     {

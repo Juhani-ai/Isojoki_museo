@@ -23,6 +23,9 @@ public class QuestionPanel : MonoBehaviour
     [Header ("Pisteet")]
     [SerializeField] private TMP_Text pointText;
 
+    [Header ("Objekti")]
+    [SerializeField] private GameObject rotationObject;
+
     private bool onVastattu = false; 
 
     void Start()
@@ -34,6 +37,7 @@ public class QuestionPanel : MonoBehaviour
         wrongButton2.onClick.AddListener(() => WrongClicked(wrongButton2));
         wrongButton3.onClick.AddListener(() => WrongClicked(wrongButton3));
         nextButton.onClick.AddListener(() => Debug.Log("Toimii"));
+        nextButton.onClick.AddListener(NextClicked);
         
         answerButton.onClick.AddListener(AnswerClicked);
 
@@ -113,5 +117,10 @@ public class QuestionPanel : MonoBehaviour
             correctButton.image.color = Color.white;
         } 
        
+    }
+
+    void NextClicked()
+    {
+        rotationObject.gameObject.SetActive(false);
     }
 }
