@@ -70,6 +70,12 @@ public class GameManager : MonoBehaviour
     [Header("Difficulty selection label")]
     [SerializeField] private GameObject TasonValintaTekstiObj;
 
+    [Header("Secret (Easter egg)")]
+    [Tooltip("Hidden button that becomes visible only after pressing difficulties in the order: Hard -> Easy -> Medium.")]
+    [SerializeField] private GameObject SalainenNappiObj;
+    [Tooltip("Text appended to the info panel when SalainenNappi is pressed.")]
+    [SerializeField][TextArea(2, 6)] private string salainenEasterEggTeksti = "";
+
     [Header("End-of-round buttons")]
     [SerializeField] private GameObject SeuraavaNappiObj;
     [SerializeField] private GameObject PaavalikkoNappiObj;
@@ -127,6 +133,15 @@ public class GameManager : MonoBehaviour
     private bool resetRewardsPending;
 
     private bool showPalkinto;
+
+    // Tracks the Hard -> Easy -> Medium WIN completion sequence.
+    private int salainenCompletionIndex;
+    private bool salainenUnlocked;
+    private bool salainenEasterEggAppended;
+
+    // UI state flags so we can show the secret button only in menus/end-of-round, not during gameplay.
+    private bool isDifficultySelectionVisible;
+    private bool areEndButtonsVisible;
 
     private void Awake()
     {
@@ -199,11 +214,142 @@ public class GameManager : MonoBehaviour
         SetStartMenuVisible(true);
         SetMenuChromeVisible(true);
 
+        ResolveSalainenNappiRefIfNeeded();
+        WireSalainenNappiButton();
+        // Force hidden on startup even if it was left enabled in the scene.
+        SetSalainenNappiVisible(false);
+
         // Optional convenience: if not set in Inspector, try to find a ParticleSystem under this GameObject.
         if (allPairsParticles == null)
         {
             allPairsParticles = GetComponentInChildren<ParticleSystem>(true);
         }
+    }
+
+    private void ResolveSalainenNappiRefIfNeeded()
+    {
+        if (SalainenNappiObj != null) return;
+
+        // GameObject.Find only finds active objects.
+        var byName = GameObject.Find("SalainenNappi");
+        if (byName != null)
+        {
+            SalainenNappiObj = byName;
+            return;
+        }
+
+        // Fallback: search all Buttons in the scene (includes inactive objects).
+        var buttons = Resources.FindObjectsOfTypeAll<Button>();
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            var button = buttons[i];
+            if (button == null) continue;
+            if (!button.gameObject.scene.IsValid()) continue;
+
+            if (string.Equals(button.name, "SalainenNappi", System.StringComparison.OrdinalIgnoreCase))
+            {
+                SalainenNappiObj = button.gameObject;
+                return;
+            }
+        }
+    }
+
+    private void WireSalainenNappiButton()
+    {
+        ResolveSalainenNappiRefIfNeeded();
+        if (SalainenNappiObj == null) return;
+
+        // The serialized reference may point to a parent container OR a child.
+        var btn = SalainenNappiObj.GetComponent<Button>();
+        if (btn == null) btn = SalainenNappiObj.GetComponentInChildren<Button>(true);
+        if (btn == null) btn = SalainenNappiObj.GetComponentInParent<Button>(true);
+        if (btn == null) return;
+
+        // Normalize so SetActive hits the clickable object.
+        SalainenNappiObj = btn.gameObject;
+
+        // Avoid duplicate wiring if already set up in Inspector.
+        int persistentCount = btn.onClick.GetPersistentEventCount();
+        for (int i = 0; i < persistentCount; i++)
+        {
+            var target = btn.onClick.GetPersistentTarget(i);
+            var method = btn.onClick.GetPersistentMethodName(i);
+            if (target == (UnityEngine.Object)this && method == nameof(SalainenNappi))
+            {
+                return;
+            }
+        }
+
+        btn.onClick.RemoveListener(SalainenNappi);
+        btn.onClick.AddListener(SalainenNappi);
+    }
+
+    private void AppendToInfoPanel(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return;
+
+        // Make sure the panel shows the accumulated text.
+        showOhjeet = false;
+        showPalkinto = false;
+
+        if (string.IsNullOrWhiteSpace(matchedInfoText))
+            matchedInfoText = text.Trim();
+        else
+            matchedInfoText += "\n" + text.Trim();
+
+        RefreshInfoPanel();
+    }
+
+    // Called by the secret UI button.
+    public void SalainenNappi()
+    {
+        if (salainenEasterEggAppended) return;
+        salainenEasterEggAppended = true;
+
+        AppendToInfoPanel(salainenEasterEggTeksti);
+    }
+
+    private void SetSalainenNappiVisible(bool visible)
+    {
+        ResolveSalainenNappiRefIfNeeded();
+        if (SalainenNappiObj != null) SalainenNappiObj.SetActive(visible);
+    }
+
+    private void RefreshSalainenNappiVisibility()
+    {
+        // Only show it in menu contexts (difficulty selection or end-of-round screens).
+        bool shouldShow = salainenUnlocked && (isDifficultySelectionVisible || areEndButtonsVisible);
+        SetSalainenNappiVisible(shouldShow);
+    }
+
+    private void NoteDifficultyCompletedWin(Difficulty difficulty)
+    {
+        if (salainenUnlocked) return;
+        if (difficulty == Difficulty.None) return;
+
+        // Required order: Hard -> Easy -> Medium (must be completed/won in this order).
+        Difficulty expected = salainenCompletionIndex switch
+        {
+            0 => Difficulty.Hard,
+            1 => Difficulty.Easy,
+            2 => Difficulty.Medium,
+            _ => Difficulty.Hard
+        };
+
+        if (difficulty == expected)
+        {
+            salainenCompletionIndex++;
+            if (salainenCompletionIndex >= 3)
+            {
+                salainenUnlocked = true;
+                RefreshSalainenNappiVisibility();
+            }
+
+            return;
+        }
+
+        // Wrong order: reset progress. Completing HARD can always start a new attempt.
+        salainenCompletionIndex = difficulty == Difficulty.Hard ? 1 : 0;
     }
 
     private void ResolvePalkintoRefsIfNeeded()
@@ -771,6 +917,9 @@ public class GameManager : MonoBehaviour
         {
             TuloksetNappiObj.SetActive(visible && ShouldShowTuloksetButton());
         }
+
+        isDifficultySelectionVisible = visible;
+        RefreshSalainenNappiVisibility();
     }
 
     private void SetStartMenuVisible(bool visible)
@@ -946,6 +1095,9 @@ public class GameManager : MonoBehaviour
         {
             TuloksetNappiObj.SetActive(visible && ShouldShowTuloksetButton());
         }
+
+        areEndButtonsVisible = visible;
+        RefreshSalainenNappiVisibility();
     }
 
     private void SetEndButtonsVisibleOnTimeout()
@@ -959,6 +1111,9 @@ public class GameManager : MonoBehaviour
 
         // Timeout is not “completed”, so keep results button hidden.
         if (TuloksetNappiObj != null) TuloksetNappiObj.SetActive(false);
+
+        areEndButtonsVisible = true;
+        RefreshSalainenNappiVisibility();
     }
 
     public void RestartGame()
@@ -1512,6 +1667,9 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Game Finished");
             roundFinished = true;
+
+            // Easter egg unlock sequence is based on WINNING difficulties in order.
+            NoteDifficultyCompletedWin(currentDifficulty);
 
             // Win text should appear only on an actual win (all pairs found).
             SetVoititVisible(true);
