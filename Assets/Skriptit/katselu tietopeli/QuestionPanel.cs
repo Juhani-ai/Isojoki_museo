@@ -58,17 +58,15 @@ public class QuestionPanel : MonoBehaviour
 
         nextButton.interactable = true;
 
-        correctButton.interactable = false;
-        wrongButton1.interactable = false;
-        wrongButton2.interactable = false;
-        wrongButton3.interactable = false;
+        SetButtonInteractable(correctButton, false);
+        SetButtonInteractable(wrongButton1, false);
+        SetButtonInteractable(wrongButton2, false);
+        SetButtonInteractable(wrongButton3, false);
 
         answerButton.gameObject.SetActive(true);
         answerButton.interactable = true;
 
         btn.image.color = Color.red;
-
-        nextButton.image.color = Color.white;
 
     }
 
@@ -86,16 +84,12 @@ public class QuestionPanel : MonoBehaviour
 
         nextButton.interactable = true;
 
-        correctButton.interactable = false;
-        wrongButton1.interactable = false;
-        wrongButton2.interactable = false;
-        wrongButton3.interactable = false;
+        SetButtonInteractable(correctButton, false);
+        SetButtonInteractable(wrongButton1, false);
+        SetButtonInteractable(wrongButton2, false);
+        SetButtonInteractable(wrongButton3, false);
 
         correctButton.image.color = Color.green;
-
-        nextText.color = Color.black;
-        nextButton.image.color = Color.white;
-
         
     }
 
@@ -103,18 +97,21 @@ public class QuestionPanel : MonoBehaviour
     {
         if (answerbuttonText.text == "Paljasta oikea vastaus")
         {
+            ColorUtility.TryParseHtmlString("#736A53", out Color paljastettuVari);
             answerbuttonText.text = "Piilota oikea vastaus";
-            answerButton.image.color = Color.grey;
+            answerButton.image.color = paljastettuVari;
 
             correctButton.image.color = Color.green;
         }
 
         else if (answerbuttonText.text == "Piilota oikea vastaus")
         {
-            answerbuttonText.text = "Paljasta oikea vastaus";
-            answerButton.image.color = Color.white;
+            ColorUtility.TryParseHtmlString("#DCC896", out Color alkuperainenVari);
 
-            correctButton.image.color = Color.white;
+            answerbuttonText.text = "Paljasta oikea vastaus";
+            answerButton.image.color = alkuperainenVari;
+            
+            correctButton.image.color = alkuperainenVari;
         } 
        
     }
@@ -122,5 +119,19 @@ public class QuestionPanel : MonoBehaviour
     void NextClicked()
     {
         rotationObject.gameObject.SetActive(false);
+    }
+
+    void SetButtonInteractable(Button btn, bool interactable)
+    {
+        btn.interactable = interactable;
+        
+        ColorBlock cb = btn.colors;
+        cb.disabledColor = new Color(
+            cb.disabledColor.r,
+            cb.disabledColor.g,
+            cb.disabledColor.b,
+            0.8f
+        );
+        btn.colors = cb;
     }
 }

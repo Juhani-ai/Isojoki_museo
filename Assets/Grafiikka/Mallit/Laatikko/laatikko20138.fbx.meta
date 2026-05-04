@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 27c8a547e78f625429c9f6fc9db3b59f
+guid: 664c8743362c6ea4f9002e21b49bfb38
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: LaatikkoPuuTexture
-    second: {fileID: 2800000, guid: 9fe409bbc423a1a419d85acdc6076118, type: 3}
+    second: {fileID: 2800000, guid: 6a7735c9798adc447986031e8032d986, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -38,7 +38,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 10
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -96,7 +96,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 10
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

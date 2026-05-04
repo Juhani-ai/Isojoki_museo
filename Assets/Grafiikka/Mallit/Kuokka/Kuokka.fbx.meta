@@ -8,17 +8,17 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: kahva4
-    second: {fileID: 2800000, guid: 3a9d50e4244145c4b962a5e831009d29, type: 3}
+    second: {fileID: 2800000, guid: 7dacaf2bb330d3f4797f1525e5fc1dd7, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: pala
-    second: {fileID: 2800000, guid: 457f988fe61445c4e8f23931b4afe23e, type: 3}
+    second: {fileID: 2800000, guid: 64ce28bb2bf600b4cb0ff6d98f8879a2, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: tera
-    second: {fileID: 2800000, guid: 1d0c4ba6c7123d544b76116f00c60791, type: 3}
+    second: {fileID: 2800000, guid: 9ace2b1ff34ae50449c92d513290a6be, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
