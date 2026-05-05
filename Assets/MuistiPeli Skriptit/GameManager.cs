@@ -292,6 +292,8 @@ public class GameManager : MonoBehaviour
         showOhjeet = false;
         showPalkinto = false;
 
+        ClearMatchedInfo();
+
         if (string.IsNullOrWhiteSpace(matchedInfoText))
             matchedInfoText = text.Trim();
         else
