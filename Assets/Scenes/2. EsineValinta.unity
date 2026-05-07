@@ -148,6 +148,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8806994402503807806}
     m_Modifications:
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 561478447224013917, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: m_Name
       value: AvaaLukko2
@@ -410,6 +422,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8650532699750179717}
     m_Modifications:
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 561478447224013917, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: m_Name
       value: AvaaLukko3
@@ -785,6 +809,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1219915534280669394}
     m_Modifications:
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 561478447224013917, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: m_Name
       value: AvaaLukko5
@@ -946,6 +982,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1113710933360773480}
     m_Modifications:
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 561478447224013917, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: m_Name
       value: AvaaLukko7
@@ -1073,46 +1121,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1981814607}
     m_Modifications:
-    - target: {fileID: 63332543740025716, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: ostoAani
-      value: 
-      objectReference: {fileID: 8300000, guid: 61f9fda2c09e871c99e246468b5cb4c9, type: 3}
-    - target: {fileID: 63332543740025716, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 1259876865}
-    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LisaaPisteita
-      objectReference: {fileID: 0}
-    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Pistemanageri, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948169168869124800, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8736609616749979454, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
       propertyPath: m_Name
       value: PisteManageri
@@ -1157,8 +1165,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 63332543740025716, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1306,6 +1313,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2539380610819637995}
     m_Modifications:
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 561478447224013917, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: m_Name
       value: AvaaLukko4
@@ -1518,6 +1537,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1545671816541287412}
     m_Modifications:
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 561478447224013917, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: m_Name
       value: AvaaLukko6
@@ -1762,6 +1793,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4013945973356945921}
     m_Modifications:
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 715262321112219653, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: esineenID
       value: Voiaski -kortti
@@ -2112,7 +2155,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 195323d14cb230c448d94164d636f7db, type: 3}
+  m_Texture: {fileID: 2800000, guid: 302c53a3a0b92269ea62d5b423d460a4, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -3978,6 +4021,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1981814607}
     m_Modifications:
+    - target: {fileID: 3241374890941876865, guid: 53ae0c245df1ca3f684005ebc64d878b, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 3241374890941876865, guid: 53ae0c245df1ca3f684005ebc64d878b, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5123323789122795427, guid: 53ae0c245df1ca3f684005ebc64d878b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4811,6 +4862,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6420602854231628089}
     m_Modifications:
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+    - target: {fileID: 275120629048898035, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 561478447224013917, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: m_Name
       value: AvaaLukko8
