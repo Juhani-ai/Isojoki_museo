@@ -1031,7 +1031,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1617436459}
+    m_TransformParent: {fileID: 1786760844}
     m_Modifications:
     - target: {fileID: 1673446380733074820, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_Name
@@ -1123,15 +1123,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1537,7 +1537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3860466875459941909, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ShowPanel
+      value: NaytaSeuraavaAvattuPaneeli
       objectReference: {fileID: 0}
     - target: {fileID: 3860466875459941909, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1554,7 +1554,7 @@ PrefabInstance:
     - target: {fileID: 3860466875459941909, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 733240643}
+      objectReference: {fileID: 1602567868}
     - target: {fileID: 3860466875459941909, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
@@ -2806,7 +2806,7 @@ GameObject:
   - component: {fileID: 201306656}
   - component: {fileID: 201306655}
   m_Layer: 5
-  m_Name: QuestionThreePanel
+  m_Name: QuestionSixPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2892,12 +2892,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 1747130986}
   wrongButton2: {fileID: 1487879550}
   wrongButton3: {fileID: 1270632975}
+  esineID: 
   nextButton: {fileID: 756063942}
   nextText: {fileID: 232191508}
   answerButton: {fileID: 1101231573}
   answerbuttonText: {fileID: 572775578}
   pointText: {fileID: 1239234409}
   rotationObject: {fileID: 1783707213}
+  panelManager: {fileID: 0}
 --- !u!222 &201306657
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3910,7 +3912,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1617436459}
+    m_TransformParent: {fileID: 1786760844}
     m_Modifications:
     - target: {fileID: 1673446380733074820, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_Name
@@ -4002,15 +4004,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8586,12 +8588,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 580545996}
   wrongButton2: {fileID: 736995787}
   wrongButton3: {fileID: 1413252206}
+  esineID: 
   nextButton: {fileID: 1434342927}
   nextText: {fileID: 486922318}
   answerButton: {fileID: 1005252190}
   answerbuttonText: {fileID: 364050361}
   pointText: {fileID: 1682284245}
   rotationObject: {fileID: 1960527285}
+  panelManager: {fileID: 0}
 --- !u!222 &660261786
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9081,7 +9085,7 @@ GameObject:
   - component: {fileID: 690358678}
   - component: {fileID: 690358677}
   m_Layer: 5
-  m_Name: QuestionSixPanel
+  m_Name: QuestionThreePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9167,12 +9171,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 122171968}
   wrongButton2: {fileID: 1346375901}
   wrongButton3: {fileID: 1265776915}
+  esineID: Kappa
   nextButton: {fileID: 1792035820}
   nextText: {fileID: 2110083366}
   answerButton: {fileID: 1479297221}
   answerbuttonText: {fileID: 1601733194}
   pointText: {fileID: 2021523439}
   rotationObject: {fileID: 580205353}
+  panelManager: {fileID: 0}
 --- !u!222 &690358679
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9840,7 +9846,7 @@ GameObject:
   - component: {fileID: 733240646}
   - component: {fileID: 733240645}
   m_Layer: 5
-  m_Name: QuestionTwoPanel
+  m_Name: QuestionThirteenPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9926,12 +9932,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 732454414}
   wrongButton2: {fileID: 580085861}
   wrongButton3: {fileID: 1410583644}
+  esineID: 
   nextButton: {fileID: 997323862}
   nextText: {fileID: 1948877092}
   answerButton: {fileID: 70775987}
   answerbuttonText: {fileID: 1254349727}
   pointText: {fileID: 1446192269}
   rotationObject: {fileID: 601730276}
+  panelManager: {fileID: 0}
 --- !u!222 &733240647
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10514,12 +10522,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 1373692059}
   wrongButton2: {fileID: 1470300142}
   wrongButton3: {fileID: 26740354}
+  esineID: 
   nextButton: {fileID: 1840049502}
   nextText: {fileID: 819282876}
   answerButton: {fileID: 1700188313}
   answerbuttonText: {fileID: 1455656932}
   pointText: {fileID: 1736922236}
   rotationObject: {fileID: 1996012505}
+  panelManager: {fileID: 0}
 --- !u!222 &786690765
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12764,7 +12774,7 @@ GameObject:
   - component: {fileID: 999103292}
   - component: {fileID: 999103291}
   m_Layer: 5
-  m_Name: QuestionThirteenPanel
+  m_Name: QuestionFourPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12817,12 +12827,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 1780805162}
   wrongButton2: {fileID: 69460006}
   wrongButton3: {fileID: 40477724}
+  esineID: 
   nextButton: {fileID: 1415495628}
   nextText: {fileID: 1836953430}
   answerButton: {fileID: 338845506}
   answerbuttonText: {fileID: 1348517941}
   pointText: {fileID: 65490874}
   rotationObject: {fileID: 885918465}
+  panelManager: {fileID: 0}
 --- !u!222 &999103293
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13483,12 +13495,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 2055079464}
   wrongButton2: {fileID: 739502582}
   wrongButton3: {fileID: 439875832}
+  esineID: 
   nextButton: {fileID: 537043463}
   nextText: {fileID: 2119154162}
   answerButton: {fileID: 1532595414}
   answerbuttonText: {fileID: 1003670594}
   pointText: {fileID: 703524785}
   rotationObject: {fileID: 578580827}
+  panelManager: {fileID: 0}
 --- !u!222 &1054698512
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15100,12 +15114,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 1657523579}
   wrongButton2: {fileID: 400445329}
   wrongButton3: {fileID: 764195651}
+  esineID: 
   nextButton: {fileID: 1924316202}
   nextText: {fileID: 225158346}
   answerButton: {fileID: 760496905}
   answerbuttonText: {fileID: 1062131474}
   pointText: {fileID: 337471338}
   rotationObject: {fileID: 181607282}
+  panelManager: {fileID: 0}
 --- !u!222 &1173209780
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15932,7 +15948,7 @@ GameObject:
   - component: {fileID: 1249182543}
   - component: {fileID: 1249182542}
   m_Layer: 5
-  m_Name: QuestionFourPanel
+  m_Name: QuestionTwoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16018,12 +16034,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 552860805}
   wrongButton2: {fileID: 974382586}
   wrongButton3: {fileID: 875789199}
+  esineID: Kahvihuhmar
   nextButton: {fileID: 317831119}
   nextText: {fileID: 1270132025}
   answerButton: {fileID: 584500276}
   answerbuttonText: {fileID: 215608085}
   pointText: {fileID: 1545643929}
   rotationObject: {fileID: 1218238393}
+  panelManager: {fileID: 0}
 --- !u!222 &1249182544
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16867,12 +16885,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 724041501}
   wrongButton2: {fileID: 1232105762}
   wrongButton3: {fileID: 1452001263}
+  esineID: 
   nextButton: {fileID: 2077916059}
   nextText: {fileID: 1537063279}
   answerButton: {fileID: 1903673558}
   answerbuttonText: {fileID: 787615591}
   pointText: {fileID: 890420913}
   rotationObject: {fileID: 844996838}
+  panelManager: {fileID: 0}
 --- !u!222 &1335528507
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18841,12 +18861,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 1031970383}
   wrongButton2: {fileID: 1916422243}
   wrongButton3: {fileID: 945036736}
+  esineID: 
   nextButton: {fileID: 265025056}
   nextText: {fileID: 1935969023}
   answerButton: {fileID: 1707286314}
   answerbuttonText: {fileID: 1661231780}
   pointText: {fileID: 798648636}
   rotationObject: {fileID: 998750417}
+  panelManager: {fileID: 0}
 --- !u!222 &1475572778
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19343,6 +19365,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501808722}
   m_CullTransparentMesh: 1
+--- !u!114 &1507752830 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3860466875459941909, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
+  m_PrefabInstance: {fileID: 77761865}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1512417703
 GameObject:
   m_ObjectHideFlags: 0
@@ -20910,12 +20943,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 824845211}
   wrongButton2: {fileID: 720557750}
   wrongButton3: {fileID: 609874142}
+  esineID: Koristelupuu
   nextButton: {fileID: 1208282924}
   nextText: {fileID: 1194907997}
   answerButton: {fileID: 1048142177}
   answerbuttonText: {fileID: 323959554}
   pointText: {fileID: 112822685}
   rotationObject: {fileID: 1675701351}
+  panelManager: {fileID: 1617436460}
 --- !u!1 &1617436455
 GameObject:
   m_ObjectHideFlags: 0
@@ -21015,22 +21050,20 @@ RectTransform:
   - {fileID: 1289829927}
   - {fileID: 1193932958}
   - {fileID: 1602567869}
-  - {fileID: 733240644}
-  - {fileID: 201306654}
   - {fileID: 1249182541}
-  - {fileID: 2105060969}
   - {fileID: 690358676}
+  - {fileID: 999103294}
+  - {fileID: 2105060969}
+  - {fileID: 201306654}
   - {fileID: 2014246601}
   - {fileID: 786690766}
   - {fileID: 660261787}
   - {fileID: 1475572779}
   - {fileID: 1335528508}
   - {fileID: 1173209781}
-  - {fileID: 999103294}
+  - {fileID: 733240644}
   - {fileID: 1054698509}
   - {fileID: 1786760844}
-  - {fileID: 77761866}
-  - {fileID: 275810191}
   - {fileID: 332527990}
   - {fileID: 303201734}
   - {fileID: 1167622903}
@@ -21053,6 +21086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf0f2a614284e34083267c607dc61bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelManager
+  loppuruutu: {fileID: 1786760843}
   allPanels:
   - {fileID: 539805478}
   - {fileID: 1602567868}
@@ -23336,6 +23370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1786760844}
   - component: {fileID: 1786760846}
+  - component: {fileID: 1786760847}
   - component: {fileID: 1786760845}
   m_Layer: 5
   m_Name: EndPanel
@@ -23358,6 +23393,8 @@ RectTransform:
   m_Children:
   - {fileID: 2124904999}
   - {fileID: 529454583}
+  - {fileID: 77761866}
+  - {fileID: 275810191}
   m_Father: {fileID: 1617436459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -23403,6 +23440,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786760843}
   m_CullTransparentMesh: 1
+--- !u!114 &1786760847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786760843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1005a25ff40024a9697e1c7622e9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoppuruutuManager
+  tulosText: {fileID: 529454584}
+  pelaaUudelleenNappi: {fileID: 1507752830}
+  kotiruutuNappi: {fileID: 1932182533}
+  kotisceneNimi: 
 --- !u!224 &1792035815 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
@@ -25253,6 +25306,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928818751}
   m_CullTransparentMesh: 1
+--- !u!114 &1932182533 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3860466875459941909, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
+  m_PrefabInstance: {fileID: 275810190}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1932704032
 GameObject:
   m_ObjectHideFlags: 0
@@ -26973,12 +27037,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 1134148497}
   wrongButton2: {fileID: 1377754772}
   wrongButton3: {fileID: 711831773}
+  esineID: 
   nextButton: {fileID: 748671707}
   nextText: {fileID: 444277661}
   answerButton: {fileID: 809308104}
   answerbuttonText: {fileID: 618971970}
   pointText: {fileID: 726904881}
   rotationObject: {fileID: 1046828296}
+  panelManager: {fileID: 0}
 --- !u!222 &2014246600
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28527,12 +28593,14 @@ MonoBehaviour:
   wrongButton1: {fileID: 664702990}
   wrongButton2: {fileID: 1571704035}
   wrongButton3: {fileID: 2082962673}
+  esineID: 
   nextButton: {fileID: 1468747256}
   nextText: {fileID: 1527707719}
   answerButton: {fileID: 972490284}
   answerbuttonText: {fileID: 1454349763}
   pointText: {fileID: 494022515}
   rotationObject: {fileID: 928451715}
+  panelManager: {fileID: 0}
 --- !u!222 &2105060972
 CanvasRenderer:
   m_ObjectHideFlags: 0

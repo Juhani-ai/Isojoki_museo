@@ -1,27 +1,26 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PanelManager : MonoBehaviour
 {
+    public GameObject loppuruutu;
+
     public GameObject[] allPanels;
     public Image fadeOverlay;
     public float fadeDuration = 0.2f;
 
-    // Popup-asetukset
     public float popupAnimDuration = 0.2f;
     public AnimationCurve popupScaleCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private GameObject currentPanel;
-
-    // 🔹 LISÄTTY
     private bool isAnimatingPopup = false;
 
     public void ShowPanel(GameObject panel)
     {
         if (panel == null) return;
         if (panel == currentPanel) return;
-
         StartCoroutine(TransitionTo(panel));
     }
 
@@ -31,7 +30,6 @@ public class PanelManager : MonoBehaviour
         StartCoroutine(TransitionTo(null));
     }
 
-    // Popup — ei koko ruudun tummennusta
     public void ShowPopup(GameObject popup)
     {
         if (popup == null) return;
@@ -45,18 +43,15 @@ public class PanelManager : MonoBehaviour
         StartCoroutine(PopupAnimateOut(popup));
     }
 
-    // 🔹 LISÄTTY: Toggle-toiminto
     public void TogglePopup(GameObject popup)
     {
         if (popup == null || isAnimatingPopup) return;
-
         if (popup.activeSelf)
             StartCoroutine(HidePopupSafe(popup));
         else
             StartCoroutine(ShowPopupSafe(popup));
     }
 
-    // 🔹 LISÄTTY: turvalliset coroutinet
     private IEnumerator ShowPopupSafe(GameObject popup)
     {
         isAnimatingPopup = true;
@@ -73,22 +68,35 @@ public class PanelManager : MonoBehaviour
         isAnimatingPopup = false;
     }
 
-    // --- Koko ruudun siirtymä ---
+    public void NaytaSeuraavaAvattuPaneeli(GameObject nykyinen)
+    {
+        List<string> avatut = EsineRekisteri.HaeAvatutEsineet();
+        int nykyinenIndeksi = System.Array.IndexOf(allPanels, nykyinen);
+
+        for (int i = nykyinenIndeksi + 1; i < allPanels.Length; i++)
+        {
+            QuestionPanel qp = allPanels[i].GetComponent<QuestionPanel>();
+
+            if (qp == null || string.IsNullOrEmpty(qp.HaeEsineID()) || avatut.Contains(qp.HaeEsineID()))
+            {
+                ShowPanel(allPanels[i]);
+                return;
+            }
+        }
+
+        if (loppuruutu != null)
+            ShowPanel(loppuruutu);
+        else
+            Debug.LogWarning("Loppuruutua ei ole asetettu PanelManagerissa!");
+    }
 
     private IEnumerator TransitionTo(GameObject nextPanel)
     {
         yield return StartCoroutine(Fade(0f, 1f));
-
         yield return new WaitForSeconds(0.1f);
-
-        if (currentPanel != null)
-            currentPanel.SetActive(false);
-
-        if (nextPanel != null)
-            nextPanel.SetActive(true);
-
+        if (currentPanel != null) currentPanel.SetActive(false);
+        if (nextPanel != null) nextPanel.SetActive(true);
         currentPanel = nextPanel;
-
         yield return StartCoroutine(Fade(1f, 0f));
     }
 
@@ -96,7 +104,6 @@ public class PanelManager : MonoBehaviour
     {
         float elapsed = 0f;
         Color c = fadeOverlay.color;
-
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
@@ -104,18 +111,14 @@ public class PanelManager : MonoBehaviour
             fadeOverlay.color = c;
             yield return null;
         }
-
         c.a = to;
         fadeOverlay.color = c;
     }
-
-    // --- Popup animaatiot ---
 
     private IEnumerator PopupAnimateIn(GameObject popup)
     {
         CanvasGroup cg = GetOrAddCanvasGroup(popup);
         float elapsed = 0f;
-
         while (elapsed < popupAnimDuration)
         {
             elapsed += Time.deltaTime;
@@ -124,7 +127,6 @@ public class PanelManager : MonoBehaviour
             cg.alpha = Mathf.Lerp(0f, 1f, t);
             yield return null;
         }
-
         popup.transform.localScale = Vector3.one;
         cg.alpha = 1f;
     }
@@ -133,7 +135,6 @@ public class PanelManager : MonoBehaviour
     {
         CanvasGroup cg = GetOrAddCanvasGroup(popup);
         float elapsed = 0f;
-
         while (elapsed < popupAnimDuration)
         {
             elapsed += Time.deltaTime;
@@ -142,7 +143,6 @@ public class PanelManager : MonoBehaviour
             cg.alpha = Mathf.Lerp(1f, 0f, t);
             yield return null;
         }
-
         popup.SetActive(false);
         popup.transform.localScale = Vector3.one;
     }
@@ -150,8 +150,7 @@ public class PanelManager : MonoBehaviour
     private CanvasGroup GetOrAddCanvasGroup(GameObject obj)
     {
         CanvasGroup cg = obj.GetComponent<CanvasGroup>();
-        if (cg == null)
-            cg = obj.AddComponent<CanvasGroup>();
+        if (cg == null) cg = obj.AddComponent<CanvasGroup>();
         return cg;
     }
 }

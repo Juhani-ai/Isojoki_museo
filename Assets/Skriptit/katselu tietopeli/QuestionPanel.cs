@@ -12,6 +12,8 @@ public class QuestionPanel : MonoBehaviour
     [SerializeField] private Button wrongButton2;
     [SerializeField] private Button wrongButton3;
 
+    [SerializeField] private string esineID;
+
     [Header ("Seuraava")]
     [SerializeField] private Button nextButton;
     [SerializeField] private TMP_Text nextText;
@@ -25,6 +27,9 @@ public class QuestionPanel : MonoBehaviour
 
     [Header ("Objekti")]
     [SerializeField] private GameObject rotationObject;
+
+    [Header ("Manageri")]
+    [SerializeField] private PanelManager panelManager;
 
     private bool onVastattu = false; 
 
@@ -116,11 +121,6 @@ public class QuestionPanel : MonoBehaviour
        
     }
 
-    void NextClicked()
-    {
-        rotationObject.gameObject.SetActive(false);
-    }
-
     void SetButtonInteractable(Button btn, bool interactable)
     {
         btn.interactable = interactable;
@@ -134,4 +134,15 @@ public class QuestionPanel : MonoBehaviour
         );
         btn.colors = cb;
     }
+
+    public string HaeEsineID()
+    {
+        return esineID;
+    }
+
+    void NextClicked()
+{
+    rotationObject.gameObject.SetActive(false);
+    panelManager.NaytaSeuraavaAvattuPaneeli(this.gameObject);
+}
 }
