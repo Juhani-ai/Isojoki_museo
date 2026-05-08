@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f60295975a4fb8f47b85ed988482bfa0
+guid: fb2a7857bb2492e47a4ef7c09509fbc0
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: PahkakuppiWood
-    second: {fileID: 2800000, guid: 40f8303c99a854241935c4ff75aa8da1, type: 3}
+      name: KauhaWood
+    second: {fileID: 2800000, guid: 906a87bd4a0813a4cbcc0be027e0c2ec, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

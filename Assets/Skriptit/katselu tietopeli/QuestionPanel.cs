@@ -35,6 +35,8 @@ public class QuestionPanel : MonoBehaviour
 
     void Start()
     {
+        LoppuruutuManager.TallennaPisteetAlussa();
+        
         nextButton.interactable = false;
 
         correctButton.onClick.AddListener(CorrectClicked);
@@ -72,18 +74,18 @@ public class QuestionPanel : MonoBehaviour
         answerButton.interactable = true;
 
         btn.image.color = Color.red;
-
     }
 
     void CorrectClicked()
     {
         if (onVastattu) return; 
         onVastattu = true;
-        
+
+        LoppuruutuManager.LisaaOikein(); // ← LISÄTTY
+
         Debug.Log("Pisteet ennen: " + Pistemanageri.kokonaisPisteet);
         Pistemanageri.LisaaPisteita(10);
         Debug.Log("Pisteet jälkeen: " + Pistemanageri.kokonaisPisteet);
-        Debug.Log("Teksti nyt: " + Pistemanageri.instance.pisteNaytto.text);
 
         pointText.text = "Pisteet: " + Pistemanageri.kokonaisPisteet;
 
@@ -95,7 +97,6 @@ public class QuestionPanel : MonoBehaviour
         SetButtonInteractable(wrongButton3, false);
 
         correctButton.image.color = Color.green;
-        
     }
 
     void AnswerClicked()
@@ -108,7 +109,6 @@ public class QuestionPanel : MonoBehaviour
 
             correctButton.image.color = Color.green;
         }
-
         else if (answerbuttonText.text == "Piilota oikea vastaus")
         {
             ColorUtility.TryParseHtmlString("#DCC896", out Color alkuperainenVari);
@@ -118,7 +118,6 @@ public class QuestionPanel : MonoBehaviour
             
             correctButton.image.color = alkuperainenVari;
         } 
-       
     }
 
     void SetButtonInteractable(Button btn, bool interactable)
@@ -141,8 +140,8 @@ public class QuestionPanel : MonoBehaviour
     }
 
     void NextClicked()
-{
-    rotationObject.gameObject.SetActive(false);
-    panelManager.NaytaSeuraavaAvattuPaneeli(this.gameObject);
-}
+    {
+        rotationObject.gameObject.SetActive(false);
+        panelManager.NaytaSeuraavaAvattuPaneeli(this.gameObject);
+    }
 }

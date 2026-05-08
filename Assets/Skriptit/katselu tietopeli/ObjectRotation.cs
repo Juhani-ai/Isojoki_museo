@@ -25,12 +25,15 @@ public class ObjectRotation : MonoBehaviour
     private Vector2 rotation;
     private bool rotateAllowed;
 
-    private void Awake()
-    {
-        cam = Camera.main.transform;
-        pressed.Enable();
-        axis.Enable();
-    }
+    private Vector3 initialScale;
+
+private void Awake()
+{
+    cam = Camera.main.transform;
+    pressed.Enable();
+    axis.Enable();
+    initialScale = transform.localScale; // tallenna alkuperäinen
+}
 
     private void Update()
     {
@@ -53,13 +56,16 @@ public class ObjectRotation : MonoBehaviour
         if (IsPointerOverRawImage())
         {
             float scroll = Mouse.current.scroll.ReadValue().y;
-                if (scroll != 0f)
-                {
-                    float scrollDir = Mathf.Sign(scroll);
-                    float currentScale = transform.localScale.x;
-                    float newScale = Mathf.Clamp(currentScale + scrollDir * zoomSpeed, minScale, maxScale);
-                    transform.localScale = Vector3.one * newScale;
-                }
+if (scroll != 0f)
+{
+    float scrollDir = Mathf.Sign(scroll);
+    // Käytä x-akselia referenssinä nykyiselle zoomille
+    float currentScale = transform.localScale.x / initialScale.x;
+    float newScale = Mathf.Clamp(currentScale + scrollDir * (zoomSpeed / initialScale.x), 
+                                  minScale / initialScale.x, 
+                                  maxScale / initialScale.x);
+    transform.localScale = initialScale * newScale; // säilytä alkuperäinen suhde
+}
         }
     }
 
