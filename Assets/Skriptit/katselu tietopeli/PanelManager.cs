@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class PanelManager : MonoBehaviour
@@ -16,6 +17,47 @@ public class PanelManager : MonoBehaviour
 
     private GameObject currentPanel;
     private bool isAnimatingPopup = false;
+
+    // ── Scene-lataus ──────────────────────────────────────────────
+
+    /// <summary>Lataa scenen nimen perusteella (fade-efektillä).</summary>
+    
+    void Start()
+{
+    // Aseta ensimmäinen aktiivinen panel currentPaneliksi
+    foreach (GameObject panel in allPanels)
+    {
+        if (panel.activeSelf)
+        {
+            currentPanel = panel;
+            break;
+        }
+    }
+}
+    public void LataaSceeni(string sceneName)
+    {
+        StartCoroutine(LataaSceeniCoroutine(sceneName));
+    }
+
+    /// <summary>Lataa scenen indeksin perusteella (fade-efektillä).</summary>
+    public void LataaSceeni(int sceneIndex)
+    {
+        StartCoroutine(LataaSceeniCoroutine(sceneIndex));
+    }
+
+    private IEnumerator LataaSceeniCoroutine(string sceneName)
+    {
+        yield return StartCoroutine(Fade(0f, 1f));
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private IEnumerator LataaSceeniCoroutine(int sceneIndex)
+    {
+        yield return StartCoroutine(Fade(0f, 1f));
+        SceneManager.LoadScene(sceneIndex);
+    }
+
+    // ── Paneelit ──────────────────────────────────────────────────
 
     public void ShowPanel(GameObject panel)
     {
@@ -69,36 +111,48 @@ public class PanelManager : MonoBehaviour
     }
 
     public void NaytaSeuraavaAvattuPaneeli(GameObject nykyinen)
+{
+    List<string> avatut = EsineRekisteri.HaeAvatutEsineet();
+    int nykyinenIndeksi = System.Array.IndexOf(allPanels, nykyinen);
+
+    for (int i = nykyinenIndeksi + 1; i < allPanels.Length; i++)
     {
-        List<string> avatut = EsineRekisteri.HaeAvatutEsineet();
-        int nykyinenIndeksi = System.Array.IndexOf(allPanels, nykyinen);
+        QuestionPanel qp = allPanels[i].GetComponent<QuestionPanel>();
+        string id = qp?.HaeEsineID();
 
-        for (int i = nykyinenIndeksi + 1; i < allPanels.Length; i++)
+        if (qp == null || string.IsNullOrEmpty(id) || 
+            avatut.Contains(id) || 
+            PlayerPrefs.GetInt("Unlocked_" + id, 0) == 1) // ← tarkistaa suoraan
         {
-            QuestionPanel qp = allPanels[i].GetComponent<QuestionPanel>();
-
-            if (qp == null || string.IsNullOrEmpty(qp.HaeEsineID()) || avatut.Contains(qp.HaeEsineID()))
-            {
-                ShowPanel(allPanels[i]);
-                return;
-            }
+            ShowPanel(allPanels[i]);
+            return;
         }
-
-        if (loppuruutu != null)
-            ShowPanel(loppuruutu);
-        else
-            Debug.LogWarning("Loppuruutua ei ole asetettu PanelManagerissa!");
     }
+
+    if (loppuruutu != null)
+        ShowPanel(loppuruutu);
+    else
+        Debug.LogWarning("Loppuruutua ei ole asetettu PanelManagerissa!");
+}
 
     private IEnumerator TransitionTo(GameObject nextPanel)
+{
+    yield return StartCoroutine(Fade(0f, 1f));
+    yield return new WaitForSeconds(0.1f);
+
+    if (currentPanel != null)
     {
-        yield return StartCoroutine(Fade(0f, 1f));
-        yield return new WaitForSeconds(0.1f);
-        if (currentPanel != null) currentPanel.SetActive(false);
-        if (nextPanel != null) nextPanel.SetActive(true);
-        currentPanel = nextPanel;
-        yield return StartCoroutine(Fade(1f, 0f));
+        foreach (AudioPlayer ap in currentPanel.GetComponentsInChildren<AudioPlayer>())
+        {
+            ap.StopAudio();
+        }
+        currentPanel.SetActive(false);
     }
+
+    if (nextPanel != null) nextPanel.SetActive(true);
+    currentPanel = nextPanel;
+    yield return StartCoroutine(Fade(1f, 0f));
+}
 
     private IEnumerator Fade(float from, float to)
     {

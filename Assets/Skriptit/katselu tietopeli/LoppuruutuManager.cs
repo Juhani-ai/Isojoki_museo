@@ -8,6 +8,7 @@ public class LoppuruutuManager : MonoBehaviour
     [Header("Tekstit")]
     [SerializeField] private TMP_Text tulosText;
     [SerializeField] private TMP_Text pisteetText;
+    [SerializeField] private TMP_Text ylakulmanPisteetText;
 
     [Header("Napit")]
     [SerializeField] private Button pelaaUudelleenNappi;
@@ -22,11 +23,25 @@ public class LoppuruutuManager : MonoBehaviour
 
     void OnEnable()
     {
-        int avattujenMaara = EsineRekisteri.HaeAvatutEsineet().Count;
+        int avattujenMaara = 0;
+        string[] kaikki = EsineRekisteri.kaikkiEsineet;
+        string[] ainaAuki = { "Kahvihuhmar", "Kappa", "Kauha", "Koristelupuu", "Leikkihevonen" };
+        
+        foreach (string id in kaikki)
+        {
+            bool onAinaAuki = System.Array.Exists(ainaAuki, e => e == id);
+            bool onOstettu = PlayerPrefs.GetInt("Unlocked_" + id, 0) == 1 || 
+                             PlayerPrefs.GetInt("Unlocked_" + id + " -kortti", 0) == 1;
+            if (onAinaAuki || onOstettu) avattujenMaara++;
+        }
+
         int kierrosPisteet = Pistemanageri.kokonaisPisteet - pisteetAlussa;
 
         tulosText.text = "Oikein: " + oikeinLaskuri + "/" + avattujenMaara;
         pisteetText.text = "Kierros pisteet: " + kierrosPisteet;
+
+        if (ylakulmanPisteetText != null)
+            ylakulmanPisteetText.text = "Pisteet: " + Pistemanageri.kokonaisPisteet;
 
         pelaaUudelleenNappi.onClick.AddListener(PelaaUudelleen);
         kotiruutuNappi.onClick.AddListener(PalaaKotiin);

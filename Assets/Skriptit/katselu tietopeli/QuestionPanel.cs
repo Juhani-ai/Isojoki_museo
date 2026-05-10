@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class QuestionPanel : MonoBehaviour
 {
@@ -35,6 +36,18 @@ public class QuestionPanel : MonoBehaviour
 
     void Start()
     {
+
+        Debug.Log("MuseoPisteet = " + PlayerPrefs.GetInt("MuseoPisteet", 0));
+Debug.Log("Unlocked_Leili -kortti = " + PlayerPrefs.GetInt("Unlocked_Leili -kortti", 0));
+Debug.Log("Unlocked_Luotipuntari = " + PlayerPrefs.GetInt("Unlocked_Luotipuntari", 0));
+
+        Debug.Log("SCENE: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+
+        Debug.Log("Unlocked_Leili = " + PlayerPrefs.GetInt("Unlocked_Leili", 0));
+
+        List<string> avatut = EsineRekisteri.HaeAvatutEsineet();
+        Debug.Log("Avatut esineet: " + string.Join(", ", avatut));
+
         LoppuruutuManager.TallennaPisteetAlussa();
         
         nextButton.interactable = false;
@@ -74,6 +87,8 @@ public class QuestionPanel : MonoBehaviour
         answerButton.interactable = true;
 
         btn.image.color = Color.red;
+
+        if (Pistemanageri.instance != null) Pistemanageri.instance.PaivitaUI();
     }
 
     void CorrectClicked()
@@ -97,6 +112,8 @@ public class QuestionPanel : MonoBehaviour
         SetButtonInteractable(wrongButton3, false);
 
         correctButton.image.color = Color.green;
+
+        if (Pistemanageri.instance != null) Pistemanageri.instance.PaivitaUI();
     }
 
     void AnswerClicked()
