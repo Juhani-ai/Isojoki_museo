@@ -2357,9 +2357,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1812576662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 044832b9fc5e906f4a3964796c8f4a5a, type: 3}
+  m_Script: {fileID: 11500000, guid: ac438f4622fd56c0db8f6e044bb23ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TarinaManager
+  palvelimenUrl: https://isojokiseura.fi/peli/tallenna.php
+  jsonUrl: https://isojokiseura.fi/peli/tarinat.json
   syoteKentta: {fileID: 822129157}
   kiitosViesti: {fileID: 131972722}
   scrollPaneeli: {fileID: 1341271768}
@@ -2368,9 +2370,6 @@ MonoBehaviour:
   kirjoitaNappi: {fileID: 1673446380478794194}
   syoteInputField: {fileID: 822129159}
   scrollTeksti: {fileID: 208119143}
-  virheNayttoaika: 3
-  onnistumisAani: {fileID: 8300000, guid: 77ad01f2238bd26e68d7e277f4278b39, type: 3}
-  virheAani: {fileID: 8300000, guid: b4bfa4b09d90944e391d73f599c9bb3a, type: 3}
 --- !u!1001 &1875861282
 PrefabInstance:
   m_ObjectHideFlags: 0
