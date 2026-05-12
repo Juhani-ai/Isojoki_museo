@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using TMP_Text = TMPro.TMP_Text;
 using TMP_InputField = TMPro.TMP_InputField;
 using System.Collections.Generic;
@@ -208,5 +208,5 @@ public class TarinaManager : MonoBehaviour
     [Serializable] public class TarinaData { public string teksti; public string pvm; }
     [Serializable] public class ListWrapper { public List<TarinaData> tarinat; }
     [Serializable] public class FiltteriWrapper { public List<string> sanat; }
-}
+}*/
 
