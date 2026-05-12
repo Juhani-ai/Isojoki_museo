@@ -24,6 +24,11 @@ public class TarinaManager : MonoBehaviour
     public TMP_InputField syoteInputField;
     public TMP_Text scrollTeksti;
 
+    [Header("Äänet")]
+    public AudioSource aaniLahde;
+    public AudioClip kiitosAani;
+    public AudioClip sensuuriAani;
+
     [Header("Asetukset")]
     public float virheNayttoaika = 3f;
 
@@ -52,13 +57,27 @@ public class TarinaManager : MonoBehaviour
 
     void Start()
     {
+        EtsiAudioLahde();
         StartCoroutine(LataaTarinatPalvelimelta());
         AktivoiKirjoitustila();
         if(asiatonViestiPaneeli != null) asiatonViestiPaneeli.SetActive(false);
     }
 
+    private void EtsiAudioLahde()
+    {
+        // Jos viite on Missing tai null, etsitään se aktiivisesti
+        if (aaniLahde == null)
+        {
+            aaniLahde = UnityEngine.Object.FindAnyObjectByType<AudioSource>();
+            if (aaniLahde != null) Debug.Log("GIMMO: AudioSource kytketty dynaamisesti!");
+        }
+    }
+
     public void TallennaTarina()
     {
+        // Varmistetaan haku vielä juuri ennen soittoa
+        EtsiAudioLahde();
+
         if (syoteInputField == null) return;
         
         string teksti = syoteInputField.text;
@@ -66,9 +85,20 @@ public class TarinaManager : MonoBehaviour
 
         if (SisaltaakoTorkya(teksti))
         {
+            if (aaniLahde != null && sensuuriAani != null) 
+            {
+                aaniLahde.PlayOneShot(sensuuriAani);
+                Debug.Log("GIMMO: Soitetaan sensuuriääni.");
+            }
             syoteInputField.text = ""; 
             NaytaVirhe();
             return; 
+        }
+
+        if (aaniLahde != null && kiitosAani != null) 
+        {
+            aaniLahde.PlayOneShot(kiitosAani);
+            Debug.Log("GIMMO: Soitetaan kiitosääni.");
         }
 
         TarinaData uusi = new TarinaData {
@@ -79,7 +109,6 @@ public class TarinaManager : MonoBehaviour
         tarinat.Add(uusi);
         StartCoroutine(LahetaTarinatPalvelimelle());
 
-        // UI-vaihdokset ja nappien tila (ne "kilahdukset")
         if(syoteKentta != null) syoteKentta.SetActive(false);
         if(kiitosViesti != null) kiitosViesti.SetActive(true);
         if(tallennaNappi != null) tallennaNappi.SetActive(false);
@@ -145,7 +174,6 @@ public class TarinaManager : MonoBehaviour
 
         yield return www.SendWebRequest();
         
-        // Päivitetään lista heti lähetyksen jälkeen
         StartCoroutine(LataaTarinatPalvelimelta());
     }
 
