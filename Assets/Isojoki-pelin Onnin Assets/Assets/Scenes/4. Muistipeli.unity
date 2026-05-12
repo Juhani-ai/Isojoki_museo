@@ -4774,7 +4774,7 @@ MonoBehaviour:
   PalkintoNappi2Obj: {fileID: 196649057}
   PalkintoNappi3Obj: {fileID: 1451578964}
   palkinto1Sprite: {fileID: 21300000, guid: b9c4649781b5c31bfbeddfd4c4fbf901, type: 3}
-  palkinto2Sprite: {fileID: 21300000, guid: 0ed3bc3b6a5c76228b358e701f2883ab, type: 3}
+  palkinto2Sprite: {fileID: 21300000, guid: 5cacb0f68791f5895ad1c15a8cce785a, type: 3}
   palkinto3Sprite: {fileID: 21300000, guid: c9f98caa0d2a684458b12dd2ad1622ed, type: 3}
   palkintoImageInInfoPanel: {fileID: 0}
   palkintoUseNativeSize: 1
