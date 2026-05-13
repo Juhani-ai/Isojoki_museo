@@ -1790,6 +1790,7 @@ GameObject:
   - component: {fileID: 912495965}
   - component: {fileID: 912495964}
   - component: {fileID: 912495966}
+  - component: {fileID: 912495967}
   m_Layer: 5
   m_Name: Pisteet
   m_TagString: ScoreText
@@ -1934,6 +1935,26 @@ MonoBehaviour:
   label: Pisteet
   scoreText: {fileID: 912495964}
   finalScoreText: {fileID: 964859493}
+--- !u!114 &912495967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912495962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c32eeb91c4727adb5a29231b55e43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pistemanageri
+  varmistusPaneeli: {fileID: 0}
+  pisteNaytto: {fileID: 912495964}
+  audioSource: {fileID: 0}
+  kolikkoAani: {fileID: 0}
+  ostoAani: {fileID: 0}
+  virheAani: {fileID: 0}
+  hytkyVoimakkuus: 1.25
+  hytkyKesto: 0.2
 --- !u!1 &964859492
 GameObject:
   m_ObjectHideFlags: 0
@@ -4989,6 +5010,10 @@ PrefabInstance:
       propertyPath: pisteNaytto
       value: 
       objectReference: {fileID: 912495964}
+    - target: {fileID: 4317448535516322364, guid: ba0b670b749ca4852932cddd57bf6aed, type: 3}
+      propertyPath: varmistusPaneeli
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
