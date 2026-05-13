@@ -1869,7 +1869,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tarinat
+  m_text: Vieraskirja
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
@@ -3064,7 +3064,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
   m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3156,8 +3156,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Selaa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
-  m_sharedMaterial: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
+  m_sharedMaterial: {fileID: -8685490310711870015, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3248,8 +3248,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tallenna
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
-  m_sharedMaterial: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
+  m_sharedMaterial: {fileID: -8685490310711870015, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
