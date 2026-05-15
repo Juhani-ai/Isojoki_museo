@@ -486,6 +486,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 4307743739578401670, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
+      propertyPath: m_UseGraphicAlpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6470495866402246161, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4787,7 +4791,6 @@ MonoBehaviour:
   SeuraavaNappiObj: {fileID: 1178817422}
   PaavalikkoNappiObj: {fileID: 0}
   TuloksetNappiObj: {fileID: 1070250111}
-  tuloksetShowWhenCompletedAtLeast: 0
   AloitaPeliNappiObj: {fileID: 1441816148}
   OhjeetNappiObj: {fileID: 1753817584}
   scoreScript: {fileID: 0}
@@ -4798,16 +4801,14 @@ MonoBehaviour:
   palkinto2Sprite: {fileID: 21300000, guid: 5cacb0f68791f5895ad1c15a8cce785a, type: 3}
   palkinto3Sprite: {fileID: 21300000, guid: c9f98caa0d2a684458b12dd2ad1622ed, type: 3}
   palkintoImageInInfoPanel: {fileID: 0}
-  palkintoUseNativeSize: 1
-  palkintoFallbackSize: {x: 1000, y: 1000}
   palkintoFitPadding: 0
+  palkintoFallbackSize: {x: 256, y: 256}
   saitPalkinnonTekstiObj: {fileID: 1472454194}
   saitKaikkiPalkinnotTekstiObj: {fileID: 1999129155}
   voititTekstiObj: {fileID: 2110607849}
   "P\xE4\xE4valikko": "1. P\xE4\xE4valikko"
   infoPopupPanel: {fileID: 212432184}
   infoPopupText: {fileID: 809049620}
-  infoPopupSeconds: 2
   clearInfoOnWinDelaySeconds: 1.5
   ohjeetTeksti: "Etsi kaikki parit ennen kuin aika loppuu. \n\nK\xE4yt\xE4 hiirt\xE4
     pelaamiseen. \n\nHelpossa ja keskitasossa etsi kuvaparit. Vaikeassa etsi kuvan
