@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Voiaski
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Voiaski
+  unlockID: Voiaski -kortti
   image: {fileID: 2800000, guid: 132bc59cc3428d23a890b2751324e98c, type: 3}
   info: 
   hint: 

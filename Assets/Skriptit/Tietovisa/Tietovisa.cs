@@ -10,7 +10,7 @@ public class Tietovisa : MonoBehaviour
     public List<QuizItemData> items;
     QuizItemData correctItem;
     List<QuizItemData> answerItems = new List<QuizItemData>();
-    List<QuizItemData> remainingItems = new List<QuizItemData>();
+    List<QuizItemData> sessionQuestions = new List<QuizItemData>();
 
     int lives = 3;
     int score = 0;
@@ -32,15 +32,10 @@ public class Tietovisa : MonoBehaviour
     public GameObject popupPanel;
     public TMP_Text popupText;
 
-    int maxQuestions = 10;
-    int questionsAsked = 0;
-
     private void Start()
     {
-        items = new List<QuizItemData>(Resources.LoadAll<QuizItemData>("QuizItems"));
-
-        remainingItems = new List<QuizItemData>(items);
-
+        LoadUnlockedItems();
+        BuildSessionQuestions();
         UpdateUI();
     }
 
@@ -53,10 +48,8 @@ public class Tietovisa : MonoBehaviour
     {
         hintUsed = false;
 
-        int randIndex = Random.Range(0, remainingItems.Count);
-        correctItem = remainingItems[randIndex];
-
-        remainingItems.RemoveAt(randIndex);
+        correctItem = sessionQuestions[0];
+        sessionQuestions.RemoveAt(0);
 
         questionImage.texture = correctItem.image;
 
@@ -98,7 +91,7 @@ public class Tietovisa : MonoBehaviour
             int points = hintUsed ? 10 : 15;
             score += points;
 
-            Pistemanageri.LisaaPisteita(score);
+            Pistemanageri.LisaaPisteita(points);
 
             ShowCorrectPopup();
         }
@@ -145,24 +138,15 @@ public class Tietovisa : MonoBehaviour
         if (lives <= 0)
         {
             Lose();
-            Debug.Log("Lose");
             return;
         }
 
-        if (questionsAsked >= maxQuestions)
+        if (sessionQuestions.Count == 0)
         {
             Win();
-            Debug.Log("Win (reached question limit");
             return;
         }
-
-        if (remainingItems.Count == 0)
-        {
-            Win();
-            Debug.Log("Win (no more questions");
-            return;
-        }
-        questionsAsked++;
+        
         GenerateQuestion();
     }
 
@@ -218,10 +202,9 @@ public class Tietovisa : MonoBehaviour
     {
         score = 0;
         lives = 3;
-        questionsAsked = 0;
 
         items = new List<QuizItemData>(Resources.LoadAll<QuizItemData>("QuizItems"));
-        remainingItems = new List<QuizItemData>(items);
+        BuildSessionQuestions();
 
         UpdateUI();
 
@@ -229,6 +212,56 @@ public class Tietovisa : MonoBehaviour
         replayButton.SetActive(false);
         menuButton.SetActive(false);
         popupPanel.SetActive(false);
+    }
+
+    void LoadUnlockedItems()
+    {
+        QuizItemData[] allItems = Resources.LoadAll<QuizItemData>("QuizItems");
+
+        items = new List<QuizItemData>();
+
+        foreach (QuizItemData item in allItems)
+        {
+            bool alwaysUnlocked =
+                item.itemName == "Kahvihuhmar" ||
+                item.itemName == "Kappa" ||
+                item.itemName == "Kauha" ||
+                item.itemName == "Koristelupuu" ||
+                item.itemName == "Leikkihevonen";
+
+            bool unlocked =
+                PlayerPrefs.GetInt("Unlocked_" + item.unlockID, 0) == 1;
+
+            if (alwaysUnlocked || unlocked)
+            {
+                items.Add(item);
+            }
+        }
+
+        Debug.Log("Loaded unlocked quiz items: " + items.Count);
+    }
+
+    void BuildSessionQuestions()
+    {
+        List<QuizItemData> unlocked = new List<QuizItemData>();
+
+        foreach (var item in items)
+        {
+            unlocked.Add(item);
+        }
+
+        Shuffle(unlocked);
+
+        sessionQuestions = new List<QuizItemData>();
+
+        int count = Mathf.Min(10, unlocked.Count);
+
+        for (int i = 0; i < count; i++)
+        {
+            sessionQuestions.Add(unlocked[i]);
+        }
+
+        Debug.Log("Session questions: " + sessionQuestions.Count);
     }
 }
  

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Pytty
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Pytty
+  unlockID: Pytty -kortti
   image: {fileID: 2800000, guid: b3cc3e49ca28d3d43949c51e1083b8f8, type: 3}
   info: 
   hint: 
