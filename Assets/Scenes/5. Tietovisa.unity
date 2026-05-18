@@ -234,7 +234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.50415, y: -397.5}
+  m_AnchoredPosition: {x: 959.31226, y: -397.5}
   m_SizeDelta: {x: 600, y: 475}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &65960229
@@ -887,7 +887,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -0.3375244, y: -492}
-  m_SizeDelta: {x: 731.28, y: 637.28}
+  m_SizeDelta: {x: 942.61, y: 318.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &357312590
 MonoBehaviour:
@@ -923,10 +923,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Sinulle n\xE4ytet\xE4\xE4n kuva esineest\xE4. \nKuvan alla 4 vaihoehtoa
-    ja sinun\ntulee valita mit\xE4 vaihtoehdoista \nkuva esitt\xE4\xE4. Vain yksi
-    oikea \nvastaus. Tarvittaessa voit pyyt\xE4\xE4\nvihjeen. Vihjeen k\xE4yttaminen\nv\xE4hentaa
-    oikeasta vastauksesta \nsaatavia pisteit\xE4."
+  m_text: "Sinulle n\xE4ytet\xE4\xE4n kuva esineest\xE4.  Kuvan \nalla 4 vaihoehtoa
+    ja sinun tulee valita mit\xE4\nvaihtoehdoista kuva esitt\xE4\xE4. Vain yksi oikea\nvastaus. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
   m_sharedMaterial: {fileID: -8685490310711870015, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
@@ -2565,7 +2563,7 @@ PrefabInstance:
     - target: {fileID: 2871399782817423267, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+      objectReference: {fileID: -8685490310711870015, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
     - target: {fileID: 2871399782817423267, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
@@ -3068,7 +3066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1208472082
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3087,7 +3085,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 819.0865, y: -1005}
+  m_AnchoredPosition: {x: 959.31226, y: -1005}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1208472083
@@ -4075,7 +4073,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.50415, y: -832.5}
+  m_AnchoredPosition: {x: 959.31226, y: -832.5}
   m_SizeDelta: {x: 820, y: 395}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1455597541
@@ -4178,6 +4176,7 @@ GameObject:
   - component: {fileID: 1524723167}
   - component: {fileID: 1524723169}
   - component: {fileID: 1524723168}
+  - component: {fileID: 1524723170}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -4202,7 +4201,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 858.42, y: 87.06}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1524723168
 MonoBehaviour:
@@ -4224,10 +4223,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Vihje
+  m_text: "K\xE4ytettiin leivostaikinan kuviointiin"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
-  m_sharedMaterial: {fileID: 5374197069686898101, guid: 365578e0326b970eaa3c31c0d456c934, type: 2}
+  m_sharedMaterial: {fileID: -8685490310711870015, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4293,7 +4292,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1524723169
@@ -4304,6 +4303,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524723166}
   m_CullTransparentMesh: 1
+--- !u!114 &1524723170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524723166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!114 &1550830834 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2871399782817423267, guid: 7dc9288bf6bba5f79ad7369fcbe468fa, type: 3}

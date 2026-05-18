@@ -82,6 +82,7 @@ public class Tietovisa : MonoBehaviour
 
         hintText.text = "";
         hintButton.SetActive(true);
+        hintText.gameObject.SetActive(false);
     }
 
     public void SelectAnswer(int index)
@@ -113,6 +114,7 @@ public class Tietovisa : MonoBehaviour
         hintUsed = true;
         hintText.text = correctItem.hint;
         hintButton.SetActive(false);
+        hintText.gameObject.SetActive(true);
     }
 
     public void ShowCorrectPopup()
