@@ -932,10 +932,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ESINEET
+  m_text: Esineet
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
-  m_sharedMaterial: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
+  m_sharedMaterial: {fileID: -8685490310711870015, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1707,10 +1707,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PELAA
+  m_text: Pelaa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
-  m_sharedMaterial: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
+  m_sharedMaterial: {fileID: -8685490310711870015, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2129,7 +2129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1313459437
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2770,10 +2770,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TARINAT
+  m_text: Vieraskirja
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
-  m_sharedMaterial: {fileID: 5374197069686898101, guid: b2a301b8eeb3d6df183f4c94bcaccaef, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
+  m_sharedMaterial: {fileID: -8685490310711870015, guid: ffa1500f9de984b178350420f2b1ea87, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

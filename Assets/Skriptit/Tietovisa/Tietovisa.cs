@@ -181,12 +181,12 @@ public class Tietovisa : MonoBehaviour
     void UpdateUI()
     {
         scoreText.text = $"Pisteet: {score}";
-        livesText.text = $"Elamat: {lives}";
+        livesText.text = $"Yritukset: {lives}";
     }
 
     public void Lose()
     {
-        popupText.text = $"Voi harmi, elamat loppui.\n\nPisteet: {score}";
+        popupText.text = $"Voi harmi, Yritykset loppui.\n\nPisteet: {score}";
         popupPanel.SetActive(true);
         nextButton.SetActive(false);
         replayButton.SetActive(true);

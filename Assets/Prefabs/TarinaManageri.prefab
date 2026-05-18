@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3464010458512456843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4880844131144148854}
+  - component: {fileID: 381499341885818023}
+  m_Layer: 0
+  m_Name: TarinaManageri
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4880844131144148854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3464010458512456843}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.01822, y: 0.73327, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &381499341885818023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3464010458512456843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac438f4622fd56c0db8f6e044bb23ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TarinaManager
+  palvelimenUrl: https://isojokiseura.fi/peli/tallenna.php
+  jsonUrl: https://isojokiseura.fi/peli/tarinat.json
+  syoteKentta: {fileID: 0}
+  kiitosViesti: {fileID: 0}
+  scrollPaneeli: {fileID: 0}
+  asiatonViestiPaneeli: {fileID: 0}
+  tallennaNappi: {fileID: 0}
+  kirjoitaNappi: {fileID: 0}
+  syoteInputField: {fileID: 0}
+  scrollTeksti: {fileID: 0}
+  aaniLahde: {fileID: 0}
+  kiitosAani: {fileID: 8300000, guid: 77ad01f2238bd26e68d7e277f4278b39, type: 3}
+  sensuuriAani: {fileID: 8300000, guid: 904f9aef6c7ecaef0a5e3824603c7067, type: 3}
+  virheNayttoaika: 3
