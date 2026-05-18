@@ -4995,7 +4995,8 @@ MonoBehaviour:
   clearInfoOnWinDelaySeconds: 1.5
   ohjeetTeksti: "Etsi kaikki parit ennen kuin aika loppuu. \n\nK\xE4yt\xE4 hiirt\xE4
     pelaamiseen. \n\nHelpossa ja keskitasossa etsi kuvaparit. Vaikeassa etsi kuvan
-    esineen nimi. \n\nPalkinnot ovat uusia kuvia esineist\xE4."
+    esineen nimi. \n\nKeski ja Vaikeaa tasoa voi pelata kun ostaa esineit\xE4. Paina
+    \"Esineet\"."
   objectInfos:
   - id: 
     info: Kahvihuhmar
