@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Leikkihevonen
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Leikkihevonen
+  unlockID: Leikkihevonen -kortti
   image: {fileID: 2800000, guid: 819c57afd9064adc984c917a954b1aef, type: 3}
   info: 
   hint: 

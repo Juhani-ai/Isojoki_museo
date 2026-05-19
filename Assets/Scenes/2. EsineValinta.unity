@@ -1121,6 +1121,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1981814607}
     m_Modifications:
+    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1035095430}
+    - target: {fileID: 3548813408044875576, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8736609616749979454, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
       propertyPath: m_Name
       value: PisteManageri
@@ -1173,6 +1185,11 @@ PrefabInstance:
 --- !u!4 &1035095429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9012649859333766419, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
+  m_PrefabInstance: {fileID: 1035095428}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1035095430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8736609616749979454, guid: 63d59290c3dc867ed956f0f8e4ecdbeb, type: 3}
   m_PrefabInstance: {fileID: 1035095428}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &1045392411 stripped
@@ -4886,6 +4903,10 @@ PrefabInstance:
       propertyPath: ostaNappi
       value: 
       objectReference: {fileID: 1952324309}
+    - target: {fileID: 715262321112219653, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
+      propertyPath: avausRaita
+      value: 
+      objectReference: {fileID: 8300000, guid: 61f9fda2c09e871c99e246468b5cb4c9, type: 3}
     - target: {fileID: 715262321112219653, guid: 822dd5b3a81a8d642a764adaad9fbe2f, type: 3}
       propertyPath: lukkoPaneeli
       value: 

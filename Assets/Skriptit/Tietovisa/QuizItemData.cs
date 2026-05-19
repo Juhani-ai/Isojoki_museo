@@ -4,6 +4,7 @@ using UnityEngine;
 public class QuizItemData : ScriptableObject
 {
     public string itemName;
+    public string unlockID;
     public Texture image;
 
     [TextArea]

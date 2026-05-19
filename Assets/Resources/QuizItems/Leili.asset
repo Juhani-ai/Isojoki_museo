@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Leili
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Leili
+  unlockID: Leili -kortti
   image: {fileID: 2800000, guid: b6c86f0562930ac4992d49900d6f5c77, type: 3}
   info: 
   hint: 

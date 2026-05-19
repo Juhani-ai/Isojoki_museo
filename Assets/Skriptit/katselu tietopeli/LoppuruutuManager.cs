@@ -14,7 +14,7 @@ public class LoppuruutuManager : MonoBehaviour
     [SerializeField] private Button pelaaUudelleenNappi;
     [SerializeField] private Button kotiruutuNappi;
 
-    [Header("Scenet")]
+    [Header("Scenet")] 
     [SerializeField] private string kotisceneNimi;
 
     private static int pisteetAlussa = 0;
@@ -26,16 +26,13 @@ public class LoppuruutuManager : MonoBehaviour
         int avattujenMaara = 0;
         string[] kaikki = EsineRekisteri.kaikkiEsineet;
         string[] ainaAuki = { "Kahvihuhmar", "Kappa", "Kauha", "Koristelupuu", "Leikkihevonen" };
-
+        
         foreach (string id in kaikki)
         {
             bool onAinaAuki = System.Array.Exists(ainaAuki, e => e == id);
-            bool onOstettu =
-                PlayerPrefs.GetInt("Unlocked_" + id, 0) == 1 ||
-                PlayerPrefs.GetInt("Unlocked_" + id + " -kortti", 0) == 1;
-
-            if (onAinaAuki || onOstettu)
-                avattujenMaara++;
+            bool onOstettu = PlayerPrefs.GetInt("Unlocked_" + id, 0) == 1 || 
+                             PlayerPrefs.GetInt("Unlocked_" + id + " -kortti", 0) == 1;
+            if (onAinaAuki || onOstettu) avattujenMaara++;
         }
 
         int kierrosPisteet = Pistemanageri.kokonaisPisteet - pisteetAlussa;
@@ -56,31 +53,17 @@ public class LoppuruutuManager : MonoBehaviour
         kotiruutuNappi.onClick.RemoveAllListeners();
     }
 
-    // 🔥 YHTEINEN RESET
-    private static void ResetLaskurit()
-    {
-        tallennettu = false;
-        pisteetAlussa = 0;
-        oikeinLaskuri = 0;
-    }
-
-    // 🔁 Pelaa uudelleen
     void PelaaUudelleen()
     {
-        ResetLaskurit();
+        tallennettu = false;
+        oikeinLaskuri = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // 🏠 Päävalikko
     void PalaaKotiin()
     {
-        ResetLaskurit();
-        SceneManager.LoadScene(kotisceneNimi);
-    }
-
-    public void MenePaavalikkoon()
-    {
-        ResetLaskurit();
+        tallennettu = false;
+        oikeinLaskuri = 0;
         SceneManager.LoadScene(kotisceneNimi);
     }
 

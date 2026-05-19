@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Koristelupuu
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Koristelupuu
+  unlockID: Koristelupuu -kortti
   image: {fileID: 2800000, guid: 6bc9bc0cab0b77d4f8930f4d607204c8, type: 3}
   info: 
   hint: 

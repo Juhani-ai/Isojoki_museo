@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Luotipuntari
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Luotipuntari
+  unlockID: Luotipuntari -kortti
   image: {fileID: 2800000, guid: 329d724761a9722b9b85e4fb95470291, type: 3}
   info: 
   hint: 

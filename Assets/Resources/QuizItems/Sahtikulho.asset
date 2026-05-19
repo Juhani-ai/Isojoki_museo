@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Sahtikulho
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Sahtikulho
+  unlockID: Sahtikulho -kortti
   image: {fileID: 2800000, guid: f509c2bdfea09fa2fbac7f2fa3232464, type: 3}
   info: 
   hint: 
