@@ -2316,61 +2316,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791583340}
   m_CullTransparentMesh: 1
---- !u!1 &1812576662
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1812576664}
-  - component: {fileID: 1812576665}
-  m_Layer: 0
-  m_Name: TarinaManageri
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1812576664
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812576662}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.01822, y: 0.73327, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1812576665
+--- !u!114 &1812576665 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+  m_PrefabInstance: {fileID: 7386204146668957785}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812576662}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 044832b9fc5e906f4a3964796c8f4a5a, type: 3}
+  m_Script: {fileID: 11500000, guid: ac438f4622fd56c0db8f6e044bb23ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TarinaManager
-  syoteKentta: {fileID: 822129157}
-  kiitosViesti: {fileID: 131972722}
-  scrollPaneeli: {fileID: 1341271768}
-  asiatonViestiPaneeli: {fileID: 1130644226}
-  tallennaNappi: {fileID: 1673446380398297052}
-  kirjoitaNappi: {fileID: 1673446380478794194}
-  syoteInputField: {fileID: 822129159}
-  scrollTeksti: {fileID: 208119143}
-  virheNayttoaika: 3
-  onnistumisAani: {fileID: 8300000, guid: 77ad01f2238bd26e68d7e277f4278b39, type: 3}
-  virheAani: {fileID: 8300000, guid: b4bfa4b09d90944e391d73f599c9bb3a, type: 3}
 --- !u!1001 &1875861282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3758,6 +3714,99 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7926563328475235885}
   m_CullTransparentMesh: 1
+--- !u!1001 &7386204146668957785
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: aaniLahde
+      value: 
+      objectReference: {fileID: 983450272}
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: syoteKentta
+      value: 
+      objectReference: {fileID: 822129157}
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: kiitosViesti
+      value: 
+      objectReference: {fileID: 131972722}
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: scrollTeksti
+      value: 
+      objectReference: {fileID: 208119143}
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: kirjoitaNappi
+      value: 
+      objectReference: {fileID: 1673446380478794194}
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: scrollPaneeli
+      value: 
+      objectReference: {fileID: 1341271768}
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: tallennaNappi
+      value: 
+      objectReference: {fileID: 1673446380398297052}
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: syoteInputField
+      value: 
+      objectReference: {fileID: 822129159}
+    - target: {fileID: 381499341885818023, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: asiatonViestiPaneeli
+      value: 
+      objectReference: {fileID: 1130644226}
+    - target: {fileID: 3464010458512456843, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_Name
+      value: TarinaManageri
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.01822
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.73327
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880844131144148854, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 94032ed63e1b3307d8a420e49748140c, type: 3}
 --- !u!114 &7878915262096299210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3946,7 +3995,7 @@ SceneRoots:
   - {fileID: 2040718917}
   - {fileID: 1085673761}
   - {fileID: 316689912}
+  - {fileID: 7386204146668957785}
   - {fileID: 4343801014472142251}
   - {fileID: 1377251961749998437}
-  - {fileID: 1812576664}
   - {fileID: 273401596}

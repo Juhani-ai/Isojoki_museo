@@ -159,8 +159,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a443baccaa7262686966dfcb405c1fde, type: 3}
   - {fileID: 8300000, guid: 2e5c30acfa956d8c98fa2ca6ef27de76, type: 3}
   - {fileID: 8300000, guid: b22373eef5aa58f25a17b397d1a12fd9, type: 3}
-  - {fileID: 8300000, guid: 9bf16f5a4ba40b9c7b7a040ee92f8027, type: 3}
-  - {fileID: 8300000, guid: 4378513b8dba479c89de3b6b2f305cab, type: 3}
   - {fileID: 8300000, guid: 2456e4a2d4b8307c98459cc1bc34eeeb, type: 3}
   - {fileID: 8300000, guid: 1b026176d0328bc22b64229cac1cb8cf, type: 3}
   klikkausAanet:

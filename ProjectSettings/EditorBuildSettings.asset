@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/3. MinipeliValinta.unity
     guid: bf1df5354b768207abee95c518e8207c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/4. Muistipeli.unity
     guid: 54dc72cf28e08508da599ea9e68370b2
   - enabled: 1
@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/7. Tarinat.unity
     guid: 160962ce9f3b5acd3853c1b26ab00161
+  - enabled: 1
+    path: Assets/Isojoki-pelin Onnin Assets/Assets/Scenes/4. Muistipeli.unity
+    guid: 26f575663fc98784d98cbd66f9b42500
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0
