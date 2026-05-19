@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pisteet: 660'
+  m_text: 'Pisteet: 650'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42d3af78569162bbc83ceddea47158a0, type: 2}
   m_sharedMaterial: {fileID: 5374197069686898101, guid: 42d3af78569162bbc83ceddea47158a0, type: 2}
