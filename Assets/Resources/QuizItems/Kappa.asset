@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Kappa
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Kappa
+  unlockID: Kappa -kortti
   image: {fileID: 2800000, guid: a29be5f14bfc8c744aabc28eaceafb74, type: 3}
   info: 
   hint: 

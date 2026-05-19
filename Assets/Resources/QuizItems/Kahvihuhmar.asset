@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Kahvihuhmar
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Kahvihuhmar
+  unlockID: Kahvihuhmar -kortti
   image: {fileID: 2800000, guid: 66a13c67b8b275723808693173baaa78, type: 3}
   info: 
   hint: 

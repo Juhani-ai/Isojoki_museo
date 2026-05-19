@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Survin
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Survin
+  unlockID: Survin -kortti
   image: {fileID: 2800000, guid: 544d12dab5a6e9ea0808c07785951c60, type: 3}
   info: 
   hint: 

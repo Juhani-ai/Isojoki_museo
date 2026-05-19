@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Taskoin
   m_EditorClassIdentifier: Assembly-CSharp::QuizItemData
   itemName: Taskoin
+  unlockID: Taskoin -kortti
   image: {fileID: 2800000, guid: 4389408a26ca77001b2ee109a56e24ce, type: 3}
   info: 
   hint: 
