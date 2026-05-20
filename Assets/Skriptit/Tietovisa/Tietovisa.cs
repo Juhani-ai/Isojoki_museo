@@ -7,263 +7,265 @@ using UnityEngine.Android;
 
 public class Tietovisa : MonoBehaviour
 {
-    public List<QuizItemData> items;
-    QuizItemData correctItem;
-    List<QuizItemData> answerItems = new List<QuizItemData>();
-    List<QuizItemData> sessionQuestions = new List<QuizItemData>();
+   public List<QuizItemData> items;
+   QuizItemData correctItem;
+   List<QuizItemData> answerItems = new List<QuizItemData>();
+   List<QuizItemData> sessionQuestions = new List<QuizItemData>();
 
-    int lives = 3;
-    int score = 0;
-    bool hintUsed = false;
-    public TMP_Text scoreText;
-    public TMP_Text livesText;
+   int lives = 3;
+   int score = 0;
+   bool hintUsed = false;
+   public TMP_Text scoreText;
+   public TMP_Text livesText;
 
-    public RawImage questionImage;
-    public Button[] answerButtons;
-    public TMP_Text[] answerTexts;
+   public RawImage questionImage;
+   public Button[] answerButtons;
+   public TMP_Text[] answerTexts;
 
-    public GameObject nextButton;
-    public GameObject replayButton;
-    public GameObject menuButton;
+   public GameObject nextButton;
+   public GameObject replayButton;
+   public GameObject menuButton;
 
-    public GameObject hintButton;
-    public TMP_Text hintText;
+   public GameObject hintButton;
+   public TMP_Text hintText;
 
-    public GameObject popupPanel;
-    public TMP_Text popupText;
+   public GameObject popupPanel;
+   public TMP_Text popupText;
 
-    private void Start()
-    {
-        LoadUnlockedItems();
-        BuildSessionQuestions();
-        UpdateUI();
-    }
+   private void Start()
+   {
+       LoadUnlockedItems();
+       BuildSessionQuestions();
+       UpdateUI();
+   }
 
-    public void StartGame()
-    {
-        GenerateQuestion();
-    }
+   public void StartGame()
+   {
+       GenerateQuestion();
+   }
 
-    public void GenerateQuestion()
-    {
-        hintUsed = false;
+   public void GenerateQuestion()
+   {
+       hintUsed = false;
 
-        correctItem = sessionQuestions[0];
-        sessionQuestions.RemoveAt(0);
+       correctItem = sessionQuestions[0];
+       sessionQuestions.RemoveAt(0);
 
-        questionImage.texture = correctItem.image;
+       questionImage.texture = correctItem.image;
 
-        answerItems.Clear();
-        answerItems.Add(correctItem);
+       answerItems.Clear();
+       answerItems.Add(correctItem);
 
+       while (answerItems.Count < 4)
+       {
+           QuizItemData randomItem = items[Random.Range(0, items.Count)];
 
+           if (!answerItems.Contains(randomItem))
+           {
+               answerItems.Add(randomItem);
+           }
+       }
 
-        while (answerItems.Count < 4)
-        {
-            QuizItemData randomItem = items[Random.Range(0,items.Count)];
+       Shuffle(answerItems);
 
-            if (!answerItems.Contains(randomItem))
-            {
-                answerItems.Add(randomItem);
-            }
-        }
+       for (int i = 0; i < 4; i++)
+       {
+           int index = i;
 
-        Shuffle(answerItems);
+           answerTexts[i].text = answerItems[i].itemName;
 
-        for (int i = 0; i < 4; i++)
-        {
-            int index = i;
+           answerButtons[i].onClick.RemoveAllListeners();
+           answerButtons[i].onClick.AddListener(() => SelectAnswer(index));
+       }
 
-            answerTexts[i].text = answerItems[i].itemName;
+       hintText.text = "";
+       hintButton.SetActive(true);
+       hintText.gameObject.SetActive(false);
+   }
 
-            answerButtons[i].onClick.RemoveAllListeners();
-            answerButtons[i].onClick.AddListener(() => SelectAnswer(index));
-        }
+   public void SelectAnswer(int index)
+   {
+       if (answerItems[index] == correctItem)
+       {
+           int points = hintUsed ? 10 : 15;
+           score += points;
 
-        hintText.text = "";
-        hintButton.SetActive(true);
-        hintText.gameObject.SetActive(false);
-    }
+           Pistemanageri.LisaaPisteita(points);
 
-    public void SelectAnswer(int index)
-    {
-        if (answerItems[index] == correctItem)
-        {
-            int points = hintUsed ? 10 : 15;
-            score += points;
+           ShowCorrectPopup();
+       }
+       else
+       {
+           lives--;
+           lives = Mathf.Max(0, lives);
+           ShowWrongPopup();
+       }
 
-            Pistemanageri.LisaaPisteita(points);
+       UpdateUI();
 
-            ShowCorrectPopup();
-        }
-        else
-        {
-            lives--;
-            lives = Mathf.Max(0, lives);
-            ShowWrongPopup();
-        }
+       Debug.Log("Clicked: " + answerItems[index].itemName);
+       Debug.Log("Correct: " + correctItem.itemName);
+   }
 
-        UpdateUI(); 
+   public void ShowHint()
+   {
+       hintUsed = true;
+       hintText.text = correctItem.hint;
+       hintButton.SetActive(false);
+       hintText.gameObject.SetActive(true);
+   }
 
-        Debug.Log("Clicked: " + answerItems[index].itemName);
-        Debug.Log("Correct: " + correctItem.itemName);
-    }
+   public void ShowCorrectPopup()
+   {
+       popupText.text = "Oikein!\n\n" + correctItem.info;
+       popupPanel.SetActive(true);
+   }
 
-    public void ShowHint()
-    {
-        hintUsed = true;
-        hintText.text = correctItem.hint;
-        hintButton.SetActive(false);
-        hintText.gameObject.SetActive(true);
-    }
+   public void ShowWrongPopup()
+   {
+       string correct = correctItem.itemName;
 
-    public void ShowCorrectPopup()
-    {
-        popupText.text = "Oikein!\n\n" + correctItem.info;
-        popupPanel.SetActive(true);
-    }
+       // KORJATTU: Ääkköset palautettu puhtaaksi tekstiksi
+       popupText.text = "Väärin!\nOikea vastaus on: " + correct +
+           "\n\n" + correctItem.info;
 
-    public void ShowWrongPopup()
-    {
-        string correct = correctItem.itemName;
+       popupPanel.SetActive(true);
+   }
 
-        popupText.text = "V��rin!\nOikea vastaus on: " + correct +
-            "\n\n" + correctItem.info;
+   public void NextQuestion()
+   {
+       popupPanel.SetActive(false);
 
-        popupPanel.SetActive(true);
-    }
+       if (lives <= 0)
+       {
+           Lose();
+           return;
+       }
 
-    public void NextQuestion()
-    {
-        popupPanel.SetActive(false);
+       if (sessionQuestions.Count == 0)
+       {
+           Win();
+           return;
+       }
+      
+       GenerateQuestion();
+   }
 
-        if (lives <= 0)
-        {
-            Lose();
-            return;
-        }
+   void Shuffle(List<QuizItemData> list)
+   {
+       for (int i = 0; i < list.Count; i++)
+       {
+           int rand = Random.Range(i, list.Count);
 
-        if (sessionQuestions.Count == 0)
-        {
-            Win();
-            return;
-        }
-        
-        GenerateQuestion();
-    }
+           QuizItemData temp = list[i];
+           list[i] = list[rand];
+           list[rand] = temp;
+       }
+   }
 
-    void Shuffle(List<QuizItemData> list)
-    {
-        for (int i = 0; i < list.Count; i++)
-        {
-            int rand = Random.Range(i, list.Count);
+   void UpdateUI()
+   {
+       scoreText.text = $"Pisteet: {score}";
+       livesText.text = $"Yritykset: {lives}";
+   }
 
-            QuizItemData temp = list[i];
-            list[i] = list[rand];
-            list[rand] = temp;
-        }
-    }
+   public void Lose()
+   {
+       // KORJATTU: "Yritykset loppui" ääkkönen varmistettu
+       popupText.text = $"Voi harmi, Yritykset loppui.\n\nPisteet: {score}";
+       popupPanel.SetActive(true);
+       nextButton.SetActive(false);
+       replayButton.SetActive(true);
+       menuButton.SetActive(true);
+   }
 
-    void UpdateUI()
-    {
-        scoreText.text = $"Pisteet: {score}";
-        livesText.text = $"Yritykset: {lives}";
-    }
+   public void Win()
+   {
+       // KORJATTU: "Onneksi olkoon" ääkkönen varmistettu
+       popupText.text = $"Onneksi olkoon!\n\nPisteet: {score}";
+       popupPanel.SetActive(true);
+       nextButton.SetActive(false);
+       replayButton.SetActive(true);
+       menuButton.SetActive(true);
+   }
 
-    public void Lose()
-    {
-        popupText.text = $"Voi harmi, Yritykset loppui.\n\nPisteet: {score}";
-        popupPanel.SetActive(true);
-        nextButton.SetActive(false);
-        replayButton.SetActive(true);
-        menuButton.SetActive(true);
-    }
+   public void Replay()
+   {
+       Pistemanageri.TallennaPisteet();
+       ResetGame();
+       GenerateQuestion();
+   }
+   
+   public void ReturnToMenu()
+   {
+       Pistemanageri.TallennaPisteet();
+       ResetGame();
+   }
 
-    public void Win()
-    {
-        popupText.text = $"Onneksi olkoon!\n\nPisteet: {score}";
-        popupPanel.SetActive(true);
-        nextButton.SetActive(false);
-        replayButton.SetActive(true);
-        menuButton.SetActive(true);
-    }
+   void ResetGame()
+   {
+       score = 0;
+       lives = 3;
 
-    public void Replay()
-    {
-        Pistemanageri.TallennaPisteet();
-        ResetGame();
-        GenerateQuestion();
-    }
-    public void ReturnToMenu()
-    {
-        Pistemanageri.TallennaPisteet();
-        ResetGame();
-    }
+       items = new List<QuizItemData>(Resources.LoadAll<QuizItemData>("QuizItems"));
+       BuildSessionQuestions();
 
-    void ResetGame()
-    {
-        score = 0;
-        lives = 3;
+       UpdateUI();
 
-        items = new List<QuizItemData>(Resources.LoadAll<QuizItemData>("QuizItems"));
-        BuildSessionQuestions();
+       nextButton.SetActive(true);
+       replayButton.SetActive(false);
+       menuButton.SetActive(false);
+       popupPanel.SetActive(false);
+   }
 
-        UpdateUI();
+   void LoadUnlockedItems()
+   {
+       QuizItemData[] allItems = Resources.LoadAll<QuizItemData>("QuizItems");
 
-        nextButton.SetActive(true);
-        replayButton.SetActive(false);
-        menuButton.SetActive(false);
-        popupPanel.SetActive(false);
-    }
+       items = new List<QuizItemData>();
 
-    void LoadUnlockedItems()
-    {
-        QuizItemData[] allItems = Resources.LoadAll<QuizItemData>("QuizItems");
+       foreach (QuizItemData item in allItems)
+       {
+           bool alwaysUnlocked =
+               item.itemName == "Kahvihuhmar" ||
+               item.itemName == "Kappa" ||
+               item.itemName == "Kauha" ||
+               item.itemName == "Koristelupuu" ||
+               item.itemName == "Leikkihevonen";
 
-        items = new List<QuizItemData>();
+           bool unlocked =
+               PlayerPrefs.GetInt("Unlocked_" + item.unlockID, 0) == 1;
 
-        foreach (QuizItemData item in allItems)
-        {
-            bool alwaysUnlocked =
-                item.itemName == "Kahvihuhmar" ||
-                item.itemName == "Kappa" ||
-                item.itemName == "Kauha" ||
-                item.itemName == "Koristelupuu" ||
-                item.itemName == "Leikkihevonen";
+           if (alwaysUnlocked || unlocked)
+           {
+               items.Add(item);
+           }
+       }
 
-            bool unlocked =
-                PlayerPrefs.GetInt("Unlocked_" + item.unlockID, 0) == 1;
+       Debug.Log("Loaded unlocked quiz items: " + items.Count);
+   }
 
-            if (alwaysUnlocked || unlocked)
-            {
-                items.Add(item);
-            }
-        }
+   void BuildSessionQuestions()
+   {
+       List<QuizItemData> unlocked = new List<QuizItemData>();
 
-        Debug.Log("Loaded unlocked quiz items: " + items.Count);
-    }
+       foreach (var item in items)
+       {
+           unlocked.Add(item);
+       }
 
-    void BuildSessionQuestions()
-    {
-        List<QuizItemData> unlocked = new List<QuizItemData>();
+       Shuffle(unlocked);
 
-        foreach (var item in items)
-        {
-            unlocked.Add(item);
-        }
+       sessionQuestions = new List<QuizItemData>();
 
-        Shuffle(unlocked);
+       int count = Mathf.Min(10, unlocked.Count);
 
-        sessionQuestions = new List<QuizItemData>();
+       for (int i = 0; i < count; i++)
+       {
+           sessionQuestions.Add(unlocked[i]);
+       }
 
-        int count = Mathf.Min(10, unlocked.Count);
-
-        for (int i = 0; i < count; i++)
-        {
-            sessionQuestions.Add(unlocked[i]);
-        }
-
-        Debug.Log("Session questions: " + sessionQuestions.Count);
-    }
+       Debug.Log("Session questions: " + sessionQuestions.Count);
+   }
 }
- 
+
