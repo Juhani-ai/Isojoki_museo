@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using System.Collections;
@@ -9,8 +9,9 @@ using System.Text.RegularExpressions;
 public class TarinaManager : MonoBehaviour
 {
     [Header("Palvelimen osoitteet")]
-    public string palvelimenUrl = "https://isojokiseura.fi/peli/tallenna.php";
-    public string jsonUrl = "https://isojokiseura.fi/peli/tarinat.json";
+    // KORJATTU: Suhteelliset polut absoluuttisten sijaan!
+    public string palvelimenUrl = "tallenna.php";
+    public string jsonUrl = "tarinat.json";
 
     [Header("UI Paneelit")]
     public GameObject syoteKentta;
@@ -205,5 +206,5 @@ public class TarinaManager : MonoBehaviour
     [Serializable] public class TarinaData { public string teksti; public string pvm; }
     [Serializable] public class ListWrapper { public List<TarinaData> tarinat; }
     [Serializable] public class FiltteriWrapper { public List<string> sanat; }
-}
+}*/
 
