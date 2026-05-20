@@ -167,7 +167,7 @@ public class Tietovisa : MonoBehaviour
     void UpdateUI()
     {
         scoreText.text = $"Pisteet: {score}";
-        livesText.text = $"Yritukset: {lives}";
+        livesText.text = $"Yritykset: {lives}";
     }
 
     public void Lose()
